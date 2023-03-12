@@ -9,8 +9,8 @@ if __name__ == '__main__':
     print(vdud.url)  # https://www.youtube.com/channel/UCMCgOm8GZkHp8zJ6l7_hIuA
 
     # менять не можем
-    vdud.channel_id = 'Новое название'
-    # AttributeError: property 'channel_id' of 'Channel' object has no setter
+    ##vdud.channel_id = 'Новое название'
+    #AttributeError: property 'channel_id' of 'Channel' object has no setter
 
     # можем получить объект для работы с API вне класса
     print(Channel.get_service())
