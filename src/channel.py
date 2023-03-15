@@ -63,10 +63,39 @@ class Channel:
             return self.subscriber_count - other.subscriber_count
         else:
             raise TypeError("ERROR: class Channel - other type not implemented")
-        
+
     def __ge__(self, other):
         if isinstance(other, Channel):
             return self.subscriber_count >= other.subscriber_count
         else:
             raise TypeError("ERROR: class Channel >= other type not implemented")
 
+    def __gt__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count > other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel > other type not implemented")
+
+    def __le__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count <= other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel <= other type not implemented")
+
+    def __lt__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count < other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel < other type not implemented")
+
+    def __eq__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count == other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel == other type not implemented")
+
+    def __ne__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count != other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel != other type not implemented")
