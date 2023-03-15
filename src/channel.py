@@ -25,11 +25,13 @@ class Channel:
         self.channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = self.channel["items"][0]["snippet"]["title"]
         self.description = self.channel["items"][0]["snippet"]["description"]
-        self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.url = f"https://www.youtube.com/channel/{channel_id}"
-        self.subscriber_count = self.channel["items"][0]["statistics"]["subscriberCount"]
-        self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
-        self.view_count = self.channel["items"][0]["statistics"]["viewCount"]
+        self.subscriber_count = int(self.channel["items"][0]["statistics"]["subscriberCount"])
+        self.video_count = int(self.channel["items"][0]["statistics"]["videoCount"])
+        self.view_count = int(self.channel["items"][0]["statistics"]["viewCount"])
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"
 
     def __repr__(self):
         """Возвращает строковое представление класса"""
@@ -49,4 +51,22 @@ class Channel:
                "videoCount": self.video_count, "viewCount": self.view_count}
         with open(fname, 'w', encoding="utf-8") as file:
             json.dump(out, file, indent=2, ensure_ascii=False)
+
+    def __add__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count + other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel + other type not implemented")
+
+    def __sub__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count - other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel - other type not implemented")
+        
+    def __ge__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriber_count >= other.subscriber_count
+        else:
+            raise TypeError("ERROR: class Channel >= other type not implemented")
 
