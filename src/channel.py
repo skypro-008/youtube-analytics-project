@@ -2,17 +2,16 @@ import json
 import os
 from googleapiclient.discovery import build
 
-class Channel:
 
+class Channel:
     """Класс для ютуб-канала"""
     api_key: str = os.getenv('API_KEY')
     youtube = build('youtube', 'v3', developerKey=api_key)
 
-
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
-        self.channel_info = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        self.__channel_id = channel_id
+        self.channel_info = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = self.channel_info["items"][0]["snippet"]['title']
         self.description = self.channel_info["items"][0]["snippet"]['description']
         self.url = "https://www.youtube.com/channel/" + f"{channel_id}"
@@ -31,7 +30,7 @@ class Channel:
     def to_json(self, file_json):
         f"""Сохраняет данные о канале в файл {file_json}.json в формате .json"""
         data = {"api_key": Channel.api_key,
-                "channel_id": self.channel_id,
+                "channel_id": self.__channel_id,
                 "title:": self.title,
                 "description": self.description,
                 "url": self.url,
@@ -41,5 +40,6 @@ class Channel:
         my_file.write(data)
         my_file.close()
 
-
-
+    @property
+    def channel_id(self):
+        return self.__channel_id
