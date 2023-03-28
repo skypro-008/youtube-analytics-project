@@ -39,7 +39,6 @@ class Channel:
         my_file = open(f"{file_json}", "w+")
         my_file.write(data)
         my_file.close()
-
     @property
     def channel_id(self):
         return self.__channel_id
