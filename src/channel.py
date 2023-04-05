@@ -13,11 +13,7 @@ class Channel:
 
     def print_info(self):
         """вывод информации о канале"""
-        # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
-        api_key: str = os.getenv('API_KEY')
+        api_key: str = os.getenv('YT_API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
-        channel_id = 'UCMCgOm8GZkHp8zJ6l7_hIuA'
-        channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-
-
-        print(json.dumps(channel, indent=2, ensure_ascii=False))
+        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        return print(json.dumps(channel, indent=2, ensure_ascii=False))
