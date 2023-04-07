@@ -16,7 +16,9 @@ class Channel:
         api_key: str = os.getenv('YT_API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
         channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        return print(json.dumps(channel, indent=2, ensure_ascii=False))
+        info_canal = json.dumps(channel, indent=2, ensure_ascii=False)
+
+        return print(info_canal)
 
 
     def get_service(self):
