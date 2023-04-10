@@ -77,3 +77,38 @@ class Channel:
         }
         with open(filename, 'w') as file:
             json.dump(data, file, indent=4)
+
+    def __str__(self):
+        """
+        Метод `__str__`, возвращающий название и ссылку
+        на канал по шаблону `<название_канала> (<ссылка_на_канал>)
+        """
+        return f"{self.__title} ({self.__url})"
+
+    def __add__(self, other):
+        """Сложение двух каналов по количеству подписчиков."""
+        return self.__subscribers_count + other.__subscribers_count
+
+    def __sub__(self, other):
+        """Вычитание двух каналов по количеству подписчиков."""
+        return self.__subscribers_count - other.__subscribers_count
+
+    def __gt__(self, other):
+        """Сравнение двух каналов по количеству подписчиков"""
+        return self.__subscribers_count > other.__subscribers_count
+
+    def __ge__(self, other):
+        """Сравнение двух каналов по количеству подписчиков"""
+        return self.__subscribers_count >= other.__subscribers_count
+
+    def __lt__(self, other):
+        """Сравнение двух каналов по количеству подписчиков"""
+        return self.__subscribers_count < other.__subscribers_count
+
+    def __le__(self, other):
+        """Сравнение двух каналов по количеству подписчиков"""
+        return self.__subscribers_count <= other.__subscribers_count
+
+    def __eq__(self, other):
+        """Сравнение двух каналов по количеству подписчиков"""
+        return self.__subscribers_count == other.__subscribers_count
