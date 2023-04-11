@@ -1,3 +1,4 @@
+import json
 import os
 
 from googleapiclient.discovery import build
@@ -17,4 +18,4 @@ class Channel:
         channel_id = self.channel_id
         youtube = self.youtube
         channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-        return channel
+        print(json.dumps(channel, indent=2, ensure_ascii=False))
