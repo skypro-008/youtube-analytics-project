@@ -1,4 +1,5 @@
-from helper.youtube_api_manual import youtube, printj
+import json
+from helper.youtube_api_manual import youtube
 
 
 class Channel:
@@ -10,6 +11,5 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel_id = self.channel_id  # Редакция
-        channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-        printj(channel)
+        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        print(json.dumps(channel, indent=3, ensure_ascii=False))
