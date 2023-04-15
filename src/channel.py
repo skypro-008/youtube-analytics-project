@@ -1,6 +1,5 @@
 import json
 import os
-import requests
 from googleapiclient.discovery import build
 
 
@@ -17,21 +16,14 @@ class Channel:
         self.channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = self.channel['items'][0]['snippet']['title']
         self.description = self.channel['items'][0]['snippet']['description']
-        self.url = self.channel['items'][0]['snippet']['customUrl']
+        self.url = f"https://www.youtube.com/channel/{self.channel_id}"
         self.subscriberCount = self.channel['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.viewCount = self.channel['items'][0]['statistics']['viewCount']
 
-    # @property
-    # def channel_id_(self):
-    #     return self.channel_id
-    #
-    # @channel_id_.setter
-    # def change_id(self, channel_id):
-    #     if self.channel_id is None:
-    #         self.channel_id = channel_id
-    #     else:
-    #         print("AttributeError: property 'channel_id' of 'Channel' object has no setter")
+    @property
+    def _channel_id(self):
+        return self.channel_id
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -40,7 +32,23 @@ class Channel:
 
     @classmethod
     def get_service(cls):
+        """получить объект для работы с API"""
+
         return cls.youtube
+
+    def to_json(self, name: str):
+        """создаем файл 'vdud.json' в данными по каналу"""
+
+        data = {'channel_id': self.channel_id,
+                'channel': self.channel,
+                'title': self.title,
+                'description': self.description,
+                'url': self.url,
+                'subscriberCount': self.subscriberCount,
+                'video_count': self.video_count,
+                'viewCount': self.viewCount}
+        with open(name, 'w') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
 
     def __repr__(self):
         return f'{self.channel_id}'
