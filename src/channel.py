@@ -39,7 +39,10 @@ class Channel:
         return json.dumps(__init__, indent=2, ensure_ascii=False)
 
     def __add__(self, other):
-        return int(self.subscribers) + int(other.subscribers)
+        if type(other) == Channel:
+            return int(self.subscribers) + int(other.subscribers)
+        else:
+            raise TypeError
 
     def __sub__(self, other):
         return int(other.subscribers) - int(self.subscribers)
