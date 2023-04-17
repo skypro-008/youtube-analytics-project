@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 
 
 class Video:
+    """Реализация класса получение информации по id видео"""
     def __init__(self, video_id):
         self.video_id = video_id
         api_key: str = os.getenv('YT_API_KEY')
