@@ -50,5 +50,29 @@ class Channel:
         with open(name, 'w') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
+    def __add__(self, other):
+        return int(self.subscriberCount) + int(other.subscriberCount)
+
+    def __sub__(self, other):
+        return int(self.subscriberCount) - int(other.subscriberCount)
+
+    def __gt__(self, other):
+        return int(self.subscriberCount) > int(other.subscriberCount)
+
+    def __ge__(self, other):
+        return int(self.subscriberCount) >= int(other.subscriberCount)
+
+    def __lt__(self, other):
+        return int(self.subscriberCount) < int(other.subscriberCount)
+
+    def __le__(self, other):
+        return int(self.subscriberCount) <= int(other.subscriberCount)
+
+    def __eq__(self, other):
+        return int(self.subscriberCount) == int(other.subscriberCount)
+
+    def __str__(self):
+        return f'{self.url}'
+
     def __repr__(self):
         return f'{self.channel_id}'
