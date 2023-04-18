@@ -1,6 +1,5 @@
 import os
 
-from src.channel import Channel
 from googleapiclient.discovery import build
 
 
@@ -24,6 +23,7 @@ class Video:
 
 
 class PLVideo(Video):
+    """Класс потомок от Video, принимает который принимает 'id видео' и 'id плейлиста"""
     def __init__(self, video_id, playlist_id: str):
         super().__init__(video_id)
         self.playlist_id = playlist_id
