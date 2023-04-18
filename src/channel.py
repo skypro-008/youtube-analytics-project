@@ -2,7 +2,6 @@ import json
 import os
 from googleapiclient.discovery import build
 
-
 api_key: str = os.getenv('YT_API_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
@@ -21,6 +20,24 @@ class Channel:
         self.subscriber_count = int(channel_data['items'][0]['statistics']['subscriberCount'])
         self.video_count = int(channel_data['items'][0]['statistics']['videoCount'])
         self.view_count = int(channel_data['items'][0]['statistics']['viewCount'])
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        return self.subscriber_count - other.subscriber_count
+
+    def __eq__(self, other):
+        return self.subscriber_count == other.subscriber_count
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
 
     @classmethod
     def get_service(cls):
