@@ -28,7 +28,7 @@ docs: https://developers.google.com/youtube/v3/docs/channels/list
 channel_id = 'UCMCgOm8GZkHp8zJ6l7_hIuA'  # вДудь
 channel_id = 'UC1eFXmJNkjITxPFWTy6RsWg'  # Редакция
 channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-printj(channel)
+#printj(channel)
 
 
 '''
@@ -41,7 +41,7 @@ playlists = youtube.playlists().list(channelId=channel_id,
                                      ).execute()
 # printj(playlists)
 for playlist in playlists['items']:
-    print(playlist)
+    #print(playlist)
     print()
 
 
@@ -59,11 +59,11 @@ playlist_videos = youtube.playlistItems().list(playlistId=playlist_id,
                                                part='contentDetails',
                                                maxResults=50,
                                                ).execute()
-# printj(playlist_videos)
+printj(playlist_videos)
 
 # получить все id видеороликов из плейлиста
 video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
-# print(video_ids)
+print(video_ids)
 
 
 '''
