@@ -19,3 +19,4 @@ if __name__ == '__main__':
 
 
     assert pl.show_best_video() == "https://youtu.be/9Bv2zltQKQA"
+    print(pl.video_response)
