@@ -1,4 +1,6 @@
 import os
+import datetime
+
 from googleapiclient.discovery import build
 import isodate
 
@@ -29,24 +31,19 @@ class PlayList():
     @property
     def total_duration(self):
         """Подсчет общей длительности плейлиста"""
-        pass
+        total_duration = datetime.timedelta()
+        for video in self.video_response['items']:
+            duration = video['contentDetails']['duration']
+            duration = isodate.parse_duration(duration)
+            total_duration += duration
+        return total_duration
     def show_best_video(self):
         """Возвращает ссылку на самое популярное видео в плейлисте"""
+        sorted_videos = sorted(self.video_response['items'], key=lambda x: int(x['statistics']['viewCount']), reverse=True)
+        best_video_id = sorted_videos[0]['id']
+        return f"https://youtu.be/{best_video_id}"
 
 
 
-        for video in self.video_response['items']:
-            # YouTube video duration is in ISO 8601 format
 
-            iso_8601_duration = video['contentDetails']['duration']
-            duration = isodate.parse_duration(iso_8601_duration)
-
-            print(duration)
-
-
-
-        #best_video_id = video_response[0]['id']
-        #best_video_url = f'https://www.youtube.com/watch?v={best_video_id}'
-
-        #return f"{best_video_url}"
 
