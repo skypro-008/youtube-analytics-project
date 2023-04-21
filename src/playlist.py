@@ -40,7 +40,7 @@ class PlayList():
     def show_best_video(self):
         """Возвращает ссылку на самое популярное видео в плейлисте"""
         #video_ids = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
-        video_data = self.youtube.videos().list(id=','.join(video_ids), part='statistics').execute()
+        video_data = self.youtube.videos().list(id=','.join(self.video_ids), part='statistics').execute()
 
         video_data_sorted = sorted(video_data['items'], key=lambda x: int(x['statistics']['likeCount']), reverse=True)
 

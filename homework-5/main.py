@@ -10,6 +10,7 @@ if __name__ == '__main__':
 
 
     duration = pl.total_duration
+
     #assert str(duration) == "3:41:01"
     #assert isinstance(duration, datetime.timedelta)
     #assert duration.total_seconds() == 13261.0
