@@ -18,15 +18,10 @@ class Channel:
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.subscribers = self.channel["items"][0]["statistics"]["subscriberCount"]
-        print(f'''{self.channel_id} 
-        {self.channel}
-        {self.title}
-        {self.url}
-        {self.video_count}
-        {self.subscribers}''')
+
 
     def __str__(self):
-        return f"{self.title} {(self.url)}"
+        return f"{self.title} {self.url}"
 
     def print_info(self, channel: dict) -> None:
         """Выводит в консоль информацию о канале."""
