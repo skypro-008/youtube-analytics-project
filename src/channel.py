@@ -1,8 +1,5 @@
-import pickle
 import json
-
 from googleapiclient.discovery import build
-
 import os
 
 
@@ -13,8 +10,6 @@ class Channel:
     youtube = build('youtube', 'v3', developerKey=api_key)
     channel_id = 'UC1eFXmJNkjITxPFWTy6RsWg'
     dict_to_print = []
-
-    #
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
@@ -37,9 +32,11 @@ class Channel:
         """Возвращает объект для работы с YouTube API"""
         return cls.youtube
 
-    def to_json(self, dict_to_print: dict) -> None:
-        self.dict_to_print.append([self.title, self.description, self.url, self.subscriberCount,
-                                                  self.video_count, self.viewCount])
-
+    def to_json(self) -> None:
         """Сохраняет в файл значения атрибутов экземпляра `Channel`"""
-        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
+        self.dict_to_print.append((self.title, self.description, self.url, self.subscriberCount,
+                                   self.video_count, self.viewCount))
+
+        with open("vdud.json", "w") as write_file:
+            json.dump(Channel.dict_to_print, write_file)
+            print(Channel.dict_to_print)
