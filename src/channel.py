@@ -12,6 +12,7 @@ class Channel:
     api_key: str = os.getenv('API_KEY_YOU_TUBE')
     youtube = build('youtube', 'v3', developerKey=api_key)
     channel_id = 'UC1eFXmJNkjITxPFWTy6RsWg'
+    dict_to_print = []
 
     #
 
@@ -37,5 +38,8 @@ class Channel:
         return cls.youtube
 
     def to_json(self, dict_to_print: dict) -> None:
-        """Сохраняющий в файл значения атрибутов экземпляра `Channel`"""
+        self.dict_to_print.append([self.title, self.description, self.url, self.subscriberCount,
+                                                  self.video_count, self.viewCount])
+
+        """Сохраняет в файл значения атрибутов экземпляра `Channel`"""
         print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
