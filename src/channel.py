@@ -10,12 +10,12 @@ class Channel:
     @classmethod
     def get_service(cls):
         api_key: str = os.getenv('YT_API_KEY')
-        return build('youtube', 'v3', developerkey=api_key)
+        return build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
-        youtube = self.get_service
+        youtube = self.get_service()
         self.channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
 
         self.title = self.channel["items"][0]["snippet"]["title"]
