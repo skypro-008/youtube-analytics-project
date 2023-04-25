@@ -32,11 +32,16 @@ class Channel:
         """Возвращает объект для работы с YouTube API"""
         return cls.youtube
 
-    def to_json(self) -> None:
+    def to_json(self, dict_to_print) -> None:
         """Сохраняет в файл значения атрибутов экземпляра `Channel`"""
-        self.dict_to_print.append((self.title, self.description, self.url, self.subscriberCount,
-                                   self.video_count, self.viewCount))
 
-        with open("vdud.json", "w") as write_file:
-            json.dump(Channel.dict_to_print, write_file)
-            print(Channel.dict_to_print)
+        with open(dict_to_print, "w", encoding='utf-8') as write_file:
+            json.dump({"title": self.title,
+                      "description": self.description,
+                      "url" : self.url,
+                      "subscriberCount": self.subscriberCount,
+                       "video_count" : self.video_count,
+                       "viewCount": self.viewCount}, write_file, indent=2, ensure_ascii=False, separators=(',', ': '))
+            print(dict_to_print)
+
+
