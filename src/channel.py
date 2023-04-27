@@ -22,6 +22,38 @@ class Channel:
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.viewCount = self.channel['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        """Метод для отображения информации об объекте класса для пользователей"""
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """ Метод добавления"""
+        return self.subscriberCount + other.subscriberCount
+
+    def __sub__(self, other):
+        """Метод вычетание"""
+        return int(self.subscriberCount) - int(other.subscriberCount)
+
+    def __gt__(self, other):
+        """ Метод сравнения (больше)"""
+        return int(self.subscriberCount) > int(other.subscriberCount)
+
+    def __ge__(self, other):
+        """ Метод сравнения (больше или равно)"""
+        return int(self.subscriberCount) >= int(other.subscriberCount)
+
+    def __lt__(self, other):
+        """ Метод сравнения (меньше)"""
+        return int(self.subscriberCount) < int(other.subscriberCount)
+
+    def __le__(self, other):
+        """ Метод сравнения (меньше или равно)"""
+        return int(self.subscriberCount) <= int(other.subscriberCount)
+
+    def __eq__(self, other):
+        """ Метод сравнения (равно)"""
+        return int(self.subscriberCount) == int(other.subscriberCount)
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         self.channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
@@ -37,11 +69,9 @@ class Channel:
 
         with open(dict_to_print, "w", encoding='utf-8') as write_file:
             json.dump({"title": self.title,
-                      "description": self.description,
-                      "url" : self.url,
-                      "subscriberCount": self.subscriberCount,
-                       "video_count" : self.video_count,
+                       "description": self.description,
+                       "url": self.url,
+                       "subscriberCount": self.subscriberCount,
+                       "video_count": self.video_count,
                        "viewCount": self.viewCount}, write_file, indent=2, ensure_ascii=False, separators=(',', ': '))
             print(dict_to_print)
-
-
