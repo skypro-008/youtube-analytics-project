@@ -18,9 +18,10 @@ class Channel:
         self.title = self.channel_info['items'][0]['snippet']['title']
         self.description = self.channel_info['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_info["items"][0]["id"]}'
-        self.subs = self.channel_info['items'][0]['statistics']['subscriberCount']
+        self.subscriber_count = self.channel_info['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel_info['items'][0]['statistics']['videoCount']
-        self.views = self.channel_info['items'][0]['statistics']['viewCount']
+        self.view_count = self.channel_info['items'][0]['statistics']['viewCount']
+        self.locals = locals()
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -37,5 +38,15 @@ class Channel:
     def to_json(self, filename):
         """Cохраняет в файл значения атрибутов экземпляра `Channel`"""
 
-        with open(filename, 'w', encoding="utf-8") as outfile:
-            json.dump(self.channel_info, outfile, indent=2, ensure_ascii=False)
+        data = {
+            "channel_id": self.channel_id,
+            "title": self.title,
+            "description": self.description,
+            "url": self.url,
+            "subscriber_count": self.subscriber_count,
+            "video_count": self.video_count,
+            "view_count": self.view_count
+        }
+
+        with open(filename, "w", encoding="utf-8") as outfile:
+            json.dump(data, outfile, ensure_ascii=False, indent=2, skipkeys=False)
