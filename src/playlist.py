@@ -52,5 +52,5 @@ class PlayList:
             if video_int > best_video:
                 best_video = video_int
         print(best_video)
-        print(f"https://youtu.be/{video['items']['id']}")
+        return f"https://youtu.be/{video['id']}"
 
