@@ -1,5 +1,8 @@
+import datetime
 import json
 import os
+from functools import reduce
+import operator
 
 # необходимо установить через: pip install google-api-python-client
 from googleapiclient.discovery import build
@@ -26,11 +29,24 @@ class PlayList:
         return f"{self.title} {self.url}"
     @property
     def total_duration(self):
-        video_response_sum = 0
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
         video_response = youtube.videos().list(part='contentDetails,statistics',
                                                id=','.join(video_ids)
                                                ).execute()
-        video_response_sum += video_response
-        return video_response_sum
-
+        duration_sum = []
+        for video in video_response['items']:
+            # YouTube video duration is in ISO 8601 format
+            iso_8601_duration = video['contentDetails']['duration']
+            duration = isodate.parse_duration(iso_8601_duration)
+            duration_sum.append(duration)
+            q = sum(duration_sum, datetime.timedelta())
+        return q
+    def show_best_video(self):
+        video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
+        video_response = youtube.videos().list(part='contentDetails,statistics',
+                                               id=','.join(video_ids)
+                                               ).execute()
+        for video in video_response['items']:
+            best_video = video["statistics"]["likeCount"]
+            vb = best_video.id
+            return f'https://youtu.be/{vb}'
