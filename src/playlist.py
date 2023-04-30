@@ -46,7 +46,11 @@ class PlayList:
         video_response = youtube.videos().list(part='contentDetails,statistics',
                                                id=','.join(video_ids)
                                                ).execute()
+        best_video = 0
         for video in video_response['items']:
-            best_video = video["statistics"]["likeCount"]
-            vb = best_video.id
-            return f'https://youtu.be/{vb}'
+            video_int = int(video["statistics"]["likeCount"])
+            if video_int > best_video:
+                best_video = video_int
+        print(best_video)
+        print(f"https://youtu.be/{video['items']['id']}")
+
