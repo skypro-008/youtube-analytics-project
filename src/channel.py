@@ -21,9 +21,9 @@ class Channel:
         self.title = self.channel["items"][0]["snippet"]["title"]
         self.description = self.channel["items"][0]["snippet"]["description"]
         self.url = "https://www.youtube.com/channel/" + channel_id
-        self.subscriberCount = int(self.channel["items"][0]["statistics"]["subscriberCount"])
+        self.subscriber_count = int(self.channel["items"][0]["statistics"]["subscriberCount"])
         self.video_count = int(self.channel["items"][0]["statistics"]["videoCount"])
-        self.viewCount = int(self.channel["items"][0]["statistics"]["viewCount"])
+        self.view_count = int(self.channel["items"][0]["statistics"]["viewCount"])
 
     def __str__(self):
         """Магический метод для отображения информации об объекте класса для пользователя"""
@@ -34,9 +34,9 @@ class Channel:
         """Магический метод для складывания каналов по количеству подписчиков"""
 
         if isinstance(other, self.__class__):
-            return self.subscriberCount + other.subscriberCount
+            return self.subscriber_count + other.subscriber_count
         else:
-            return self.subscriberCount + other
+            return self.subscriber_count + other
 
     def __sub__(self, other):
         """Магический метод для вычисления разницы каналов по количеству подписчиков"""
@@ -88,9 +88,9 @@ class Channel:
             'title': self.title,
             'description': self.description,
             'url': self.url,
-            'subscriberCount': self.subscriberCount,
+            'subscriber_count': self.subscriber_count,
             'video_count': self.video_count,
-            'viewCount': self.viewCount
+            'view_count': self.view_count
         }
 
         with open(file_name, 'w', encoding='utf-8') as file:
