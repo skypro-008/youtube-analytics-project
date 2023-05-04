@@ -3,9 +3,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 
-# class HTTPErrors(Exception):
-#     def __init__(self, *args, **kwargs):
-#         self.message = args[0] if args else '000'
+class HTTPErrors(Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Неверный id видео'
 
 
 class Video:
@@ -16,16 +16,18 @@ class Video:
         self.video_id = video_id
         self.video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                          id=video_id).execute()
-        if len(self.video_response['items']) == 0:
-            self.title = None
-            self.url_video = None
-            self.viewCount = None
-            self.like_count = None
-        else:
+        try:
+            if len(self.video_response['items']) == 0:
+                raise HTTPErrors
             self.title = self.video_response['items'][0]['snippet']['title']
             self.url_video = f"https://youtu.be/{self.video_id}"
             self.view_count = self.video_response['items'][0]['statistics']['viewCount']
             self.like_count = self.video_response['items'][0]['statistics']['likeCount']
+        except HTTPErrors:
+            self.title = None
+            self.url_video = None
+            self.viewCount = None
+            self.like_count = None
 
     def __str__(self):
         return f'{self.title}'
