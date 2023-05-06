@@ -1,6 +1,7 @@
 import os
 
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 
 class Video:
@@ -14,12 +15,25 @@ class Video:
         id видео, название видео, ссылка на видео, количество просмотров, количество лайков
         """
         self.id_video = id_video
-        self.video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                         id=self.id_video).execute()
-        self.title = self.video_response['items'][0]['snippet']['title']
-        self.url = f'https://www.youtube.com/watch?v={self.id_video}'
-        self.views_count = self.video_response['items'][0]['statistics']['viewCount']
-        self.likes_count = self.video_response['items'][0]['statistics']['likeCount']
+        self.title = None
+        self.url = None
+        self.views_count = None
+        self.like_count = None
+        try:
+            self.video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                             id=self.id_video).execute()
+            if self.video_response['items']:
+                self.title = self.video_response['items'][0]['snippet']['title']
+                self.url = f'https://www.youtube.com/watch?v={self.id_video}'
+                self.views_count = self.video_response['items'][0]['statistics']['viewCount']
+                self.like_count = self.video_response['items'][0]['statistics']['likeCount']
+            else:
+                print(f"Видео {self.id_video} не найдено")
+        except HttpError as e:
+            if e.resp.status == 404:
+                print(f"Видео {self.id_video} не найдено")
+            else:
+                print(f"Ошибка при получении информации о видео {self.id_video}: {e}")
 
     def __str__(self):
         """Метод `__str__`, возвращающий название видео"""
@@ -28,6 +42,7 @@ class Video:
 
 class PLVideo(Video):
     """Класс PLVideo - наследует класс Video"""
+
     def __init__(self, id_video, playlist_id):
         """
         Инициализация атрибутами класса Video с расширением
