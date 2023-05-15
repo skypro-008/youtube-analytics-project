@@ -15,11 +15,9 @@ def youtube_info(current_channel_id):
     # создать специальный объект для работы с API
     youtube = build('youtube', 'v3', developerKey=api_key)
 
-
     def printj(dict_to_print: dict) -> None:
         """Выводит словарь в json-подобном удобном формате с отступами"""
         print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
-
 
     '''
     получить данные о канале по его id
@@ -31,7 +29,6 @@ def youtube_info(current_channel_id):
     channel_id = current_channel_id  # HighLoad Channel
     channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
     printj(channel)
-
 
     '''
     получить данные по play-листам канала
@@ -45,7 +42,6 @@ def youtube_info(current_channel_id):
     # for playlist in playlists['items']:
     #     print(playlist)
     #     print()
-
 
     '''
     получить данные по видеороликам в плейлисте
@@ -66,7 +62,6 @@ def youtube_info(current_channel_id):
     video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
     # print(video_ids)
 
-
     '''
     вывести длительности видеороликов из плейлиста
     docs: https://developers.google.com/youtube/v3/docs/videos/list
@@ -81,7 +76,6 @@ def youtube_info(current_channel_id):
     #     iso_8601_duration = video['contentDetails']['duration']
     #     duration = isodate.parse_duration(iso_8601_duration)
     #     print(duration)
-
 
     '''
     получить статистику видео по его id
