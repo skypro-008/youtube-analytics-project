@@ -1,4 +1,13 @@
-from helper import youtube_api_manual as youtube
+import json
+import os
+from googleapiclient.discovery import build
+
+
+# API_KEY скопирован из гугла и вставлен в переменные окружения
+api_key: str = os.getenv('API_KEY')
+
+# создается специальный объект для работы с API
+youtube = build('youtube', 'v3', developerKey=api_key)
 
 
 class Channel:
@@ -11,4 +20,10 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        youtube.youtube_info(self.channel_id)
+
+        # получаем данные о канале по его id
+        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+
+        # выводит словарь в json-подобном удобном формате с отступами
+        print(json.dumps(channel, indent=2, ensure_ascii=False))
+
