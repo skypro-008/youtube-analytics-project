@@ -26,35 +26,59 @@ class Channel:
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Информация об объекте для пользователей
+        """
         return f'{self.title} ({self.url})'
 
 
-    def __add__(self, other):
+    def __add__(self, other) -> int:
+        """
+        Возвращает результат сложения
+        """
         return self.int_subscriber_count + other.int_subscriber_count
 
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> int:
+        """
+        Возвращает результат вычитания
+        """
         return self.int_subscriber_count - other.int_subscriber_count
 
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
+        """
+        Возвращает результат оператора <
+        """
         return self.int_subscriber_count < other.int_subscriber_count
 
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
+        """
+        Возвращает результат оператора <=
+        """
         return self.int_subscriber_count <= other.int_subscriber_count
 
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
+        """
+        Возвращает результат оператора >
+        """
         return self.int_subscriber_count > other.int_subscriber_count
 
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> bool:
+        """
+        Возвращает результат оператора >=
+        """
         return self.int_subscriber_count >= other.int_subscriber_count
 
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
+        """
+        Возвращает результат оператора ==
+        """
         return self.int_subscriber_count == other.int_subscriber_count
 
 
