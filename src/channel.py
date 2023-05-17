@@ -22,7 +22,3 @@ class Channel:
         channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         channel_info = json.dumps(channel, indent=2, ensure_ascii=False)
         print(channel_info)
-
-print(api_key)
-
- 
