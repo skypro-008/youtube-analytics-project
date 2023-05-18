@@ -25,16 +25,16 @@ docs: https://developers.google.com/youtube/v3/docs/channels/list
 
 сервис для быстрого получения id канала: https://commentpicker.com/youtube-channel-id.php
 '''
-# channel_id = 'UC-OVMPlMA3-YCIeg4z5z23A'  # MoscowPython
-channel_id = 'UCwHL6WHUarjGfUM_586me8w'  # HighLoad Channel
+channel_id = 'UC-OVMPlMA3-YCIeg4z5z23A'  # MoscowPython
+# channel_id = 'UCwHL6WHUarjGfUM_586me8w'  # HighLoad Channel
 channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
 printj(channel)
 
 
 '''
-получить данные по play-листам канала
-docs: https://developers.google.com/youtube/v3/docs/playlists/list
-'''
+# получить данные по play-листам канала
+# docs: https://developers.google.com/youtube/v3/docs/playlists/list
+# '''
 playlists = youtube.playlists().list(channelId=channel_id,
                                      part='contentDetails,snippet',
                                      maxResults=50,
