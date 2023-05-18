@@ -11,26 +11,31 @@ class Video:
 
     def __init__(self, video_info: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.video_info = video_info
-        self.video = self.youtube.videos().list(id=self.video_info, part='snippet,statistics').execute()
-        self.video_id = self.video['items'][0]['id']
-        self.video_title = self.video['items'][0]['snippet']['title']
-        self.video_url = self.video['items'][0]['snippet']['thumbnails']['default']['url']
-        self.video_number_views = self.video['items'][0]['statistics']['viewCount']
-        self.video_number_like = self.video['items'][0]['statistics']['likeCount']
+        try:
+            self.video_info = video_info
+            self.video = self.youtube.videos().list(id=self.video_info, part='snippet,statistics').execute()
+            self.video_id = self.video['items'][0]['id']
+            self.title = self.video['items'][0]['snippet']['title']
+            self.video_url = self.video['items'][0]['snippet']['thumbnails']['default']['url']
+            self.video_number_views = self.video['items'][0]['statistics']['viewCount']
+            self.like_count = self.video['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.like_count = None
 
     def __str__(self):
-        return f'{self.video_title}'
+        return f'{self.title}'
 
     def to_json(self, dict_to_print) -> None:
         """Сохраняет в файл значения атрибутов экземпляра `Video`"""
 
         with open(dict_to_print, "w", encoding='utf-8') as write_file:
             json.dump({"id": self.video_id,
-                       "title": self.video_title,
+                       "title": self.title,
                        "url": self.video_url,
-                       "likeCount": self.video_number_like,
-                       "viewCount": self.video_number_views}, write_file, indent=2, ensure_ascii=False, separators=(',', ': '))
+                       "likeCount": self.like_count,
+                       "viewCount": self.video_number_views}, write_file, indent=2, ensure_ascii=False,
+                      separators=(',', ': '))
             print(dict_to_print)
 
 

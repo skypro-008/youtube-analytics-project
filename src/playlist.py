@@ -11,6 +11,7 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 
 
 class PlayList(Video):
+
     def __init__(self, playlist_id: str):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.playlist_id = playlist_id
@@ -31,6 +32,7 @@ class PlayList(Video):
         video_response = youtube.videos().list(part='contentDetails,statistics',
                                                id=','.join(video_ids)
                                                ).execute()
+
         total_video_diration = datetime.timedelta(hours=0, minutes=0, seconds=0)
 
         for video in video_response['items']:
@@ -60,8 +62,8 @@ class PlayList(Video):
 
         video_like_count = 0
         video_url = ''
-        for video in video_response['items']:
 
+        for video in video_response['items']:
             like_count = int(video['statistics']['likeCount'])
 
             if like_count > video_like_count:
