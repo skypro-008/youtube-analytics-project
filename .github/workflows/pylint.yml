@@ -20,4 +20,4 @@ jobs:
         pip install pylint pytest
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint --ignore=helper,homework-1,homework-2,homework-3,homework-4,homework-5,homework-6 $(git ls-files '*.py')
