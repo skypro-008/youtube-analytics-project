@@ -1,4 +1,6 @@
 def find_value(dictionary: dict, aim: str) -> str:
+    """Находит и возвращает значение во вложенном словаре через рекурсию"""
+    
     for key, value in dictionary.items():
         if key == aim:
             return value
