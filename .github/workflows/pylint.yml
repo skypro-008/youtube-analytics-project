@@ -9,15 +9,15 @@ jobs:
       matrix:
         python-version: ["3.11"]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint pytest
-    - name: Analysing the code with pylint
-      run: |
-        pylint --ignore=helper,homework-1,homework-2,homework-3,homework-4,homework-5,homework-6 $(git ls-files '*.py')
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint pytest
+      - name: Analysing the code with pylint
+        run: |
+          find . -name '*.py' -not -path "./helper/*" -not -path "./homework-1/*" -not -path "./homework-2/*" -not -path "./homework-3/*" -not -path "./homework-4/*" -not -path "./homework-5/*" -not -path "./homework-6/*" -exec pylint {} +
