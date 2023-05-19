@@ -20,4 +20,4 @@ jobs:
           pip install pylint pytest
       - name: Analysing the code with pylint
         run: |
-          find . -name '*.py' -not -path "./helper/*" -not -path "./homework-1/*" -not -path "./homework-2/*" -not -path "./homework-3/*" -not -path "./homework-4/*" -not -path "./homework-5/*" -not -path "./homework-6/*" -exec pylint {} +
+          pylint --rcfile=.pylintrc $(git ls-files '*.py')
