@@ -2,7 +2,6 @@ from src.channel import Channel
 
 if __name__ == '__main__':
     vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
-
     # получаем значения атрибутов
     print(vdud.title)  # вДудь
     print(vdud.video_count)  # 163 (может уже больше)

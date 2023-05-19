@@ -1,4 +1,4 @@
-import os
+
 
 from src.channel import Channel
 
