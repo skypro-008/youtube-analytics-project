@@ -70,7 +70,7 @@ class Channel:
 
         self.__title = find_value(channel, "title")
         self.__description = find_value(channel, "description")
-        self.__url = find_value(channel, "url")
+        self.__url = f'https://www.youtube.com/channel/{find_value(channel, "id")}'
         self.__subscribers_count = find_value(channel, "subscriberCount")
         self.__video_count = find_value(channel, "videoCount")
         self.__views_count = find_value(channel, "viewCount")

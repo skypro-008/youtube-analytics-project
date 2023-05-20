@@ -10,7 +10,7 @@ def find_value(dictionary: dict, aim: str) -> str:
                 return result
         elif isinstance(value, list):
             for el in value:
-                if isinstance(el, dict):
+                if isinstance(el, (dict, list)):
                     result = find_value(el, aim)
                     if result:
                         return result
