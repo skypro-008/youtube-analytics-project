@@ -42,6 +42,6 @@ class Channel:
         data['videoCount'] = self.video_count
         data['viewsCount'] = self.views_count
         data['subscriberCount'] = self.subscriber_count
-        with open(f'{name_json}.json', "w") as file:
-            json.dump(data, file, indent=2)
+        with open(f'{name_json}', "w", encoding='utf-8') as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
 
