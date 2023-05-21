@@ -10,12 +10,20 @@ class PlayList:
     youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, playlist_id):
+        self.playlist_id = playlist_id
         self.url = "https://www.youtube.com/playlist?list=" + playlist_id
         self.playlist_videos = PlayList.youtube.playlistItems().list(playlistId=playlist_id,
                                                                      part='contentDetails, snippet',
                                                                      maxResults=50,
                                                                      ).execute()
         self.video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
+        self.title = self.playlist_info()['items'][0]['snippet']['localized']['title']
+
+    def playlist_info(self):
+        playlist_videos = self.youtube.playlists().list(part='snippet',
+                                                        id=self.playlist_id,
+                                                        ).execute()
+        return playlist_videos
 
     @property
     def total_duration(self):
