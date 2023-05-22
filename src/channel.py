@@ -1,9 +1,12 @@
 import json
 import os
 from googleapiclient.discovery import build
+from googleapiclient.discovery import Resource
 from src.utils import find_value
+from functools import total_ordering
 
 
+@total_ordering
 class Channel:
     """Класс для ютуб-канала"""
 
@@ -25,32 +28,37 @@ class Channel:
         self.set_atr()
 
     @property
-    def channel_id(self):
+    def channel_id(self) -> str:
         return self.__channel_id
 
     @property
-    def title(self):
+    def title(self) -> str:
         return self.__title
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self.__description
 
     @property
-    def url(self):
+    def url(self) -> str:
         return self.__url
 
     @property
-    def subscribers_count(self):
+    def subscribers_count(self) -> str:
         return self.__subscribers_count
 
     @property
-    def video_count(self):
+    def video_count(self) -> str:
         return self.__video_count
 
     @property
-    def views_count(self):
+    def views_count(self) -> str:
         return self.__views_count
+
+    def __str__(self) -> str:
+        """Возвращает строку в формате: `<название_канала> (<ссылка_на_канал>)`"""
+
+        return f"{self.title} ({self.url})"
 
     def get_info(self) -> dict:
         """Получает данные о канале по его id"""
@@ -85,7 +93,7 @@ class Channel:
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     @classmethod
-    def get_service(cls):
+    def get_service(cls) -> Resource:
         """Создаёт специальный объект для работы с API"""
 
         # API_KEY скопирован из гугла и вставлен в переменные окружения
@@ -104,7 +112,7 @@ class Channel:
                 "views_count": self.views_count
                 }
 
-    def to_json(self, file_name) -> None:
+    def to_json(self, file_name: str) -> None:
         """Записывает аттрибуты экземпляра класса в json-файл"""
 
         from_root = "homework-2", file_name
@@ -114,3 +122,47 @@ class Channel:
 
         with open(path, "w", encoding="UTF-8") as json_file:
             json.dump(attributes, json_file, indent=4, separators=(',', ': '), ensure_ascii=False)
+
+    def __add__(self, other) -> int | Exception:
+        """
+        Реализует возможность сложения объектов данного класса
+        между собой по количеству подписчиков
+        """
+
+        if isinstance(other, Channel):
+            return int(self.subscribers_count) + int(other.subscribers_count)
+        else:
+            raise TypeError("Операции между этими объектами невозможны")
+
+    def __sub__(self, other) -> int | Exception:
+        """
+        Реализует возможность вычитания объектов данного класса
+        между собой по количеству подписчиков
+        """
+
+        if isinstance(other, Channel):
+            return int(self.subscribers_count) - int(other.subscribers_count)
+        else:
+            raise TypeError("Операции между этими объектами невозможны")
+
+    def __eq__(self, other) -> bool | Exception:
+        """
+        Реализует возможность сравнения по знаку "==" объектов данного класса
+        между собой по количеству подписчиков
+        """
+
+        if isinstance(other, Channel):
+            return self.subscribers_count == other.subscribers_count
+        else:
+            raise TypeError("Операции между этими объектами невозможны")
+
+    def __lt__(self, other) -> bool | Exception:
+        """
+        Реализует возможность сравнения по знаку "<" объектов данного класса
+        между собой по количеству подписчиков
+        """
+
+        if isinstance(other, Channel):
+            return self.subscribers_count < other.subscribers_count
+        else:
+            raise TypeError("Операции между этими объектами невозможны")
