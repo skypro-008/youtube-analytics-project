@@ -26,6 +26,72 @@ class Channel:
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
 
+    def __str__(self) -> str:
+        """
+        Информация об объекте для пользователей
+        """
+        return f'{self.title} ({self.url})'
+
+
+    def __add__(self, other) -> int:
+        """
+        Возвращает результат сложения
+        """
+        return self.int_subscriber_count + other.int_subscriber_count
+
+
+    def __sub__(self, other) -> int:
+        """
+        Возвращает результат вычитания
+        """
+        return self.int_subscriber_count - other.int_subscriber_count
+
+
+    def __lt__(self, other) -> bool:
+        """
+        Возвращает результат оператора <
+        """
+        return self.int_subscriber_count < other.int_subscriber_count
+
+
+    def __le__(self, other) -> bool:
+        """
+        Возвращает результат оператора <=
+        """
+        return self.int_subscriber_count <= other.int_subscriber_count
+
+
+    def __gt__(self, other) -> bool:
+        """
+        Возвращает результат оператора >
+        """
+        return self.int_subscriber_count > other.int_subscriber_count
+
+
+    def __ge__(self, other) -> bool:
+        """
+        Возвращает результат оператора >=
+        """
+        return self.int_subscriber_count >= other.int_subscriber_count
+
+
+    def __eq__(self, other) -> bool:
+        """
+        Возвращает результат оператора ==
+        """
+        return self.int_subscriber_count == other.int_subscriber_count
+
+
+    @property
+    def int_subscriber_count(self):
+        """
+        Возвращает число из строки (для сравнения)
+
+        :return: число int
+        """
+        return int(self.subscriber_count)
+
+
     @property
     def channel_id(self) -> str:
         """
