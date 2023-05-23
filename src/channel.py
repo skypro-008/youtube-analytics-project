@@ -43,8 +43,8 @@ class Channel:
         dict_hw_2['video_count'] = self.video_count
         dict_hw_2['viewCount'] = self.viewCount
 
-        with open(file_name, 'w') as f:
-            json.dump(dict_hw_2, f, indent=2)
+        with open(file_name, 'w', encoding='utf-8') as f:
+            json.dump(dict_hw_2, f, indent=2, ensure_ascii=False)
 
     @property
     def channel_id(self) -> str:
@@ -53,5 +53,9 @@ class Channel:
 
     @channel_id.setter
     def channel_id(self, channel_id):
-        # сеттер для закрытого атрибута channel_id
-        self.__channel_id = channel_id
+
+        try:
+            if channel_id[:2] == 'UC':
+                self.__channel_id = channel_id
+        except:
+            print('Нельзя менять')
