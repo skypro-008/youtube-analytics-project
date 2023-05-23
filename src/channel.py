@@ -103,6 +103,8 @@ class Channel:
         return manager
 
     def get_attributes_dict(self) -> dict:
+        """Возвращает словарь со свойствами класса и их значениями"""
+
         return {"channel_id": self.channel_id,
                 "title": self.title,
                 "description": self.description,
