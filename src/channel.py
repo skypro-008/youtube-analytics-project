@@ -9,7 +9,7 @@ class Channel:
     dict_hw_2 = {}
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
         channel = Channel.get_service().channels().list(id=channel_id, part='snippet,statistics').execute()
         # новые атрибуты
         self.title = channel['items'][0]['snippet']['title']
@@ -46,14 +46,11 @@ class Channel:
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(self.dict_hw_2, f, indent=2, ensure_ascii=False)
 
-    @property
-    def channel_id(self) -> str:
-        # геттер для закрытого атрибута channel_id
-        return self.__channel_id
 
-    @channel_id.setter
-    def channel_id(self, channel_id):
-        self.__channel_id = channel_id
+
+
+
+
 
 
 
