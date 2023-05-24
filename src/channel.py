@@ -1,7 +1,7 @@
 """ channel class module """
 import json
 
-from googleapiclient.discovery import build
+from googleapiclient import discovery
 
 from src.constants import API_KEY
 
@@ -9,7 +9,11 @@ from src.constants import API_KEY
 class Channel:
     """Class for a YouTube channel"""
 
-    youtube = build('youtube', 'v3', developerKey=API_KEY)
+    youtube = discovery.build(
+        'youtube',
+        'v3',
+        developerKey=API_KEY
+    )
 
     def __init__(self, channel_id: str = None, channel_name: str = None) -> \
             None:
