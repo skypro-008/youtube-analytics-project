@@ -84,6 +84,6 @@ def test_channel_get_channel_id_by_channel_name(mock_youtube):
         ]
     }
 
-    channel_id = channel._get_channel_id_by_channel_name() # pylint: disable=W0212
+    channel_id = channel._get_channel_id_by_channel_name()  # pylint: disable=W0212
 
     assert channel_id == 'your_channel_id'
