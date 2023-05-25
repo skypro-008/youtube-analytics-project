@@ -1,7 +1,7 @@
 """ channel class module """
 import json
 
-from googleapiclient import discovery
+from googleapiclient.discovery import build  # pylint: disable=E0401
 
 from src.constants import API_KEY
 
@@ -9,7 +9,7 @@ from src.constants import API_KEY
 class Channel:
     """Class for a YouTube channel"""
 
-    youtube = discovery.build(
+    youtube = build(
         'youtube',
         'v3',
         developerKey=API_KEY
