@@ -1,17 +1,10 @@
-""" Conftest module """
-
-from unittest import mock
-
+""" Conftest module"""
 import pytest
+
+from src.channel import Channel
 
 
 @pytest.fixture
-def mock_youtube():
-    """
-    Fixture for mocking the YouTube API build function.
-
-    It patches the 'src.channel.build' function and returns the mock
-    build object.
-    """
-    with mock.patch('src.channel.build') as mock_build:
-        yield mock_build.return_value
+def channel():
+    """Create a Channel instance with a sample channel ID"""
+    return Channel('UC-OVMPlMA3-YCIeg4z5z23A')
