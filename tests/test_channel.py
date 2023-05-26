@@ -1,89 +1,81 @@
-""" Channel test module """
-
-import json
-from unittest import mock
+""" Channel class testing module """
+import os
+from unittest.mock import patch
 
 from src.channel import Channel
 
 
-def test_channel_print_info(mock_youtube):
-    """
-    Test the print_info method of the Channel class.
+def test_channel_id(channel):
+    """Test for the channel_id property of the Channel class."""
+    assert channel.channel_id == 'UC-OVMPlMA3-YCIeg4z5z23A'
 
-    It ensures that the method retrieves channel information using
-    the YouTube API and prints the information in the expected format.
-    """
-    channel = Channel(channel_id='your_channel_id')
-    channel.youtube = mock_youtube
 
-    mock_channels_list = mock_youtube.channels().list().execute
-    mock_channels_list.return_value = {
-        'items': [
-            {
-                'id': 'your_channel_id',
-                'snippet': {
-                    'title': 'Your Channel Name',
-                    'description': 'Your Channel Description'
-                },
-                'statistics': {
-                    'viewCount': '1000',
-                    'subscriberCount': '500',
-                    'videoCount': '10'
-                }
-            }
-        ]
-    }
+def test_channel_title(channel):
+    """Test for the title property of the Channel class."""
+    assert channel.title == 'MoscowPython'
 
-    with mock.patch('builtins.print') as mock_print:
+
+def test_channel_description(channel):
+    """Test for the description property of the Channel class."""
+    assert channel.description == 'Видеозаписи со встреч питонистов и ' \
+                                  'джангистов в Москве и не только. :)\n' \
+                                  'Присоединяйтесь: https://www.facebook.com' \
+                                  '/groups/MoscowDjango! :)'
+
+
+def test_channel_url(channel):
+    """Test for the url property of the Channel class."""
+    assert channel.url == 'https://www.youtube.com/channel/UC-OVMPlMA3-' \
+                          'YCIeg4z5z23A'
+
+
+def test_channel_subscribers(channel):
+    """Test for the subscribers property of the Channel class."""
+    assert isinstance(channel.subscribers, int) is True
+
+
+def test_channel_video_count(channel):
+    """Test for the video_count property of the Channel class."""
+    assert isinstance(channel.video_count, int) is True
+
+
+def test_channel_views(channel):
+    """Test for the views property of the Channel class."""
+    assert isinstance(channel.views, int) is True
+
+
+def test_to_json(channel):
+    """Test the to_json method of the Channel class."""
+    channel.to_json('channel.json')
+    assert os.path.exists('channel.json')
+
+    os.remove('channel.json')
+    assert not os.path.exists('channel.json')
+
+
+def test_print_info(channel):
+    """Test the print_info method of the Channel class."""
+    with patch('src.channel.Channel._printj') as mock_print:
         channel.print_info()
 
-        expected_output = {
-            'items': [
-                {
-                    'id': 'your_channel_id',
-                    'snippet': {
-                        'title': 'Your Channel Name',
-                        'description': 'Your Channel Description'
-                    },
-                    'statistics': {
-                        'viewCount': '1000',
-                        'subscriberCount': '500',
-                        'videoCount': '10'
-                    }
-                }
-            ]
-        }
-
         mock_print.assert_called_once_with(
-            json.dumps(
-                expected_output,
-                indent=2,
-                ensure_ascii=False
-            )
+            channel._channel_info  # pylint: disable=W0212
         )
 
 
-def test_channel_get_channel_id_by_channel_name(mock_youtube):
-    """
-    Test the _get_channel_id_by_channel_name method of the Channel class.
+def test_get_service():
+    """Test the get_service method of the Channel class."""
+    service = Channel.get_service()
+    assert service is not None
 
-    It ensures that the method retrieves the channel ID by channel name
-    using the YouTube API and returns the correct channel ID.
-    """
-    channel = Channel(channel_name='Your Channel Name')
-    channel.youtube = mock_youtube
 
-    mock_search_list = mock_youtube.search().list().execute
-    mock_search_list.return_value = {
-        'items': [
-            {
-                'id': {
-                    'channelId': 'your_channel_id'
-                }
-            }
-        ]
-    }
+def test_to_int():
+    """Test the _to_int method of the Channel class."""
+    assert Channel._to_int('1000') == 1000  # pylint: disable=W0212
+    assert Channel._to_int('10.5') == 10  # pylint: disable=W0212
+    assert Channel._to_int('1.99') == 1  # pylint: disable=W0212
 
-    channel_id = channel._get_channel_id_by_channel_name()  # pylint: disable=W0212
 
-    assert channel_id == 'your_channel_id'
+def test_repr(channel):
+    """Test the __repr__ method of the Channel class."""
+    assert repr(channel) == 'UC-OVMPlMA3-YCIeg4z5z23A'
