@@ -4,9 +4,10 @@ import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
+load_dotenv()
+
 
 class Channel:
-    load_dotenv()
     yt_api_key = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=yt_api_key)
 
