@@ -1,7 +1,7 @@
-from src.channel import Channel
+from src.channel_1 import Channel
 
 if __name__ == '__main__':
-    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')  # UC-OVMPlMA3-YCIeg4z5z23A
     moscowpython.print_info()
 
     """
