@@ -1,14 +1,10 @@
 import json
-import os
 
-from dotenv import load_dotenv
 from googleapiclient.discovery import build
-
-load_dotenv()
+from config import yt_api_key
 
 
 class Channel:
-    yt_api_key = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=yt_api_key)
 
     def __init__(self, channel_id: str) -> None:

@@ -1,14 +1,11 @@
-import os
 import isodate
-from datetime import timedelta
-from dotenv import load_dotenv
-from googleapiclient.discovery import build
 
-load_dotenv()
+from datetime import timedelta
+from googleapiclient.discovery import build
+from config import yt_api_key
 
 
 class PlayList:
-    yt_api_key = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=yt_api_key)
 
     def __init__(self, playlist_id: str) -> None:
