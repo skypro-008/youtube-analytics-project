@@ -57,7 +57,7 @@ https://www.youtube.com/playlist?list=PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb
 # playlist_id = 'PLguYHBi01DWrlpOkXwOYe8qjGFyqobcoO'
 playlist_id = 'PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb'
 playlist_videos = youtube.playlistItems().list(playlistId=playlist_id,
-                                               part='contentDetails',
+                                               part='contentDetails,snippet',
                                                maxResults=50,
                                                ).execute()
 # printj(playlist_videos)
@@ -68,9 +68,9 @@ video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist
 
 
 '''
-вывести длительности видеороликов из плейлиста
-docs: https://developers.google.com/youtube/v3/docs/videos/list
-'''
+# вывести длительности видеороликов из плейлиста
+# docs: https://developers.google.com/youtube/v3/docs/videos/list
+# '''
 video_response = youtube.videos().list(part='contentDetails,statistics',
                                        id=','.join(video_ids)
                                        ).execute()
