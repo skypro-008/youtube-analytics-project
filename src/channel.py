@@ -23,6 +23,7 @@ class Channel:
             id=channel_id
         ).execute()
 
+
         # Обработка полученного результата
         channel_items = self.response['items'][0]
         snippet = channel_items['snippet']
