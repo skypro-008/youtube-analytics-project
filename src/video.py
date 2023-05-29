@@ -20,5 +20,22 @@ class Video:
         self.view_count: int = self.video['items'][0]['statistics']['viewCount']
         self.like_count: int = self.video['items'][0]['statistics']['likeCount']
 
+
     def __str__(self) -> str:
+        """
+        Информация об объекте для пользователей
+        """
         return f'{self.title}'
+
+
+class PLVideo(Video):
+    """
+    Класс для плейлистов ютуб
+    """
+    def __init__(self, video_id: str, playlist_id: str):
+        self.playlist_videos = YOUTUBE.playlistItems().list(playlistId=playlist_id,
+                                                            part='contentDetails',
+                                                            maxResults=50,
+                                                            ).execute()
+        super().__init__(video_id)
+        self.playlist_id = playlist_id
