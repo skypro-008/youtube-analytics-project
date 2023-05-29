@@ -11,9 +11,12 @@ class Video:
     Класс для ютуб-видео
     """
     def __init__(self, video_id: str) -> None:
-        self.video = YOUTUBE.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                           id=video_id
-                                           ).execute()
+        """
+        Инициализация класса по id видео.
+        """
+        self.video: dict = YOUTUBE.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                 id=video_id
+                                                 ).execute()
         self.video_id: str = video_id
         self.title: str = self.video['items'][0]['snippet']['title']
         self.url: str = f'https://www.youtube.com/watch?v={video_id}'
@@ -32,10 +35,11 @@ class PLVideo(Video):
     """
     Класс для плейлистов ютуб
     """
-    def __init__(self, video_id: str, playlist_id: str):
-        self.playlist_videos = YOUTUBE.playlistItems().list(playlistId=playlist_id,
-                                                            part='contentDetails',
-                                                            maxResults=50,
-                                                            ).execute()
+    def __init__(self, video_id: str, playlist_id: str) -> None:
+
+        self.playlist_videos: dict = YOUTUBE.playlistItems().list(playlistId=playlist_id,
+                                                                  part='contentDetails',
+                                                                  maxResults=50,
+                                                                  ).execute()
         super().__init__(video_id)
-        self.playlist_id = playlist_id
+        self.playlist_id: str = playlist_id

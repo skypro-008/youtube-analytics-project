@@ -2,7 +2,7 @@ import json
 import os
 from googleapiclient.discovery import build
 
-API_KEY: str = os.getenv('YT_API_KEY')
+API_KEY = os.getenv('YT_API_KEY')
 YOUTUBE = build('youtube', 'v3', developerKey=API_KEY)
 
 
@@ -109,7 +109,7 @@ class Channel:
 
 
     @staticmethod
-    def get_service() -> object:
+    def get_service():
         """
         Возвращает объект для работы с YouTube API
         return: объект для работы с YouTube API
@@ -117,7 +117,7 @@ class Channel:
         return YOUTUBE
 
 
-    def to_json(self, path) -> None:
+    def to_json(self, path: str) -> None:
         """
         Записывает аттрибуты экземпляра в json
         param: путь к файлу
