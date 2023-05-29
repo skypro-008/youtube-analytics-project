@@ -21,11 +21,14 @@ class Video:
         return self.youtube.videos().list(part='snippet, statistics', id=self.video_id).execute()
 
     def __update_attributes(self) -> None:
-        data = self.__get_data()
-        self.title = data.get('items')[0].get('snippet').get('title')
-        self.video_url = f'https://www.youtube.com/watch?v={self.video_id}'
-        self.view_count = data.get('items')[0].get('statistics').get('viewCount')
-        self.like_count = data.get('items')[0].get('statistics').get('likeCount')
+        try:
+            data = self.__get_data()
+            self.title = data.get('items')[0].get('snippet').get('title')
+            self.video_url = f'https://www.youtube.com/watch?v={self.video_id}'
+            self.view_count = data.get('items')[0].get('statistics').get('viewCount')
+            self.like_count = data.get('items')[0].get('statistics').get('likeCount')
+        except Exception as e:
+            print(f'{e} : Несуществующий video id')
 
 
 class PLVideo(Video):
