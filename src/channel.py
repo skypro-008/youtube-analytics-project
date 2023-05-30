@@ -3,7 +3,6 @@ import json
 from googleapiclient.discovery import build
 
 api_key: str = os.getenv('YT_API_KEY')
-
 class Channel:
     """Класс для ютуб-канала"""
     youtube = build('youtube', 'v3', developerKey=api_key)
@@ -32,9 +31,33 @@ class Channel:
         self.title = snippet['title']
         self.description = snippet['description']
         self.url = 'https://www.youtube.com/channel/' + self.__channel_id
-        self.count_subscriber = statistics['subscriberCount']
+        self.count_subscriber = int(statistics['subscriberCount'])
         self.video_count = statistics["videoCount"]
         self.all_count_views = statistics['viewCount']
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        return self.count_subscriber + other.count_subscriber
+
+
+    def __sub__(self, other):
+        return self.count_subscriber - other.count_subscriber
+
+
+    def __gt__(self, other):
+        return self.count_subscriber > other.count_subscriber
+
+    def __ge__(self, other):
+        return self.count_subscriber >= other.count_subscriber
+
+    def __lt__(self, other):
+        return self.count_subscriber < other.count_subscriber
+
+    def __le__(self, other):
+        return self.count_subscriber <= other.count_subscriber
+
 
     @property
     def channel_id(self):
@@ -60,3 +83,15 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         # Вывод результатов
         print(json.dumps(self.response, indent=2, ensure_ascii=False))
+
+# moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+# highload = Channel('UCwHL6WHUarjGfUM_586me8w')
+# print(moscowpython)
+# print(moscowpython + highload)
+# print(moscowpython - highload)
+# print(highload - moscowpython)
+# print(moscowpython > highload)
+# print(moscowpython >= highload)
+# print(moscowpython < highload)
+# print(moscowpython <= highload)
+# print(moscowpython == highload)
