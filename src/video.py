@@ -6,7 +6,7 @@ class Video(Channel):
     """Класс для ютуб-видео"""
 
     def __init__(self, video_id: str) -> None:
-        """Экземпляр инициализируется по id канала. Дальше все данные будут подтягиваться по API."""
+        """Экземпляр инициализируется по id видео. Дальше все данные будут подтягиваться по API."""
 
         self._video_id = video_id
         self._title = None
@@ -81,7 +81,7 @@ class Video(Channel):
         self.likes_count = find_value(video_info, "likeCount")
 
     def __str__(self) -> str:
-        """Возвращает строку в формате: `<название_канала>`"""
+        """Возвращает строку в формате: `<название_видео>`"""
 
         return f"{self.title}"
 
