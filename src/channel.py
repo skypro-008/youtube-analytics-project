@@ -28,15 +28,137 @@ class Channel:
         self.__channel_title: str = self._snippet['title']
         self.__channel_description: str = self._snippet['description']
         self.__channel_url: str = youtube_channel + self.__channel_id
+
         self.__channel_subs: int = self._to_int(
             self._statistics['subscriberCount']
         )
+
         self.__channel_total_video: int = self._to_int(
             self._statistics['videoCount']
         )
+
         self.__channel_total_views = self._to_int(
             self._statistics['viewCount']
         )
+
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the object.
+
+        Returns:
+            str: The string representation of the object in the format:
+            "{channel_title} ({channel_url})"
+        """
+        return f"{self.__channel_title} ({self.__channel_url})"
+
+    def __add__(self, other) -> int:
+        """
+        Adds the number of subscribers of two channels.
+
+        Args:
+            other (Channel): The other Channel object to add.
+
+        Returns:
+            int: The sum of the number of subscribers of self and other.
+        """
+        return self.subscribers + other.subscribers
+
+    def __sub__(self, other) -> int:
+        """
+        Subtracts the number of subscribers of two channels.
+
+        Args:
+            other (Channel): The other Channel object to subtract.
+
+        Returns:
+            int: The difference between the number of subscribers of
+            self and other.
+        """
+        return self.subscribers - other.subscribers
+
+    def __lt__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is less than the
+        number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has fewer subscribers than other, False
+            otherwise.
+        """
+        return self.subscribers < other.subscribers
+
+    def __le__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is less than or
+        equal to the number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has fewer or equal subscribers to other,
+            False otherwise.
+        """
+        return self.subscribers <= other.subscribers
+
+    def __gt__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is greater than the
+        number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has more subscribers than other, False
+            otherwise.
+        """
+        return self.subscribers > other.subscribers
+
+    def __ge__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is greater than or
+        equal to the number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has more or equal subscribers to other,
+            False otherwise.
+        """
+        return self.subscribers >= other.subscribers
+
+    def __eq__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is equal to the
+        number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has the same number of subscribers as
+            other, False otherwise.
+        """
+        return self.subscribers == other.subscribers
+
+    def __ne__(self, other) -> bool:
+        """
+        Checks if the number of subscribers of self is not equal to the
+        number of subscribers of another channel.
+
+        Args:
+            other (Channel): The other Channel object to compare.
+
+        Returns:
+            bool: True if self has a different number of subscribers
+            than other, False otherwise.
+        """
+        return self.subscribers != other.subscribers
 
     def print_info(self) -> None:
         """
@@ -50,7 +172,8 @@ class Channel:
         Returns the information about the YouTube channel.
 
         Returns:
-            dict: The channel information including snippet and statistics.
+            dict: The channel information including snippet and
+            statistics.
         """
         result: dict = self.__youtube.channels().list(
             part='snippet,statistics',
@@ -156,13 +279,13 @@ class Channel:
             file_title (str): The file name for the JSON file.
         """
         all_attrib = {
-            "id" : self.__channel_id,
-            "title" : self.__channel_title,
-            "description" : self.__channel_description,
-            "url" : self.__channel_url,
-            "subscriberCount" : self.__channel_subs,
-            "videoCount" : self.__channel_total_video,
-            "viewCount" : self.__channel_total_views
+            "id": self.__channel_id,
+            "title": self.__channel_title,
+            "description": self.__channel_description,
+            "url": self.__channel_url,
+            "subscriberCount": self.__channel_subs,
+            "videoCount": self.__channel_total_video,
+            "viewCount": self.__channel_total_views
         }
 
         with open(
