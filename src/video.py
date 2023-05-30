@@ -1,5 +1,5 @@
 """Video and Play List Video class module"""
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build  # pylint: disable=E0401
 
 from src.constants import API_KEY
 
@@ -78,6 +78,9 @@ class Video:
             dict: The statistics data of the video.
         """
         return self._video_data['statistics']
+
+    def __repr__(self):
+        return self._video_id
 
 
 class PLVideo(Video):
