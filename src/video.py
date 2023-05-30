@@ -32,9 +32,5 @@ class PLVideo(Video):
     """
     def __init__(self, video_id: str, playlist_id: str) -> None:
 
-        self.playlist_videos: dict = YOUTUBE.playlistItems().list(playlistId=playlist_id,
-                                                                  part='contentDetails',
-                                                                  maxResults=50,
-                                                                  ).execute()
         super().__init__(video_id)
         self.playlist_id: str = playlist_id
