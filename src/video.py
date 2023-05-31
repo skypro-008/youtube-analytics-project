@@ -7,6 +7,7 @@ class Video(Channel):
 
     def __init__(self, video_id: str) -> None:
         """Экземпляр инициализируется по id видео. Дальше все данные будут подтягиваться по API."""
+        # noinspection PyMissingConstructor
 
         self._video_id = video_id
         self._title = None
