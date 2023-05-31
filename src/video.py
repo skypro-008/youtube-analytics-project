@@ -27,7 +27,10 @@ class Video:
         return f'{self.title}'
 
 
-    def __gt__(self, other):
+    def __gt__(self, other: 'Video') -> bool:
+        """
+        Возвращает результат сравнения видео по количеству лайков
+        """
         return self.like_count > other.like_count
 
 
