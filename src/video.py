@@ -1,4 +1,5 @@
 from src.constants import YOUTUBE
+import isodate
 
 
 class Video:
@@ -17,13 +18,17 @@ class Video:
         self.url: str = f'https://www.youtube.com/watch?v={video_id}'
         self.view_count: int = self.video['items'][0]['statistics']['viewCount']
         self.like_count: int = self.video['items'][0]['statistics']['likeCount']
-
+        self.duration = isodate.parse_duration(self.video['items'][0]['contentDetails']['duration'])
 
     def __str__(self) -> str:
         """
         Информация об объекте для пользователей
         """
         return f'{self.title}'
+
+
+    def __gt__(self, other):
+        return self.like_count > other.like_count
 
 
 class PLVideo(Video):
