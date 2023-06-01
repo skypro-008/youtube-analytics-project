@@ -1,16 +1,14 @@
-def find_value(dictionary: dict, aim: str) -> str:
-    """Находит и возвращает значение во вложенном словаре через рекурсию"""
-
-    for key, value in dictionary.items():
-        if key == aim:
+def find_value(data_info, keyword):
+    for key, value in data_info.items():
+        if key == keyword:
             return value
         elif isinstance(value, dict):
-            result = find_value(value, aim)
+            result = find_value(value, keyword)
             if result:
                 return result
         elif isinstance(value, list):
             for el in value:
-                if isinstance(el, (dict, list)):
-                    result = find_value(el, aim)
+                if isinstance(el, dict):
+                    result = find_value(el, keyword)
                     if result:
                         return result
