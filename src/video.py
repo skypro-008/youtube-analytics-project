@@ -8,7 +8,7 @@ class Video:
 
     def __init__(self, video_id):
         self.video_id = video_id
-        video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topDetails',
+        video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails',
                                                     id=self.video_id).execute()
 
         self.video_title: str = video_response['items'][0]['snippet']['title']
