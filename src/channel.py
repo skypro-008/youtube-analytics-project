@@ -19,7 +19,7 @@ class Channel:
         pprint(input_dict)
         self.title = input_dict['items'][0]['snippet']['title']
         self.description = input_dict['items'][0]['snippet']['description']
-        self.channel_url = input_dict['items'][0]['snippet']['customUrl']
+        self.channel_url = f'https://www.comyoutube/channel/{etag}'
         self.subscribers = input_dict['items'][0]['statistics']['subscriberCount']
         self.video_count = input_dict['items'][0]['statistics']['videoCount']
         self.view = input_dict['items'][0]['statistics']['viewCount']
@@ -43,6 +43,3 @@ class Channel:
         with open (path, "w") as file:
             file.write(json.dumps(self.__dict__, indent=2))
 
-n = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
-print(n.title)
-n.to_json("tex.txt")
