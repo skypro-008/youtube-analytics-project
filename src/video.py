@@ -1,9 +1,5 @@
-import os
-from googleapiclient.discovery import build
-
-
-API_KEY: str = os.getenv('YT_API_KEY')
-YOUTUBE = build('youtube', 'v3', developerKey=API_KEY)
+from src.constants import YOUTUBE
+import isodate
 
 
 class Video:
@@ -22,7 +18,7 @@ class Video:
         self.url: str = f'https://www.youtube.com/watch?v={video_id}'
         self.view_count: int = self.video['items'][0]['statistics']['viewCount']
         self.like_count: int = self.video['items'][0]['statistics']['likeCount']
-
+        self.duration = isodate.parse_duration(self.video['items'][0]['contentDetails']['duration'])
 
     def __str__(self) -> str:
         """
@@ -31,15 +27,18 @@ class Video:
         return f'{self.title}'
 
 
+    def __gt__(self, other: 'Video') -> bool:
+        """
+        Возвращает результат сравнения видео по количеству лайков
+        """
+        return self.like_count > other.like_count
+
+
 class PLVideo(Video):
     """
     Класс для плейлистов ютуб
     """
     def __init__(self, video_id: str, playlist_id: str) -> None:
 
-        self.playlist_videos: dict = YOUTUBE.playlistItems().list(playlistId=playlist_id,
-                                                                  part='contentDetails',
-                                                                  maxResults=50,
-                                                                  ).execute()
         super().__init__(video_id)
         self.playlist_id: str = playlist_id
