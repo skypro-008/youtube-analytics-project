@@ -13,12 +13,19 @@ class Video:
         self.video: dict = YOUTUBE.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                  id=video_id
                                                  ).execute()
-        self.video_id: str = video_id
-        self.title: str = self.video['items'][0]['snippet']['title']
-        self.url: str = f'https://www.youtube.com/watch?v={video_id}'
-        self.view_count: int = self.video['items'][0]['statistics']['viewCount']
-        self.like_count: int = self.video['items'][0]['statistics']['likeCount']
-        self.duration = isodate.parse_duration(self.video['items'][0]['contentDetails']['duration'])
+        try:
+            self.video_id: str = video_id
+            self.title: str = self.video['items'][0]['snippet']['title']
+            self.url: str = f'https://www.youtube.com/watch?v={video_id}'
+            self.view_count: int = self.video['items'][0]['statistics']['viewCount']
+            self.like_count: int = self.video['items'][0]['statistics']['likeCount']
+            self.duration = isodate.parse_duration(self.video['items'][0]['contentDetails']['duration'])
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
+            self.duration = None
 
     def __str__(self) -> str:
         """
