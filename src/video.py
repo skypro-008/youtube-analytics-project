@@ -10,10 +10,10 @@ class Video:
 
     Attributes:
         _video_id (str): The ID of the video.
-        __video_title (str): The title of the video.
-        __video_url (str): The URL of the video.
-        __video_views (str): The number of views of the video.
-        __video_likes (str): The number of likes on the video.
+        _video_title (str): The title of the video.
+        _video_url (str): The URL of the video.
+        _video_views (str): The number of views of the video.
+        _video_likes (str): The number of likes on the video.
     """
 
     __youtube = build(
@@ -31,19 +31,11 @@ class Video:
         """
         youtube_url = 'https://www.youtube.com/watch?v='
         self._video_id = video_id
-        self.__video_title = self._snippet['title']
-        self.__video_url = youtube_url + video_id
-        self.__video_views = self._statistics['viewCount']
-        self.__video_likes = self._statistics['likeCount']
-
-    def __str__(self) -> str:
-        """
-        Returns the string representation of the Video object.
-
-        Returns:
-            str: The title of the video.
-        """
-        return self.__video_title
+        self._video_title = self._snippet['title']
+        self._video_url = youtube_url + video_id
+        self._video_views = self._statistics['viewCount']
+        self._video_likes = int(self._statistics['likeCount'])
+        self._video_duration = self._content_details['duration']
 
     @property
     def _video_data(self) -> dict:
@@ -54,7 +46,7 @@ class Video:
             dict: The video data.
         """
         result: dict = self.__youtube.videos().list(
-            part='snippet,statistics',
+            part='snippet,statistics,contentDetails',
             id=self._video_id
         ).execute()
         return result['items'][0]
@@ -79,7 +71,82 @@ class Video:
         """
         return self._video_data['statistics']
 
+    @property
+    def _content_details(self):
+        """
+        Returns the content details of the video.
+
+        Returns:
+            dict: A dictionary containing the content details of the video.
+        """
+        return self._video_data['contentDetails']
+
+    @property
+    def duration(self):
+        """
+        Returns the duration of the video.
+
+        Returns:
+            int: The duration of the video in seconds.
+        """
+        return self._video_duration
+
+    @property
+    def title(self):
+        """
+        Returns the title of the video.
+
+        Returns:
+            str: The title of the video.
+        """
+        return self._video_title
+
+    @property
+    def url(self):
+        """
+        Returns the URL of the video.
+
+        Returns:
+            str: The URL of the video.
+        """
+        return self._video_url
+
+    @property
+    def views(self):
+        """
+        Returns the number of views of the video.
+
+        Returns:
+            int: The number of views of the video.
+        """
+        return self._video_views
+
+    @property
+    def likes(self):
+        """
+        Returns the number of likes of the video.
+
+        Returns:
+            int: The number of likes of the video.
+        """
+        return self._video_likes
+
+    def __str__(self) -> str:
+        """
+        Returns the string representation of the Video object.
+
+        Returns:
+            str: The title of the video.
+        """
+        return self._video_title
+
     def __repr__(self):
+        """
+        Return a string representation of the Video object.
+
+        Returns:
+            str: A string representation of the Video object.
+        """
         return self._video_id
 
 
