@@ -20,7 +20,60 @@ class Channel:
         try:
             self.__parse()
         except Exception as e:
-            print("Error", str(e))
+            print("Error:", str(e))
+
+    def __str__(self):
+        """"""
+        return f'{self.__channel_id} ({self.url})'
+
+    def __add__(self, other):
+        """Метод для выполнения операции сложение (+) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for +")
+
+    def __sub__(self, other):
+        """ Метод для выполнения операции вычитание (-) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) - int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for -")
+
+    def __lt__(self, other):
+        """Метод для выполнения операции сравнения меньше (<) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) < int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for <")
+
+    def __le__(self, other):
+        """ Метод для выполнения операции меньше-равно (<=) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) <= int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for <=")
+
+    def __gt__(self, other):
+        """ Метод для выполнения операции больше (>) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) > int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for >")
+
+    def __ge__(self, other):
+        """ Метод для выполнения операции больше-равно (>=) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) >= int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for >=")
+
+    def __eq__(self, other):
+        """ Метод для выполнения операции равно (==) между двумя объектами типа `Channel`"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) == int(other.subscriber_count)
+        else:
+            raise TypeError("Unsupported operand type for ==")
 
     def __parse(self):
         channel = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
@@ -32,6 +85,10 @@ class Channel:
         self.video_count = channel['items'][0]['statistics']['videoCount']
         self.view_count = channel['items'][0]['statistics']['viewCount']
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
     @classmethod
     def get_service(cls):
         """Возвращает объект для работы с YouTube API"""
@@ -39,15 +96,10 @@ class Channel:
 
     def get_channel(self):
         """Возвращает объект channel"""
-
         youtube = self.get_service()
         channel = youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
 
         return channel
-
-    @property
-    def channel_id(self):
-        return self.__channel_id
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале"""
@@ -57,7 +109,6 @@ class Channel:
 
     def to_json(self, file_name):
         """Сохраняет в файл значения атрибутов экземпляра `Channel`"""
-        data = self.__dict__
 
         with open(file_name, 'w', encoding='utf-8') as file:
-            json.dump(data, file)
+            json.dump(self.__dict__, file, ensure_ascii=False)
