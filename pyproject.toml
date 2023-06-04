@@ -6,6 +6,7 @@ authors = ["Yaroslav Galiulin <yaroslav66@list.ru>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+isodate = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
 
