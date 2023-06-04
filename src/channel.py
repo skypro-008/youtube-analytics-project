@@ -19,10 +19,32 @@ class Channel:
         pprint(input_dict)
         self.title = input_dict['items'][0]['snippet']['title']
         self.description = input_dict['items'][0]['snippet']['description']
-        self.channel_url = f'https://www.comyoutube/channel/{etag}'
+        self.url = f'https://www.youtube.com/channel/{channel_id}'
         self.subscribers = input_dict['items'][0]['statistics']['subscriberCount']
         self.video_count = input_dict['items'][0]['statistics']['videoCount']
         self.view = input_dict['items'][0]['statistics']['viewCount']
+
+
+    def __str__(self):
+        return f'{self.title}({self.url}'
+
+    def __add__(self, other):
+        return self.subscribers + other.subscribers
+
+
+    def __sub__(self, other):
+        return int(self.subscribers - other.subscribers)
+
+    def __eq__(self, other):
+        return self.subscribers == other.subscribers
+
+
+    def __lt__(self, other):
+        return self.subscribers < other.subscribers
+
+
+    def __gt__(self, other):
+        return self.subscribers > other.subscribers
 
 
     def print_info(self) -> None:
