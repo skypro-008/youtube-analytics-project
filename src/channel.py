@@ -17,6 +17,47 @@ class Channel:
         self.video_count: int = channel['items'][0]['statistics']['videoCount'] #количество видео
         self.view_count: int = channel['items'][0]['statistics']['viewCount'] #общее количество просмотров
 
+    def __str__(self):
+        """Метод возвращает название и ссылку на канал по шаблону `<название_канала> (<ссылка_на_канал>)"""
+        return f'{self.title} ({self.url})'
+
+
+    def __add__(self, other):
+        """Метод для суммирования общего количества подписчиков по двум каналам"""
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Метод для определения разницы в общем количестве подписчиков двух каналов"""
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        """Метод для операции сравнения «больше»"""
+        if self.subscriber_count > other.subscriber_count:
+            return True
+        else:
+            return False
+
+    def __ge__(self, other):
+        """Метод для операции сравнения «больше или равно»"""
+        if self.subscriber_count >= other.subscriber_count:
+            return True
+        else:
+            return False
+
+    def __lt__(self, other):
+        """Метод для операции сравнения «меньше»"""
+        if self.subscriber_count < other.subscriber_count:
+            return True
+        else:
+            return False
+
+    def __le__(self, other):
+        """Метод для операции сравнения «меньше или равно»"""
+        if self.subscriber_count <= other.subscriber_count:
+            return True
+        else:
+            return False
+
     def _get_channel_info(self):
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         return channel
