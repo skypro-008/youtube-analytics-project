@@ -14,10 +14,12 @@ class Channel:
         self.channel_id = channel_id
 
     def get_service(self):
+        """Подключение по API к youtube"""
         servise = build('youtube', 'v3', developerKey=Channel.api_key)
         return servise
 
     def get_channel_info(self):
+        """GET запрос по id канала с необходимыми параметрами о канале. Возвращает данные о канале в формате JSON """
         r = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         return json.dumps(r)
 
