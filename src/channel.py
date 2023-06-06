@@ -5,7 +5,7 @@ import json
 
 class Channel:
     """Класс для ютуб-канала"""
-    api_key: str = os.getenv('YT_API_KEY')
+    api_key: str = 'AIzaSyBy1jlB4KQiic3Y0RTEgfYJ4rCQvNFZCi4' #os.getenv('YT_API_KEY')
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
@@ -17,6 +17,10 @@ class Channel:
         self.subscriber_count = self.channel['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
+
+    def __repr__(self):
+        return f'{self.title}(https://www.youtube.com/channel/{self.url})'
+
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -39,3 +43,35 @@ class Channel:
         dict_to_json = json.dumps(dictionary, indent=2, ensure_ascii=False)
         with open(new_file, 'w', encoding='utf-8') as file:
             file.write(dict_to_json)
+
+    def __add__(self, other):
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other):
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other):
+        if int(self.subscriber_count) > int(other.subscriber_count):
+            return True
+        return False
+
+    def __lt__(self, other):
+        if int(self.subscriber_count) < int(other.subscriber_count):
+            return True
+        return False
+
+    def __ge__(self, other):
+        if int(self.subscriber_count) >= int(other.subscriber_count):
+            return True
+        return False
+
+    def __le__(self, other):
+        if int(self.subscriber_count) <= int(other.subscriber_count):
+            return True
+        return False
+
+    def __eq__(self, other):
+        if int(self.subscriber_count) == int(other.subscriber_count):
+            return True
+        return False
+
