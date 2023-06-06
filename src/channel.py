@@ -24,11 +24,15 @@ class Channel:
 
     def __add__(self, other):
         """Метод для суммирования общего количества подписчиков по двум каналам"""
-        return self.subscriber_count + other.subscriber_count
+        a = float(self.subscriber_count)
+        b = float(other.subscriber_count)
+        return int(a + b)
 
     def __sub__(self, other):
         """Метод для определения разницы в общем количестве подписчиков двух каналов"""
-        return self.subscriber_count - other.subscriber_count
+        a = float(self.subscriber_count)
+        b = float(other.subscriber_count)
+        return int(a - b)
 
     def __gt__(self, other):
         """Метод для операции сравнения «больше»"""
