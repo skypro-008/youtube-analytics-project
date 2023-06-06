@@ -1,10 +1,8 @@
 import json
-import os
-
-from googleapiclient.discovery import build
+from src.playlist import Play_List_Mixin
 
 
-class Channel:
+class Channel(Play_List_Mixin):
     """Класс для ютуб-канала"""
     dict_hw_2 = {}
 
@@ -50,12 +48,12 @@ class Channel:
         channel_info = json.dumps(channel, indent=2, ensure_ascii=False)
         print(channel_info)
 
-    @classmethod
-    def get_service(cls):
-        """Класс-метод возвращающий объект для работы с YouTube API"""
-        api_key: str = os.getenv('YT_API_KEY')
-        object_get = build('youtube', 'v3', developerKey=api_key)
-        return object_get
+    #@classmethod
+    #def get_service(cls):
+    #    """Класс-метод возвращающий объект для работы с YouTube API"""
+    #    api_key: str = os.getenv('YT_API_KEY')
+    #    object_get = build('youtube', 'v3', developerKey=api_key)
+    #    return object_get
 
     def to_json(self, file_name):
         """Мохраняющий в файл значения атрибутов экземпляра `Channel`"""
