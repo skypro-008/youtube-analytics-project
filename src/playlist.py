@@ -80,6 +80,3 @@ class PlayList(Play_List_Mixin):
                 url_video_top = i['id']
 
         return f'https://youtu.be/{url_video_top}'
-
-pl = PlayList('PLv_zOGKKxVpj-n2qLkEM2Hj96LO6uqgQw')
-print(pl)
