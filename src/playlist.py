@@ -7,20 +7,7 @@ import datetime
 
 
 class Play_List_Mixin:
-    def __init__(self):
-        self.playlist_id = None
-
-    def get_play_list(self):
-        playlist_videos = PlayList.get_service().playlistItems().list(playlistId=self.playlist_id,
-                                                                      part='contentDetails',
-                                                                      maxResults=50).execute()
-
-        video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
-
-        video_response = PlayList.get_service().videos().list(part='contentDetails,statistics',
-                                                              id=','.join(video_ids)
-                                                              ).execute()
-        return video_response['items']
+    """Создание объекта ютуб через API"""
 
     @classmethod
     def get_service(cls):
@@ -80,3 +67,15 @@ class PlayList(Play_List_Mixin):
                 url_video_top = i['id']
 
         return f'https://youtu.be/{url_video_top}'
+
+    def get_play_list(self):
+        playlist_videos = PlayList.get_service().playlistItems().list(playlistId=self.playlist_id,
+                                                                      part='contentDetails',
+                                                                      maxResults=50).execute()
+
+        video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
+
+        video_response = PlayList.get_service().videos().list(part='contentDetails,statistics',
+                                                              id=','.join(video_ids)
+                                                              ).execute()
+        return video_response['items']
