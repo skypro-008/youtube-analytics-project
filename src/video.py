@@ -1,16 +1,23 @@
-from src.playlist import Play_List_Mixin
+from src.playlist import Play_Mixin
 
 
-class Video(Play_List_Mixin):
+class Video(Play_Mixin):
     def __init__(self, video_id):
         self.video_id = video_id
-        video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                          id=self.video_id).execute()
+        try:
+            video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                              id=self.video_id).execute()
 
-        self.video_title: str = video_response['items'][0]['snippet']['title']
-        self.view_count: int = video_response['items'][0]['statistics']['viewCount']
-        self.like_count: int = video_response['items'][0]['statistics']['likeCount']
-        self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+            self.video_title: str = video_response['items'][0]['snippet']['title']
+            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+            self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+
+        except IndexError:
+            self.video_title = None
+            self.view_count = None
+            self.like_count = None
+            self.comment_count = None
 
     def __repr__(self):
         return f'{self.__class__.__name__}' \

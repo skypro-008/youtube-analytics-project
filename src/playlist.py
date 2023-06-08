@@ -6,7 +6,7 @@ import datetime
 # from helper.youtube_api_manual import video_response
 
 
-class Play_List_Mixin:
+class Play_Mixin:
     """Создание объекта ютуб через API"""
 
     @classmethod
@@ -17,7 +17,7 @@ class Play_List_Mixin:
         return object_get
 
 
-class PlayList(Play_List_Mixin):
+class PlayList(Play_Mixin):
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id

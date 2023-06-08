@@ -1,8 +1,8 @@
 import json
-from src.playlist import Play_List_Mixin
+from src.playlist import Play_Mixin
 
 
-class Channel(Play_List_Mixin):
+class Channel(Play_Mixin):
     """Класс для ютуб-канала"""
     dict_hw_2 = {}
 
@@ -47,13 +47,6 @@ class Channel(Play_List_Mixin):
         channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         channel_info = json.dumps(channel, indent=2, ensure_ascii=False)
         print(channel_info)
-
-    #@classmethod
-    #def get_service(cls):
-    #    """Класс-метод возвращающий объект для работы с YouTube API"""
-    #    api_key: str = os.getenv('YT_API_KEY')
-    #    object_get = build('youtube', 'v3', developerKey=api_key)
-    #    return object_get
 
     def to_json(self, file_name):
         """Мохраняющий в файл значения атрибутов экземпляра `Channel`"""
