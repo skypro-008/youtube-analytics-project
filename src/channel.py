@@ -29,10 +29,6 @@ class Channel:
     @property
     def channel_id(self):
         return self.__channel_id
-    @channel_id.setter
-    def channel_id(self, new_id):
-        return print("AttributeError: property 'channel_id' of 'Channel' object has no setter")
-
 
     @classmethod
     def get_service(cls):
