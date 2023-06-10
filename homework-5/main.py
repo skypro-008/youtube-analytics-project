@@ -12,4 +12,4 @@ if __name__ == '__main__':
     assert isinstance(duration, datetime.timedelta)
     assert duration.total_seconds() == 13261.0
 
-    assert pl.show_best_video() == "https://youtu.be/9Bv2zltQKQA"
+    assert pl.show_best_video() == "https://youtu.be/S7Ri5-9WHQY"  # изменено на актуальное

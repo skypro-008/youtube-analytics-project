@@ -42,14 +42,14 @@ class Channel:
         """Магический метод для вычисления разницы каналов по количеству подписчиков"""
 
         if isinstance(other, self.__class__):
-            return self.subscriberCount - other.subscriberCount
+            return self.subscriber_count - other.subscriber_count
         else:
-            return self.subscriberCount - other
+            return self.subscriber_count - other
 
     def __ge__(self, other):
         """Магический метод для сравнения каналов (больше или равно) по количеству подписчиков"""
 
-        if self.subscriberCount >= other.subscriberCount:
+        if self.subscriber_count >= other.subscriberCount:
             return True
         else:
             return False
@@ -57,21 +57,21 @@ class Channel:
     def __lt__(self, other):
         """Магический метод для сравнения каналов (меньше или равно) по количеству подписчиков"""
 
-        if self.subscriberCount <= other.subscriberCount:
+        if self.subscriber_count <= other.subscriberCount:
             return True
         else:
             return False
 
     def __gt__(self, other):
         """Магический метод для сравнения количества подписчиков (больше)"""
-        if self.subscriberCount > other.subscriberCount:
+        if self.subscriber_count > other.subscriberCount:
             return True
         else:
             return False
 
     def __le__(self, other):
         """Магический метод для сравнения количества подписчиков (меньше)"""
-        if self.subscriberCount < other.subscriberCount:
+        if self.subscriber_count < other.subscriberCount:
             return True
         else:
             return False
