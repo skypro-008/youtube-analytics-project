@@ -26,6 +26,83 @@ class Channel:
         self.video_count = r['items'][0]["statistics"]["videoCount"]
         self.view_count = r['items'][0]["statistics"]["viewCount"]
 
+    def __str__(self):
+        return f'<{self.title}> (<{self.url}>)'
+
+    def __add__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        return int(self.subscriber_count) + int(variable_other)
+
+    def __sub__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        return int(self.subscriber_count) - int(variable_other)
+
+    def __rsub__(self, other):
+        return self - other
+
+    def __gt__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        if int(self.subscriber_count) > int(variable_other):
+            return True
+        else:
+            return False
+
+    def __ge__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        if int(self.subscriber_count) >= int(variable_other):
+            return True
+        else:
+            return False
+
+    def __lt__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        if int(self.subscriber_count) <= int(variable_other):
+            return True
+        else:
+            return False
+
+    def __le__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        if int(self.subscriber_count) < int(variable_other):
+            return True
+        else:
+            return False
+
+    def __eq__(self, other):
+        if not isinstance(other, (int, Channel)):
+            raise ArithmeticError("Правый операнд должен быть int или Channel")
+        variable_other = other
+        if isinstance(other, Channel):
+            variable_other = other.subscriber_count
+        if int(self.subscriber_count) == int(variable_other):
+            return True
+        else:
+            return False
+
     @property
     def channel_id(self):
         return self.__channel_id
