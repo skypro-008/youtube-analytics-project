@@ -18,7 +18,7 @@ class Channel:
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
-    def __repr__(self):
+    def __str__(self):
         return f'{self.title}(https://www.youtube.com/channel/{self.url})'
 
 
@@ -51,27 +51,18 @@ class Channel:
         return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __gt__(self, other):
-        if int(self.subscriber_count) > int(other.subscriber_count):
-            return True
-        return False
+        return int(self.subscriber_count) > int(other.subscriber_count)
 
     def __lt__(self, other):
-        if int(self.subscriber_count) < int(other.subscriber_count):
-            return True
-        return False
+        return int(self.subscriber_count) < int(other.subscriber_count)
 
     def __ge__(self, other):
-        if int(self.subscriber_count) >= int(other.subscriber_count):
-            return True
-        return False
+        return int(self.subscriber_count) >= int(other.subscriber_count)
 
     def __le__(self, other):
-        if int(self.subscriber_count) <= int(other.subscriber_count):
-            return True
-        return False
+        return int(self.subscriber_count) <= int(other.subscriber_count)
 
     def __eq__(self, other):
-        if int(self.subscriber_count) == int(other.subscriber_count):
-            return True
-        return False
+        return int(self.subscriber_count) == int(other.subscriber_count)
+
 
