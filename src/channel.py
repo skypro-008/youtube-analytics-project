@@ -65,3 +65,6 @@ class Channel:
         with open (path, "w") as file:
             file.write(json.dumps(self.__dict__, indent=2))
 
+n = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+print(n.title)
+n.to_json("tex.txt")
