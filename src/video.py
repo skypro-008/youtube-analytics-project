@@ -10,11 +10,16 @@ class Video:
         self.video_id = video_id
         video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails',
                                                     id=self.video_id).execute()
-
-        self.video_title: str = video_response['items'][0]['snippet']['title']
-        self.view_count: int = video_response['items'][0]['statistics']['viewCount']
-        self.like_count: int = video_response['items'][0]['statistics']['likeCount']
-        self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+        try:
+            self.video_title: str = video_response['items'][0]['snippet']['title']
+            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+            self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+        except IndexError:
+            self.video_title = None
+            self.view_count = None
+            self.like_count = None
+            self.comment_count = None
 
     def __repr__(self):
         return f'{self.__class__.__name__}' \
