@@ -1,15 +1,15 @@
-from src.channel import Channel
+
 from googleapiclient.discovery import build
 
 
-class Video(Channel):
+class Video():
     api_key = "AIzaSyAA_DGWlyk07XTfwlz507KCFoh2Q8AeM5Y"
 
 
     def __init__(self, video_id:str) -> None:
 
         youtube = build('youtube', 'v3', developerKey=self.api_key)
-        self.video_id = id
+        self.video_id = video_id
         video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=video_id
                                                ).execute()

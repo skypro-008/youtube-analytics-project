@@ -68,3 +68,6 @@ class Channel:
 n = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
 print(n.title)
 n.to_json("tex.txt")
+
+
+
