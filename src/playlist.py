@@ -4,14 +4,11 @@ import isodate
 from googleapiclient.discovery import build
 from datetime import timedelta
 from src.utils import find_value
+from src.youtube_object import YoutubeObject
 from pprint import pprint
 
 
-class PlayList:
-    service_name = 'youtube'
-    service_version = 'v3'
-    api_key = os.getenv('YT_API_KEY')
-    service = build(service_name, service_version, developerKey=api_key)
+class PlayList(YoutubeObject):
 
     def __init__(self, playlist_id):
         self.__playlist_id = playlist_id

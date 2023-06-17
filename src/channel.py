@@ -1,19 +1,14 @@
 import json
-import os
 
 from src.utils import find_value
 from pprint import pprint
 from googleapiclient.discovery import build
 from functools import total_ordering
-
+from src.youtube_object import YoutubeObject
 
 @total_ordering
-class Channel:
+class Channel(YoutubeObject):
     """Класс для ютуб-канала"""
-    service_name: str = 'youtube'
-    service_version: str = 'v3'
-    yt_api_key: str = os.getenv('YT_API_KEY')
-    service = build(service_name, service_version, developerKey=yt_api_key)
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
@@ -25,7 +20,7 @@ class Channel:
         self.__channel_video_count = None
         self.__channel_summary_views = None
 
-        self.channel = Channel.service.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        self.channel = self.service.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
 
         self.set_info()
 
