@@ -1,14 +1,13 @@
+from pprint import pprint
+
 from googleapiclient.discovery import build
 from src.utils import find_value
+from src.youtube_object import YoutubeObject
 
 import os
 
 
-class Video:
-    service_name: str = 'youtube'
-    service_version: str = 'v3'
-    yt_api_key: str = os.getenv('YT_API_KEY')
-    service = build(service_name, service_version, developerKey=yt_api_key)
+class Video(YoutubeObject):
 
     def __init__(self, video_id):
         self.__video_id = video_id
@@ -27,10 +26,12 @@ class Video:
         video_response = Video.service.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                      id=self.__video_id
                                                      ).execute()
-
-        self.title: str = find_value(video_response, 'title')
-        self.view_count: int = int(find_value(video_response, 'viewCount'))
-        self.like_count: int = int(find_value(video_response, 'likeCount'))
+        try:
+            self.title: str = video_response['items'][0]['snippet']['title']
+            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+        except IndexError:
+            pass
 
 
 class PLVideo(Video):
