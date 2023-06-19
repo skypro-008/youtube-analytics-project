@@ -55,7 +55,7 @@ class Channel:
         """свойство скрытия атрибута ид канала"""
         return self.__channel_id
 
-    def to_json(self):
+    def to_json(self,file):
         """метод сохраняющий в файл значения атрибутов экземпляра Channel"""
         dict = {
             "channel_id": self.__channel_id,
@@ -67,7 +67,7 @@ class Channel:
             "videoCount" : self.video_count
 
         }
-        with open("moscowpython.json", "w") as file_json:
+        with open(file, "w") as file_json:
             json.dump(dict, file_json)
 
 
