@@ -1,5 +1,5 @@
 import json
-
+import os
 
 class Channel:
     """Класс для ютуб-канала"""
@@ -41,3 +41,24 @@ class Channel:
 
     def __ge__(self,other):
         return self.subscriber_count >= other.subscriber_count
+
+    @property
+    def channel_id(self) -> str:
+        return self.__channel_id
+
+    def to_json(self, file_name):
+        dict = {}
+        dict['id'] = self.channel_id
+        dict['title'] = self.title
+        dict['description'] = self.description
+        dict['url'] = self.url
+        dict['subscriberCount'] = self.subscriber_count
+        dict['video_count'] = self.video_count
+
+        with open(file_name, 'w') as f:
+            json.dump(dict, f, indent=2)
+
+    def get_service(cls):
+        api_key: str = os.getenv('YT_API_KEY')
+        object_get = build('youtube','v3', developerKey=api_key)
+        return object_get
