@@ -9,11 +9,12 @@ class Video:
     def __init__(self, id_video):
         self.id_video = id_video
         """GET запрос по id видео с необходимыми параметрами о видео. Возвращает данные о канале в формате JSON """
-        video_data = self.get_service().videos().list(id=self.id_video, part='snippet,statistics').execute()
+        video_data = self.get_service().videos().list(id=self.id_video, part='contentDetails,snippet,statistics').execute()
         self.title_video = video_data['items'][0]['snippet']['title']
         self.url_video = "https://www.youtube.com/watch?v=" + self.id_video
         self.views_count_video = video_data['items'][0]['statistics']['viewCount']
         self.likes_count_video = video_data['items'][0]['statistics']['likeCount']
+        self.duration_video = video_data['items'][0]['contentDetails']['duration']
 
     @classmethod
     def get_service(cls):
