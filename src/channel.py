@@ -23,6 +23,38 @@ class Channel:
         self.video_count = self.info['items'][0]['statistics']['videoCount']
         self.views = self.info['items'][0]['statistics']['viewCount']
 
+    def __str__(self) -> str:
+        """Возвращает инфо в формате '<название_канала> (<ссылка_на_канал>)'"""
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other) -> int:
+        """Возвращает суммарное кол-во подписчиков двух каналов"""
+        return int(self.subscribers) + int(other.subscribers)
+
+    def __sub__(self, other) -> int:
+        """Возвращает кол-во подписчиков первого канала минус кол-во подписчиков второго канала"""
+        return int(self.subscribers) - int(other.subscribers)
+
+    def __lt__(self, other) -> bool:
+        '''Проверяет кол-во подписчиков первого канала < второго канала'''
+        return int(self.subscribers) < int(other.subscribers)
+
+    def __le__(self, other) -> bool:
+        '''Проверяет кол-во подписчиков первого канала <= второго канала'''
+        return int(self.subscribers) <= int(other.subscribers)
+
+    def __gt__(self, other) -> bool:
+        '''Проверяет кол-во подписчиков первого канала > второго канала'''
+        return int(self.subscribers) > int(other.subscribers)
+
+    def __ge__(self, other) -> bool:
+        '''Проверяет кол-во подписчиков первого канала >= второго канала'''
+        return int(self.subscribers) >= int(other.subscribers)
+
+    def __eq__(self, other) -> bool:
+        '''Проверяет кол-во подписчиков первого канала == второго канала'''
+        return int(self.subscribers) == int(other.subscribers)
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
 
