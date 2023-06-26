@@ -4,6 +4,10 @@ if __name__ == '__main__':
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     moscowpython.print_info()
 
+    moscowpython = Channel('UCYp3rk70ACGXQ4gFAiMr1SQ')
+
+    moscowpython.print_info()
+
     """
 {
   "kind": "youtube#channelListResponse",
