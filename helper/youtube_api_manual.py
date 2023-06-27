@@ -8,7 +8,7 @@ import isodate
 
 
 # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
-api_key: str = os.getenv('YT_API_KEY')
+api_key: str = os.getenv('API_KEY')
 
 # создать специальный объект для работы с API
 youtube = build('youtube', 'v3', developerKey=api_key)
@@ -26,7 +26,7 @@ docs: https://developers.google.com/youtube/v3/docs/channels/list
 сервис для быстрого получения id канала: https://commentpicker.com/youtube-channel-id.php
 '''
 # channel_id = 'UC-OVMPlMA3-YCIeg4z5z23A'  # MoscowPython
-channel_id = 'UCwHL6WHUarjGfUM_586me8w'  # HighLoad Channel
+channel_id = 'AIzaSyBp63UldTsYdO7fW2DrZsrEoDuvSDVKDB4'  # HighLoad Channel
 channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
 printj(channel)
 
@@ -53,7 +53,7 @@ docs: https://developers.google.com/youtube/v3/docs/playlistItems/list
 https://www.youtube.com/playlist?list=PLH-XmS0lSi_zdhYvcwUfv0N88LQRt6UZn
 или из ответа API: см. playlists выше
 '''
-playlist_id = 'PLH-XmS0lSi_zdhYvcwUfv0N88LQRt6UZn'
+playlist_id = 'PLH-AIzaSyBp63UldTsYdO7fW2DrZsrEoDuvSDVKDB4'
 playlist_videos = youtube.playlistItems().list(playlistId=playlist_id,
                                                part='contentDetails',
                                                maxResults=50,
