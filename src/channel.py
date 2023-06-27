@@ -19,9 +19,30 @@ class Channel:
             self.title = i["snippet"]["title"]
             self.description = i["snippet"]["description"]
             self.url = f"https://www.youtube.com/channel/{i['id']}"
-            self.subscriber_count = i["statistics"]['subscriberCount']
+            self.subscriber_count = int(i["statistics"]['subscriberCount'])
             self.video_count = i["statistics"]["videoCount"]
             self.view_count = i["statistics"]["viewCount"]
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
