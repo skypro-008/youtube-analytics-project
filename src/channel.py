@@ -8,6 +8,7 @@ class Channel:
     """Класс для ютуб-канала"""
     API_KEY: str = os.getenv('API_KEY_YOUTUBE')
     youtube = build('youtube', 'v3', developerKey=API_KEY)
+
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
@@ -21,7 +22,7 @@ class Channel:
         self.__view_count = self.channel['items'][0]['statistics']['viewCount']
 
     def __repr__(self):
-        return f"\"{self.__class__.__name__}(\'{self.name}\', {self.price}, {self.quantity})\""
+        return f"{self.__class__.__name__}({self.title})"
 
     def __str__(self):
         return f"{self.title} ({self.url})"
