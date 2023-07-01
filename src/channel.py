@@ -20,7 +20,39 @@ class Channel:
         self.__video_count = self.channel['items'][0]['statistics']['videoCount']
         self.__view_count = self.channel['items'][0]['statistics']['viewCount']
 
+    def __repr__(self):
+        return f"\"{self.__class__.__name__}(\'{self.name}\', {self.price}, {self.quantity})\""
 
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """функция сложения количества подписчиков"""
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other):
+        """функция вычитания количества подписчиков"""
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other):
+        """функция сравнения количества подписчиков"""
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other):
+        """функция сравнения количества подписчиков"""
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __lt__(self, other):
+        """функция сравнения количества подписчиков"""
+        return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __le__(self, other):
+        """функция сравнения количества подписчиков"""
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __eq__(self, other):
+        """функция сравнения количества подписчиков"""
+        return int(self.subscriber_count) == int(other.subscriber_count)
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -56,10 +88,10 @@ class Channel:
 
     @classmethod
     def get_service(cls):
-    """
-    возвращающий объект для работы с YouTube API
-    """
-    return cls.youtube
+        """
+        возвращающий объект для работы с YouTube API
+        """
+        return cls.youtube
 
     def to_json(self, file):
         """
