@@ -10,6 +10,7 @@ packages = [{include = "youtube_analytics_project_astakhov"}]
 python = "^3.11"
 google-api-python-client = "^2.91.0"
 isodate = "^0.6.1"
+flake8 = "^6.0.0"
 
 
 [build-system]
