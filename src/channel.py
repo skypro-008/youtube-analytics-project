@@ -23,6 +23,7 @@ class Channel:
         self.number_of_subscribers = self.channel['items'][0]['statistics']['subscriberCount']
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.total_views = self.channel['items'][0]['statistics']['viewCount']
+
     @classmethod
     def get_service(cls):
         return build('youtube', 'v3', developerKey=cls.api_key)
