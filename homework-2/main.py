@@ -6,7 +6,7 @@ if __name__ == '__main__':
     # получаем значения атрибутов
     print(moscowpython.title)  # MoscowPython
     print(moscowpython.video_count)  # 685 (может уже больше)
-    print(moscowpython.url)  # https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A
+    print(moscowpython.url_channel)  # https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A
 
     # менять не можем
     moscowpython.channel_id = 'Новое название'
