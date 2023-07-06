@@ -16,6 +16,7 @@ class Video:
         self.url = os.path.join('https://www.youtube.com/watch?v=' + self.video_id)
         self.views = self.info['items'][0]['statistics']['viewCount']
         self.likes = self.info['items'][0]['statistics']['likeCount']
+        self.duration = self.info['items'][0]['contentDetails']['duration']
 
     def __str__(self):
         """Возвращает инфо в формате '<название_видео>'"""
@@ -23,7 +24,7 @@ class Video:
 
 
 class PLVideo(Video):
-    def __init__(self, video_id, playlist_id):
+    def __init__(self, video_id, pl_id):
         """Дочерний класс от Video. Экземпляр инициализируется id видео и id плейлиста"""
         super().__init__(video_id)
-        self.playlist_id = playlist_id
+        self.pl_id = pl_id
