@@ -11,7 +11,6 @@ class Video:
             self.like_count: int = self.get_video_response(video_id)['items'][0]['statistics']['likeCount']# количество лайков
         except IndexError:
             self.video_title = None
-            self.video_id = None
             self.like_count = None
             self.view_count = None
             self.url = None
