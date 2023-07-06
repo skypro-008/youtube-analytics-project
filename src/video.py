@@ -3,12 +3,21 @@ import os
 
 class Video:
     def __init__(self, video_id: str) -> None:
+        try:
+            self.video_id = video_id #id видео
+            self.video_title = self.get_video_response(video_id)['items'][0]['snippet']['title'] # название видео
+            self.url = self.get_video_response(video_id)['items'][0]['snippet']['thumbnails']['default']['url']  # ссылка на видео
+            self.view_count: int = self.get_video_response(video_id)['items'][0]['statistics']['viewCount']# количество просмотров
+            self.like_count: int = self.get_video_response(video_id)['items'][0]['statistics']['likeCount']# количество лайков
+        except IndexError:
+            self.video_title = None
+            self.video_id = None
+            self.like_count = None
+            self.view_count = None
+            self.url = None
 
-        self.video_id = video_id #id видео
-        self.video_title = self.get_video_response(video_id)['items'][0]['snippet']['title'] # название видео
-        self.url = self.get_video_response(video_id)['items'][0]['snippet']['thumbnails']['default']['url']  # ссылка на видео
-        self.view_count: int = self.get_video_response(video_id)['items'][0]['statistics']['viewCount']# количество просмотров
-        self.like_count: int = self.get_video_response(video_id)['items'][0]['statistics']['likeCount']# количество лайков
+
+
 
     def __str__(self):
         return f"{self.video_title}"
@@ -39,5 +48,10 @@ class PLVideo(Video):
         url = self.url  # ссылка на видео
         view_count = self.view_count # количество просмотров
         like_count = self.like_count # количество лайков
+
+class NotId(Exception):
+    def __init__(self, video_id):
+        pass
+
 
 
