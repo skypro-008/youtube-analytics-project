@@ -3,16 +3,16 @@ from googleapiclient.discovery import build
 import os
 from dotenv import load_dotenv
 
-
 load_dotenv()
+
 class Channel:
     """
-    Класс для ютуб-канала
+    Класс для YouTube-канала
     """
+
     api_key: str = os.getenv('YT_API_KEY')
 
-    youtube = build('youtube', 'v3', developerKey = api_key)
-
+    youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, channel_id: str) -> None:
         """
@@ -31,19 +31,17 @@ class Channel:
         """
         Выводит в консоль информацию о канале.
         """
-        channel = self.youtube.channels().list(id = self.channel_id, part = 'snippet,statistics').execute()
-        print(channel)
+        print(self.channel)
 
-
+    @staticmethod
     def printj(dict_to_print: dict) -> None:
         """Выводит словарь в json-подобном удобном формате с отступами"""
-        print(json.dumps(dict_to_print, indent = 2, ensure_ascii = False))
+        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
 
     @classmethod
     def get_service(cls):
         # Метод для работы с YouTube API
         return build('youtube', 'v3', developerKey=cls.api_key)
-
 
     def to_json(self, file_name):
         # Сохранение значений атрибутов в файл
@@ -58,5 +56,8 @@ class Channel:
         }
         with open(file_name, "w") as json_file:
             json.dump(channel_data, json_file)
+
+
+
 
 
