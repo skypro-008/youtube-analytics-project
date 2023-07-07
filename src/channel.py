@@ -27,6 +27,13 @@ class Channel:
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.viewCount = self.channel["items"][0]["statistics"]["viewCount"]
 
+    def __str__(self):
+        """
+        Возвращает название канала и ссылку на него.
+        """
+        return f"{self.title} ({self.url})"
+
+
     def print_info(self) -> None:
         """
         Выводит в консоль информацию о канале.
@@ -57,7 +64,52 @@ class Channel:
         with open(file_name, "w") as json_file:
             json.dump(channel_data, json_file)
 
+    def __add__(self, other):
+        """
+        Возвращает сумму подписчиков 2 каналов.
+        """
+        total_subscribers = int(self.subscriberCount) + int(other.subscriberCount)
+        return total_subscribers
+
+    def __sub__(self, other):
+        """
+        возвращает разницу подписчиков 2 каналов
+        """
+        diff_subscribers = int(self.subscriberCount) - int(other.subscriberCount)
+        return diff_subscribers
 
 
+    def __gt__(self, other):
+        """
+        Возвращает True, если количество подписчиков текущего канала больше,
+        чем у другого канала, и False в противном случае.
+        """
+        return int(self.subscriberCount) > int(other.subscriberCount)
 
+    def __ge__(self, other):
+        """
+        Возвращает True, если количество подписчиков текущего канала больше или равно,
+        другому каналу, и False в противном случае.
+        """
+        return int(self.subscriberCount) >= int(other.subscriberCount)
+
+    def __lt__(self, other):
+        """
+        Возвращает True, если количество подписчиков текущего канала меньше,
+        чем у другого канала, и False в противном случае.
+        """
+        return int(self.subscriberCount) < int(other.subscriberCount)
+
+    def __le__(self, other):
+        """
+        Возвращает True, если количество подписчиков текущего канала меньше или равно,
+        другому каналу, и False в противном случае.
+        """
+        return int(self.subscriberCount) <= int(other.subscriberCount)
+
+    def __eq__(self, other):
+        """
+        Возвращает True, если количество подписчиков двух каналов равно, и False в противном случае.
+        """
+        return int(self.subscriberCount) == int(other.subscriberCount)
 
