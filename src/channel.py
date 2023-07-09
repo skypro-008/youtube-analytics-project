@@ -41,5 +41,18 @@ class Channel:
         """Выводит в консоль информацию о канале"""
         channel = self.get_channel_id()
         self.print_json(channel)
-        #channel_json = self.print_json(channel)
-        #print(channel_json)
+
+
+    @classmethod
+    def get_service(cls):
+        """
+        Класс-метод `get_service()` возвращает объект для работы с YouTube API
+        """
+        pass
+
+
+    def to_json(self):
+        """
+        Метод `to_json()` сохраняет в файл значения атрибутов экземпляра `Channel`
+        """
+        pass
