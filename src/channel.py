@@ -40,5 +40,6 @@ class Channel:
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале"""
         channel = self.get_channel_id()
-        channel_json = self.print_json(channel)
-        print(channel_json)
+        self.print_json(channel)
+        #channel_json = self.print_json(channel)
+        #print(channel_json)
