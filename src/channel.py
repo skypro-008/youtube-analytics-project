@@ -2,7 +2,6 @@ import json
 import os
 
 from googleapiclient import discovery
-# import googleapiclient.discovery
 # from googleapiclient.discovery import build
 
 API_KEY = os.getenv("YT_API_KEY")
@@ -13,9 +12,12 @@ api_version = "v3"
 youtube = discovery.build(api_service_name, api_version, developerKey=API_KEY)
 # youtube = googleapiclient.discovery.build(api_service_name, api_version, developerKey=API_KEY)
 
+url_main_channel = 'https://www.youtube.com/channel/'
+
 
 class Channel:
     """Класс для ютуб-канала"""
+
 
     def __init__(self, channel_id: str) -> None:
         """
@@ -23,6 +25,12 @@ class Channel:
         Дальше все данные будут подтягиваться по API
         """
         self.channel_id = channel_id
+        self.title: str = self.get_channel_id()['items'][0]['snippet']['title']
+        self.description: str = self.get_channel_id()['items'][0]['snippet']['description']
+        self.url: str = url_main_channel + channel_id
+        self.subscriberCount: int = self.get_channel_id()['items'][0]['statistics']['subscriberCount']
+        self.videoCount: int = self.get_channel_id()['items'][0]['statistics']['videoCount']
+        self.viewCount: int = self.get_channel_id()['items'][0]['statistics']['viewCount']
 
 
     def print_json(self, dict_print: dict) -> None:
@@ -48,11 +56,14 @@ class Channel:
         """
         Класс-метод `get_service()` возвращает объект для работы с YouTube API
         """
-        pass
+        youtube = discovery.build(api_service_name, api_version, developerKey=API_KEY)
+        return youtube
 
 
-    def to_json(self):
+    def to_json(self, file_name: str):
         """
         Метод `to_json()` сохраняет в файл значения атрибутов экземпляра `Channel`
         """
-        pass
+        data = json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        with open(file_name, 'w', encoding='utf-8') as file:
+            json.dump(data, file)
