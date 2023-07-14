@@ -8,18 +8,70 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.id = channel_id
+        self._channel_id = channel_id
+        self.api_key: str = os.getenv('YOUTUBE_API')
+        self.channel_data = None
+        self.fetch_channel_data()
+
+    def fetch_channel_data(self):
+        youtube = build('youtube', 'v3', developerKey=self.api_key)
+        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        self.channel_data = json.dumps(channel, indent=2, ensure_ascii=False)
+
+    def channel_json(self):
+        return self.channel_data
+
+    def my_service(self):
+        """Создаем json файл без лишних данных"""
+        return json.loads(self.channel_data)['items'][0]
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
+        print(self.channel_data)
 
-        # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
-        api_key: str = os.getenv('YOUTUBE_API')
+    @property
+    def channel_id(self):
+        return self._channel_id
 
-        # создать специальный объект для работы с API
-        youtube = build('youtube', 'v3', developerKey=api_key)
+    @channel_id.setter
+    def channel_id(self, new_channel_id):
+        raise AttributeError("Attribute 'channel_id' of 'Channel' object has no setter.")
 
-        channel = youtube.channels().list(id=self.id, part='snippet,statistics').execute()
+    @property
+    def title(self):
+        return self.my_service()['snippet']['title']
 
-        print(json.dumps(channel, indent=2, ensure_ascii=False))
-        return youtube
+    @property
+    def description(self):
+        return self.my_service()['snippet']['description']
+
+    @property
+    def video_count(self):
+        return self.my_service()['statistics']['videoCount']
+
+    @property
+    def url(self):
+        return self.my_service()['snippet']['thumbnails']['default']['url']
+
+    @property
+    def subscriber_count(self):
+        return self.my_service()['statistics']['subscriberCount']
+
+    @property
+    def view_count(self):
+        return self.my_service()['statistics']['viewCount']
+
+    @classmethod
+    def get_service(cls):
+        """Возвращает объект для работы с YouTube API."""
+        api_key = os.getenv('YOUTUBE_API')
+        return build('youtube', 'v3', developerKey=api_key)
+
+    def to_json(self, filename):
+        """ Cоздаем файл 'moscowpython.json' c данными по каналу """
+        with open(filename, 'w') as f:
+            json.dump(self.my_service(), f, indent=2, ensure_ascii=False)
+
+
+
+
