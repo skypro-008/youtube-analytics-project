@@ -1,5 +1,7 @@
 import json
 import os
+import re
+
 from googleapiclient.discovery import build
 
 
@@ -12,6 +14,12 @@ class Channel:
         self.api_key: str = os.getenv('YOUTUBE_API')
         self.channel_data = None
         self.fetch_channel_data()
+
+    def __str__(self):
+        pattern = r'https?://[^\s!"?]+'
+        description = self.description
+        matches = re.findall(pattern, description)
+        return f"{self.title} ({''.join(matches)})"
 
     def fetch_channel_data(self):
         youtube = build('youtube', 'v3', developerKey=self.api_key)
@@ -72,6 +80,23 @@ class Channel:
         with open(filename, 'w') as f:
             json.dump(self.my_service(), f, indent=2, ensure_ascii=False)
 
+    def __add__(self, other):
+        return int(self.subscriber_count) + int(other.subscriber_count)
 
+    def __sub__(self, other):
+        return int(self.subscriber_count) - int(other.subscriber_count)
 
+    def __lt__(self, other):
+        return int(self.subscriber_count) < int(other.subscriber_count)
 
+    def __le__(self, other):
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __gt__(self, other):
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other):
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __eq__(self, other):
+        return int(self.subscriber_count) == int(other.subscriber_count)

@@ -1,0 +1,39 @@
+{
+  "kind": "youtube#channel",
+  "etag": "9szRoIya4ha9PgWCQ4U4rfoGwbY",
+  "id": "UC-OVMPlMA3-YCIeg4z5z23A",
+  "snippet": {
+    "title": "MoscowPython",
+    "description": "Видеозаписи со встреч питонистов и джангистов в Москве и не только. :)\nПрисоединяйтесь: https://www.facebook.com/groups/MoscowDjango! :)",
+    "customUrl": "@moscowdjangoru",
+    "publishedAt": "2012-07-13T09:48:44Z",
+    "thumbnails": {
+      "default": {
+        "url": "https://yt3.ggpht.com/ytc/AOPolaTejB96pN-8rzeM6mmnaxiVpLKQjWfxtfnoXlfyCQ=s88-c-k-c0x00ffffff-no-rj",
+        "width": 88,
+        "height": 88
+      },
+      "medium": {
+        "url": "https://yt3.ggpht.com/ytc/AOPolaTejB96pN-8rzeM6mmnaxiVpLKQjWfxtfnoXlfyCQ=s240-c-k-c0x00ffffff-no-rj",
+        "width": 240,
+        "height": 240
+      },
+      "high": {
+        "url": "https://yt3.ggpht.com/ytc/AOPolaTejB96pN-8rzeM6mmnaxiVpLKQjWfxtfnoXlfyCQ=s800-c-k-c0x00ffffff-no-rj",
+        "width": 800,
+        "height": 800
+      }
+    },
+    "localized": {
+      "title": "MoscowPython",
+      "description": "Видеозаписи со встреч питонистов и джангистов в Москве и не только. :)\nПрисоединяйтесь: https://www.facebook.com/groups/MoscowDjango! :)"
+    },
+    "country": "RU"
+  },
+  "statistics": {
+    "viewCount": "2349337",
+    "subscriberCount": "26200",
+    "hiddenSubscriberCount": false,
+    "videoCount": "694"
+  }
+}
