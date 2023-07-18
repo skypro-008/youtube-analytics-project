@@ -28,9 +28,50 @@ class Channel:
         self.title: str = self.get_channel_id()['items'][0]['snippet']['title']
         self.description: str = self.get_channel_id()['items'][0]['snippet']['description']
         self.url: str = url_main_channel + channel_id
-        self.subscriberCount: int = self.get_channel_id()['items'][0]['statistics']['subscriberCount']
+        self.subscriberCount: int = self.to_int(self.get_channel_id()['items'][0]['statistics']['subscriberCount'])
         self.videoCount: int = self.get_channel_id()['items'][0]['statistics']['videoCount']
         self.viewCount: int = self.get_channel_id()['items'][0]['statistics']['viewCount']
+
+
+    def __str__(self):
+        return f'{self.title}({self.url})'
+
+
+    def __add__(self, other):
+        return self.subscriberCount + other.subscriberCount
+
+
+    def __sub__(self, other):
+        return self.subscriberCount - other.subscriberCount
+
+
+    def __gt__(self, other):
+        return self.subscriberCount > other.subscriberCount
+
+
+    def __ge__(self, other):
+        return self.subscriberCount >= other.subscriberCount
+
+
+    def __lt__(self, other):
+        return self.subscriberCount < other.subscriberCount
+
+
+    def __le__(self, other):
+        return self.subscriberCount <= other.subscriberCount
+
+
+    def __eq__(self, other):
+        return self.subscriberCount == other.subscriberCount
+
+
+    def to_int(self, numb):
+        """Возвращает полученное значение в типе int"""
+        if type(numb) == int:
+            return numb
+        else:
+            num_int = int(float(numb))
+            return num_int
 
 
     def print_json(self, dict_print: dict) -> None:
