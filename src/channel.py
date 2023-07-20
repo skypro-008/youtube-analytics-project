@@ -3,7 +3,6 @@ import os
 from googleapiclient.discovery import build
 
 
-
 class Channel:
     """Класс для ютуб-канала"""
     api_key = os.getenv('YT_API_KEY')
@@ -22,6 +21,39 @@ class Channel:
         self.__subscriber_count = int(statistics['subscriberCount'])
         self.__video_count = int(statistics['videoCount'])
         self.__view_count = int(statistics['viewCount'])
+
+    def __str__(self):
+        """
+        Метод возвращающий название и ссылку на канал
+        """
+        return f"{self.__name} ({self.__url})"
+
+    def __add__(self, other):
+        """
+        Метод сложения по количеству подписчиков
+        """
+        return self.__subscriber_count + other.__subscriber_count
+
+    def __sub__(self, other):
+        """
+        Метод вычитания по количеству подписчиков
+        """
+        return self.__subscriber_count - other.__subscriber_count
+
+    def __lt__(self, other):
+        """
+        Метод сравнения по количеству подписчиков
+        """
+        return self.__subscriber_count < other.__subscriber_count
+
+    def __le__(self, other):
+        return self.__subscriber_count <= other.__subscriber_count
+
+    def __gt__(self, other):
+        return self.__subscriber_count > other.__subscriber_count
+
+    def __ge__(self, other):
+        return self.__subscriber_count >= other.__subscriber_count
 
     @property
     def channel_id(self) -> str:
@@ -67,6 +99,5 @@ class Channel:
             'video_count': self.__video_count,
             'view_count': self.__view_count
         }
-
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
