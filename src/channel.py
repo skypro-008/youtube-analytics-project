@@ -8,10 +8,10 @@ from googleapiclient.discovery import build
 class Channel:
     """Класс для ютуб-канала"""
 
-    def __init__(self, channel_id: str) -> None:
+    def __init__(self, channel_id):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self._channel_id = channel_id
-        self.api_key: str = os.getenv('YOUTUBE_API')
+        self.api_key = os.getenv('YOUTUBE_API')
         self.channel_data = None
         self.fetch_channel_data()
 
