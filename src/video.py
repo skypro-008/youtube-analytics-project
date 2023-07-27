@@ -45,15 +45,3 @@ class PLVideo(Video):
     def __init__(self, video_id, playlist_id):
         super().__init__(video_id)
         self.playlist_id = playlist_id
-        self.playlist_data = None
-        self.fetch_playlist_data()
-
-
-    def fetch_playlist_data(self):
-        youtube = build('youtube', 'v3', developerKey=self.api_key)
-        playlist_videos = youtube.playlistItems().list(playlistId='PLv_zOGKKxVph_8g2Mqc3LMhj0M_BfasbC',
-                                                       part='contentDetails',
-                                                       maxResults=50,
-                                                       ).execute()
-        self.playlist_data = json.dumps(playlist_videos, indent=2, ensure_ascii=False)
-
