@@ -31,12 +31,14 @@ class PLVideo(Video):
     Класс инициализирует экземпляр по id видео и id плейлиста.
     """
 
-    def __init__(self, id_video, id_playlist):
-        super().__init__(id_video)
+    def __init__(self, video_id: str, id_playlist: str) -> None:
+        super().__init__(video_id)
         self.id_playlist = id_playlist
 
     def __str__(self):
         return super().__str__()
+
+
 
 
 
