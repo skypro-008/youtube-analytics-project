@@ -9,15 +9,23 @@ class Video:
 
     def __init__(self, video_id):
         self.video_id = video_id
-        video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+        try:
+            video_response = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                     id=self.video_id
                                                     ).execute()
 
-        self.name = video_response['items'][0]['snippet']['title']
-        self.url = f"https://www.youtube.com/watch?v={self.video_id}"
-        self.comment_count = video_response['items'][0]['statistics']['commentCount']
-        self.video_like_count = video_response['items'][0]['statistics']['likeCount']
-        self.view_count = video_response['items'][0]['statistics']['viewCount']
+            self.name = video_response['items'][0]['snippet']['title']
+            self.url = f"https://www.youtube.com/watch?v={self.video_id}"
+            self.comment_count = video_response['items'][0]['statistics']['commentCount']
+            self.video_like_count = video_response['items'][0]['statistics']['likeCount']
+            self.view_count = video_response['items'][0]['statistics']['viewCount']
+        except Exception:
+            print(f"Несуществующий id={video_id} видео")
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
+
 
     def __str__(self):
         """
