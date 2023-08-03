@@ -24,6 +24,11 @@ class Channel:
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+
     @classmethod
     def get_service(cls):
         return build('youtube', 'v3', developerKey=cls.api_key)
