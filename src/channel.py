@@ -18,10 +18,11 @@ class Channel:
         self.title = self.channel["items"][0]["snippet"]["title"]
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
+        self.subscriberCount = self.channel["items"][0]["statistics"]["subscriberCount"]
 
 
     def __str__(self):
-        return f'{self.title} ({self.url}'
+        return f'{self.title} ({self.url})'
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -60,9 +61,63 @@ class Channel:
         self.subscriberCount = self.channel["items"][0]["statistics"]["subscriberCount"]
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.viewCount = self.channel["items"][0]["statistics"]["viewCount"]
-
         with open(file_name, 'w') as file:
             json.dump(self.channel, file)
+
+    def get_channel(self):
+        return self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+
+    def __add__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount + other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __sub__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount - other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __gt__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount > other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __ge__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount >= other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __lt__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount < other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __le__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount <= other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __eq__(self, other):
+        if isinstance(other, Channel):
+            return self.subscriberCount == other.subscriberCount
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+    def __sub__(self, other):
+        if isinstance(other, Channel):
+            return int(self.subscriberCount) - int(other.subscriberCount)
+        else:
+            raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
+
+
+
+
 
 
 
