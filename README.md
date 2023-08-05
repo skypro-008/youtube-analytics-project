@@ -12,6 +12,15 @@
 ### Особенности проекта
 - управление виртуальным окружением и зависимостями через venv + pip
 
+python.exe -m pip install --upgrade pip
+pip list
+pip install requests
+pip install pytest
+pip install coverage
+pip list
+pip freeze > requirements.txt
+
+
 ### Как сдавать домашние задания
 
 #### Необходимо выполнить один раз:
