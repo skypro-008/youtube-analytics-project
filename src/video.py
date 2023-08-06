@@ -14,17 +14,18 @@ class Video:
                                                     id=self.video_id
                                                     ).execute()
 
-            self.name = video_response['items'][0]['snippet']['title']
+            self.title = video_response['items'][0]['snippet']['title']
             self.url = f"https://www.youtube.com/watch?v={self.video_id}"
             self.comment_count = video_response['items'][0]['statistics']['commentCount']
-            self.video_like_count = video_response['items'][0]['statistics']['likeCount']
+            self.like_count = video_response['items'][0]['statistics']['likeCount']
             self.view_count = video_response['items'][0]['statistics']['viewCount']
-        except Exception:
+        except IndexError:
             print(f"Несуществующий id={video_id} видео")
             self.title = None
             self.url = None
             self.view_count = None
             self.like_count = None
+            self.comment_count = None
 
 
     def __str__(self):
