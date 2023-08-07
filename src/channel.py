@@ -11,15 +11,12 @@ class Channel:
 
     def __init__(self, channel_id):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.API_KEY = os.getenv('YT_API_KEY')
-        self.youtube = build('youtube', 'v3', developerKey='AIzaSyAZomY9PsOL0gNN8BbgrlbNo9z6BVbmR7s')
         self.__channel_id = channel_id
         self.channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = self.channel["items"][0]["snippet"]["title"]
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
         self.subscriberCount = self.channel["items"][0]["statistics"]["subscriberCount"]
-
 
     def __str__(self):
         return f'{self.title} ({self.url})'
@@ -42,10 +39,11 @@ class Channel:
             print("False name or invalid")
 
     @classmethod
-    def get_service(cls):
-        API_KEY = os.getenv('YT_API_KEY')
-        youtube = build('youtube', 'v3', developerKey='AIzaSyAZomY9PsOL0gNN8BbgrlbNo9z6BVbmR7s')
-        return youtube
+    def get_service(self):
+        self.API_KEY = os.getenv('YT_API_KEY')
+        self.youtube = build('youtube', 'v3', developerKey='AIzaSyAZomY9PsOL0gNN8BbgrlbNo9z6BVbmR7s')
+        return helper.youtube
+
     @classmethod
     def to_class(cls, obj):
         if not isinstance(obj, Channel):
@@ -54,13 +52,15 @@ class Channel:
         return obj.subscriberCount
 
     def to_json(self, file_name=None):
-        self.__channel_id = helper.youtube_api_manual.channel_id
-        self.title = self.channel["items"][0]["snippet"]["title"]
-        self.description = self.channel["items"][0]["snippet"]["description"]
-        self.url = f'https://www.youtube.com/channel/{self.channel_id}'
-        self.subscriberCount = self.channel["items"][0]["statistics"]["subscriberCount"]
-        self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
-        self.viewCount = self.channel["items"][0]["statistics"]["viewCount"]
+        data = {
+            'channel_id': self.channel_id,
+            'title': self.title,
+            'description': self.description,
+            'url': self.url,
+            'subscriberCount': self.subscriberCount,
+            'video_count': self.video_count,
+            'viewCount': self.viewCount
+        }
         with open(file_name, 'w') as file:
             json.dump(self.channel, file)
 
@@ -114,7 +114,6 @@ class Channel:
             return int(self.subscriberCount) - int(other.subscriberCount)
         else:
             raise TypeError('Операнд справа должен быть экземпляром класса Channel!')
-
 
 
 
