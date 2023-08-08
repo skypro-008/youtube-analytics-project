@@ -34,6 +34,51 @@ class Channel:
         return build('youtube', 'v3', developerKey=cls.api_key)
 
 
+    def __str__(self):
+        return f'{self.title} (https://www.youtube.com/channel/{self.__channel_id})'
+
+
+    def __add__(self, other):
+        plus = int(self.view_count) + int(other.view_count)
+        # minus = int(self.view_count) - int(other.view_count)
+        # more = int(self.view_count) > int(other.view_count)
+        # more_equals = int(self.view_count) >= int(other.view_count)
+        # less = int(self.view_count) < int(other.view_count)
+        # less_equals = int(self.view_count) <= int(other.view_count)
+        # equals = int(self.view_count) == int(other.view_count)
+        return plus
+
+
+    def __sub__(self, other):
+        minus = int(self.view_count) - int(other.view_count)
+        return minus
+
+
+    def __gt__(self, other):
+        more = int(self.view_count) > int(other.view_count)
+        return more
+
+
+    def __ge__(self, other):
+        more_equals = int(self.view_count) >= int(other.view_count)
+        return more_equals
+
+
+    def __lt__(self, other):
+        less = int(self.view_count) < int(other.view_count)
+        return less
+
+
+    def __le__(self, other):
+        less_equals = int(self.view_count) <= int(other.view_count)
+        return less_equals
+
+
+    def __eq__(self, other):
+        equals = int(self.view_count) == int(other.view_count)
+        return equals
+
+
     def to_json(self, path):
         data = self.__dict__
         del data["channel"]
