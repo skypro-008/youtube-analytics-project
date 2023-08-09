@@ -23,11 +23,11 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
         youtube = build('youtube', 'v3', developerKey=YT_API_KEY)
-        self.__youtube = id(youtube)
+        # self.youtube_str = str(youtube)
 
-        channel = youtube.channels().list(id=self.channel_id,
+        channel = youtube.channels().list(id=channel_id,
                                           part='snippet,statistics').execute()
 
         self.url: str = 'https://www.youtube.com/channel/'+channel['items'][0]['id']
@@ -38,8 +38,15 @@ class Channel:
         self.description: str = channel["items"][0]["snippet"]["description"]
 
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+    @channel_id.setter
+    def channel_id(self, new_id):
+        pass
+
     def __repr__(self):
-        return f'id канала: {self.channel_id}\n' \
+        return f'id канала: {self.__channel_id}\n' \
                f'название канала: {self.title}\n' \
                f'описание канала: {self.description}\n' \
                f'ссылка на канал: {self.url}\n' \
@@ -48,22 +55,23 @@ class Channel:
                f'общее количество просмотров: {self.view_count}'
 
 
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         # создать специальный объект для работы с API
         youtube = build('youtube', 'v3', developerKey=YT_API_KEY)
 
-        channel = youtube.channels().list(id=self.channel_id,
+        channel = youtube.channels().list(id=self.__channel_id,
                                           part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
-
-    def get_service(self):
-        return self.__youtube
+    @classmethod
+    def get_service(cls):
+        return f'{str(build("youtube", "v3", developerKey=YT_API_KEY))}'
 
 
     def to_json(self, name_file: str):
-        json_list = {"id": self.channel_id,
+        json_list = {"id": self.__channel_id,
                      "title": self.title,
                      "description": self.description,
                      "url": self.url,
@@ -74,4 +82,6 @@ class Channel:
 
         name_file = full_path_name_file(name_file)
         with open(name_file, 'w', encoding='UTF-8') as file:
-            json.dumps(json_list, file)
+            json.dump(json_list, file)
+
+        print(name_file)
