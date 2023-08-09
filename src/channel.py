@@ -84,4 +84,4 @@ class Channel:
         with open(name_file, 'w', encoding='UTF-8') as file:
             json.dump(json_list, file)
 
-        print(name_file)
+        # print(name_file)
