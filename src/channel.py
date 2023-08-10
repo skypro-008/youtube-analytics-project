@@ -45,6 +45,32 @@ class Channel:
     def channel_id(self, new_id):
         pass
 
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other: 'Channel') -> int:
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other: 'Channel') -> int:
+        # метод для операции вычитания (self - other);
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __lt__(self, other: 'Channel') -> int:
+        # метод для операции сравнения «меньше» (self < other);
+        return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __le__(self, other: 'Channel') -> int:
+        # метод для операции сравнения «меньше или равно»  (self <= other);
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __gt__(self, other: 'Channel') -> int:
+        #  метод для операции сравнения «больше» (self > other);
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other: 'Channel') -> int:
+        # метод для операции сравнения «больше или равно» (self >= other).
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
     def __repr__(self):
         return f'id канала: {self.__channel_id}\n' \
                f'название канала: {self.title}\n' \
