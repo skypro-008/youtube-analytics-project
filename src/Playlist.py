@@ -1,9 +1,9 @@
-import json
 import os
 from datetime import timedelta
 
 import isodate
 from googleapiclient.discovery import build
+
 from src.Video import Video
 
 
@@ -14,7 +14,10 @@ class PlayList:
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
-        self.list_playlist: dict = self.youtube.playlists().list(id=playlist_id, part='snippet').execute()
+
+    def get_playlist_info(self):
+        """Получает информацию о плейлисте"""
+        self.list_playlist: dict = self.youtube.playlists().list(id=self.playlist_id, part='snippet').execute()
         self.title = self.list_playlist.get('items', {})[0].get('snippet', {}).get('title')
         self.url = "https://www.youtube.com/playlist?list=" + self.playlist_id
         self.playlist_videos = self.youtube.playlistItems().list(playlistId=self.playlist_id,
@@ -25,6 +28,7 @@ class PlayList:
     @property
     def total_duration(self):
         """Возвращает длительность всех видео для плейлиста"""
+        self.get_playlist_info()
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
 
         video_response = self.youtube.videos().list(part='contentDetails,statistics',
@@ -39,6 +43,7 @@ class PlayList:
         return result
 
     def show_best_video(self) -> str:
+        self.get_playlist_info()
         statistic_list = []
         for video in self.playlist_videos['items']:
             video_id = str(video['contentDetails']['videoId'])
