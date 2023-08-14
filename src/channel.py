@@ -48,7 +48,7 @@ class Channel:
     def __str__(self):
         return f'{self.title} ({self.url})'
 
-    def __add__(self, other: 'Channel') -> int:
+    def __add__(self, other) -> int:
         return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __sub__(self, other: 'Channel') -> int:

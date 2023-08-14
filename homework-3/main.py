@@ -23,6 +23,7 @@ if __name__ == '__main__':
     print(f'Канал {highload.title}: \033[32m{highload.subscriber_count}\033[39m')
     print()
     print(f'Сумма подписчиков обоих каналов: \033[32m{moscowpython + highload}\033[39m')  #
+
     # 100100
     print(f'Разность подписчиков канала {moscowpython.title} и {highload.title}:'
           f' \033[32m{moscowpython - highload}\033[39m')  # -48300
