@@ -1,9 +1,10 @@
 import os
 import json
+from src.apimixin import APIMixin
 from googleapiclient.discovery import build
 
 
-class Channel:
+class Channel(APIMixin):
     """Класс для ютуб-канала"""
     api_key: str = os.getenv('YT_API_KEY')
 
@@ -40,12 +41,6 @@ class Channel:
 
     def __add__(self, other):
         plus = int(self.view_count) + int(other.view_count)
-        # minus = int(self.view_count) - int(other.view_count)
-        # more = int(self.view_count) > int(other.view_count)
-        # more_equals = int(self.view_count) >= int(other.view_count)
-        # less = int(self.view_count) < int(other.view_count)
-        # less_equals = int(self.view_count) <= int(other.view_count)
-        # equals = int(self.view_count) == int(other.view_count)
         return plus
 
 
