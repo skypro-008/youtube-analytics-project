@@ -47,5 +47,6 @@ class Channel:
         Запись в указанный файл json
         :param filename: имя файла
         """
+
         with open(filename, "w", encoding='UTF-8') as file:
             json.dump(self.channel_dict, file, ensure_ascii=False)
