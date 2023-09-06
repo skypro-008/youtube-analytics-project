@@ -51,3 +51,35 @@ class Channel:
 
         with open(filename, "w", encoding='UTF-8') as file:
             json.dump(self.channel_dict, file, ensure_ascii=False)
+
+    def __str__(self) -> str:
+        """Строковое представление экземпляра класса"""
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other) -> int:
+        """Сумма числа подписчиков нескольких каналов"""
+        return self.subscribers + other.subscribers
+
+    def __sub__(self, other) -> int:
+        """Разность числа подписчиков нескольких каналов"""
+        return self.subscribers - other.subscribers
+
+    def __gt__(self, other) -> bool:
+        """Сравнение (больше) числа подписчиков нескольких каналов"""
+        return self.subscribers > other.subscribers
+
+    def __ge__(self, other) -> bool:
+        """Сравнение (больше либо равно) числа подписчиков нескольких каналов"""
+        return self.subscribers >= other.subscribers
+
+    def __lt__(self, other) -> bool:
+        """Сравнение (меньше) числа подписчиков нескольких каналов"""
+        return self.subscribers < other.subscribers
+
+    def __le__(self, other) -> bool:
+        """Сравнение (меньше либо равно) числа подписчиков нескольких каналов"""
+        return self.subscribers <= other.subscribers
+
+    def __eq__(self, other) -> bool:
+        """Проверяет равенство числа подписчиков нескольких каналов"""
+        return self.subscribers == other.subscribers
