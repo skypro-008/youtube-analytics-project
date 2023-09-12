@@ -1,9 +1,8 @@
 from src.channel import Channel
 
 if __name__ == '__main__':
-    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
-    moscowpython.print_info()
-
+    pythchannel = Channel('AIzaSyDOsEBflTxbKq0zbiuwT1Tp53zY33WQmEI', 'UC-OVMPlMA3-YCIeg4z5z23A')
+    pythchannel.print_info()
     """
 {
   "kind": "youtube#channelListResponse",
