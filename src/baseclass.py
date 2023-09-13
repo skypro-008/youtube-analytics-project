@@ -1,9 +1,8 @@
-from abc import ABC
 import os
 from googleapiclient.discovery import build
 
 
-class Apibase(ABC):
+class MixinBase:
     """Абстрактный класс, который вернет объект для работы с YouTube API"""
 
     # API_KEY_YOUTUBE скопирован из гугла и вставлен в переменные окружения
