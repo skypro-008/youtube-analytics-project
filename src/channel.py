@@ -2,7 +2,7 @@ import os
 
 from googleapiclient.discovery import build
 
-os.environ['YT_API_KEY'] = 'AIzaSyBpNdpo_fHPACm0Nopoj45bkRVeAjCpQcc'
+# os.environ['YT_API_KEY'] = 'AIzaSyBpNdpo_fHPACm0Nopoj45bkRVeAjCpQcc'
 
 
 class Channel:
