@@ -2,14 +2,21 @@ import os
 
 from googleapiclient.discovery import build
 
-# os.environ['YT_API_KEY'] = 'AIzaSyBpNdpo_fHPACm0Nopoj45bkRVeAjCpQcc'
-
 
 class Channel:
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
         self.channel_id = channel_id
+        self.channel_title = None
+        self.channel_description = None
+        self.url = None
+        self.num_subscribers = None
+        self.video_count = None
+        self.total_views = None
+        self.__api_key = os.getenv('YT_API_KEY')
+        self.get_channel_info()
+
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
 
