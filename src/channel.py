@@ -1,5 +1,6 @@
 import json
 import os
+
 from googleapiclient.discovery import build
 
 
@@ -8,7 +9,7 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         self.channel_id = channel_id
-        self.channel_title = None
+        self.title = None
         self.channel_description = None
         self.url = None
         self.num_subscribers = None
@@ -21,6 +22,7 @@ class Channel:
 
     @classmethod
     def get_service(cls):
+        # объект для работы с YouTube API
         __api_key = os.getenv('YT_API_KEY')
         youtube = build('youtube', 'v3', developerKey=__api_key)
         return youtube
@@ -30,7 +32,7 @@ class Channel:
         channel_data = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         if 'items' in channel_data:
             channel_data = channel_data['items'][0]
-            self.channel_title = channel_data['snippet']['title']
+            self.title = channel_data['snippet']['title']
             self.channel_description = channel_data['snippet']['description']
             self.url = f"https://www.youtube.com/channel/{self.channel_id}"
             self.num_subscribers = int(channel_data['statistics']['subscriberCount'])
@@ -38,9 +40,10 @@ class Channel:
             self.total_views = int(channel_data['statistics']['viewCount'])
 
     def to_json(self, filename):
+        # сохраняет в файл '*.json' значения атрибутов экземпляра Channel
         channel_data = {
             'channel_id': self.channel_id,
-            'channel_title': self.channel_title,  # Corrected key name
+            'channel_title': self.title,  # Corrected key name
             'channel_description': self.channel_description,
             'channel_link': self.url,
             'num_subscribers': self.num_subscribers,
@@ -51,11 +54,11 @@ class Channel:
             json.dump(channel_data, file)
 
     def print_info(self) -> None:
+        # Выводит в консоль информацию о канале
         print(f"Channel ID: {self.channel_id}")
-        print(f"Channel Name: {self.channel_title}")
+        print(f"Channel Name: {self.title}")
         print(f"Channel Description: {self.channel_description}")
         print(f"Channel Link: {self.url}")
         print(f"Number of Subscribers: {self.num_subscribers}")
         print(f"Number of Videos: {self.video_count}")
         print(f"Total Views: {self.total_views}")
-        """Выводит в консоль информацию о канале."""
