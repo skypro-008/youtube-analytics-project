@@ -1,5 +1,5 @@
 import os
-
+import json
 from googleapiclient.discovery import build
 
 
@@ -37,6 +37,19 @@ class Channel:
             self.video_count = int(channel_data['statistics']['videoCount'])
             self.total_views = int(channel_data['statistics']['viewCount'])
 
+
+    def to_json(self, filename):
+        channel_data = {
+            'channel_id': self.channel_id,
+            'channel_title': self.channel_title,  # Corrected key name
+            'channel_description': self.channel_description,
+            'channel_link': self.url,
+            'num_subscribers': self.num_subscribers,
+            'num_videos': self.video_count,
+            'total_views': self.total_views
+        }
+        with open(filename, 'w') as file:
+            json.dump(channel_data, file)
 
     def print_info(self) -> None:
         # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
