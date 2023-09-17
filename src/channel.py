@@ -25,6 +25,18 @@ class Channel:
         youtube = build('youtube', 'v3', developerKey=__api_key)
         return youtube
 
+    def get_channel_info(self):
+        youtube = self.get_service()
+        channel_data = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        if 'items' in channel_data:
+            channel_data = channel_data['items'][0]
+            self.channel_title = channel_data['snippet']['title']
+            self.channel_description = channel_data['snippet']['description']
+            self.url = f"https://www.youtube.com/channel/{self.channel_id}"
+            self.num_subscribers = int(channel_data['statistics']['subscriberCount'])
+            self.video_count = int(channel_data['statistics']['videoCount'])
+            self.total_views = int(channel_data['statistics']['viewCount'])
+
 
     def print_info(self) -> None:
         # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
