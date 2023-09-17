@@ -1,5 +1,5 @@
-import os
 import json
+import os
 from googleapiclient.discovery import build
 
 
@@ -37,7 +37,6 @@ class Channel:
             self.video_count = int(channel_data['statistics']['videoCount'])
             self.total_views = int(channel_data['statistics']['viewCount'])
 
-
     def to_json(self, filename):
         channel_data = {
             'channel_id': self.channel_id,
@@ -60,5 +59,3 @@ class Channel:
         print(f"Number of Videos: {self.video_count}")
         print(f"Total Views: {self.total_views}")
         """Выводит в консоль информацию о канале."""
-
-
