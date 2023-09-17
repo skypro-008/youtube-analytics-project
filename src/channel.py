@@ -52,13 +52,13 @@ class Channel:
             json.dump(channel_data, file)
 
     def print_info(self) -> None:
-        # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
-        api_key: str = os.getenv('YT_API_KEY')
-        youtube = build('youtube', 'v3', developerKey=api_key)
-        playlists = youtube.playlists().list(channelId=self.channel_id,
-                                             part='contentDetails,snippet',
-                                             maxResults=50,
-                                             ).execute()
+        print(f"Channel ID: {self.channel_id}")
+        print(f"Channel Name: {self.channel_title}")
+        print(f"Channel Description: {self.channel_description}")
+        print(f"Channel Link: {self.url}")
+        print(f"Number of Subscribers: {self.num_subscribers}")
+        print(f"Number of Videos: {self.video_count}")
+        print(f"Total Views: {self.total_views}")
         """Выводит в консоль информацию о канале."""
 
-        print(playlists)
+
