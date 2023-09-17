@@ -19,6 +19,12 @@ class Channel:
 
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
+    @classmethod
+    def get_service(cls):
+        __api_key = os.getenv('YT_API_KEY')
+        youtube = build('youtube', 'v3', developerKey=__api_key)
+        return youtube
+
 
     def print_info(self) -> None:
         # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
