@@ -17,7 +17,7 @@ class Channel:
         self.channel_data = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = self.channel_data['items'][0]['snippet']['title']
         self.description = self.channel_data['items'][0]['snippet']['description']
-        self.url = self.channel_data['items'][0]['snippet']['thumbnails']['default']['url']
+        self.url = f'youtube.com/channel/{self.__channel_id}'
         self.subscribers_count = int(self.channel_data['items'][0]['statistics']['subscriberCount'])
         self.video_count = self.channel_data['items'][0]['statistics']['videoCount']
         self.views_count = self.channel_data['items'][0]['statistics']['viewCount']
@@ -52,8 +52,7 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel_data = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        print(json.dumps(channel_data, indent=4, ensure_ascii=False))
+        print(json.dumps(self.channel_data, indent=4, ensure_ascii=False))
 
     @classmethod
     def get_service(cls):
