@@ -15,44 +15,30 @@ class Channel:
     def __add__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] + other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for +")
 
     def __sub__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] - other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for -")
 
     def __eq__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] == other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for ==")
 
     def __lt__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] < other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for <")
 
     def __le__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] <= other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for <=")
 
     def __gt__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] > other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for >")
 
     def __ge__(self, other):
         if isinstance(other, Channel):
             return self.channel_data['subscriberCount'] >= other.channel_data['subscriberCount']
-        else:
-            raise TypeError("Unsupported operand type for >=")
 
     def get_service(self):
         return build('youtube', 'v3', developerKey=self.api_key)
@@ -79,8 +65,6 @@ class Channel:
                 'viewCount': int(statistics['viewCount']),
             }
             return channel_data
-        else:
-            return None
 
     def to_json(self, filename):
         if self.channel_data:

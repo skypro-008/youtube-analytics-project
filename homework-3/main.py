@@ -2,7 +2,7 @@ from src.channel import Channel
 
 if __name__ == '__main__':
     # Создаем два экземпляра класса
-    moscowpython = Channel('AIzaSyDOsEBflTxbKq0zbiuwT1Tp53zY33WQmEI','UC-OVMPlMA3-YCIeg4z5z23A')
+    moscowpython = Channel('AIzaSyDOsEBflTxbKq0zbiuwT1Tp53zY33WQmEI', 'UC-OVMPlMA3-YCIeg4z5z23A')
     highload = Channel('AIzaSyDOsEBflTxbKq0zbiuwT1Tp53zY33WQmEI', 'UCwHL6WHUarjGfUM_586me8w')
 
     # Используем различные магические методы
