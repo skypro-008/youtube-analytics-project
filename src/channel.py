@@ -55,3 +55,77 @@ class Channel:
         }
         with open(name, "w", encoding='utf-8') as file:
             json.dump(temp_dict, file, ensure_ascii=False)
+
+    def __str__(self):
+        """
+        Метод возвращает информацию об объекте для пользователя
+        return: '<название канала> <url адрес канала>'
+        """
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        """
+        Метод позволяет складывать количество подписчиков у объектов,
+        если они принадлежат одному классу
+        return: Сумму количества подписчиков
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other):
+        """"
+        Метод позволяет вычитать количество подписчиков у объектов,
+        если они принадлежат одному классу
+        return: Разность количества подписчиков
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __eq__(self, other):
+        """"
+        Метод позволяет проверять на равенство количество подписчиков у объектов,
+        если они принадлежат одному классу
+        return: True или False
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) == int(other.subscriber_count)
+
+    def __gt__(self, other):
+        """"
+        Метод позволяет проверять больше ли количество
+        подписчиков у первого объекта, чем у второго,
+        если они принадлежат одному классу
+        return: True или False
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __lt__(self, other):
+        """"
+        Метод позволяет проверять меньше ли количество
+        подписчиков у первого объекта, чем у второго,
+        если они принадлежат одному классу
+        return: True или False
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __ge__(self, other):
+        """"
+        Метод позволяет проверять больше либо равно количество
+        подписчиков у первого объекта, чем у второго,
+        если они принадлежат одному классу
+        return: True или False
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __le__(self, other):
+        """"
+        Метод позволяет проверять меньше либо равно количество
+        подписчиков у первого объекта, чем у второго,
+        если они принадлежат одному классу
+        return: True или False
+        """
+        if isinstance(self, Channel) and isinstance(other, Channel):
+            return int(self.subscriber_count) <= int(other.subscriber_count)
