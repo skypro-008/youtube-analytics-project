@@ -8,7 +8,7 @@ class Channel:
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
         self.title = None
         self.channel_description = None
         self.url = None
@@ -19,6 +19,10 @@ class Channel:
         self.get_channel_info()
 
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
+
+    @property
+    def channel_id(self):
+        return self.__channel_id
 
     @classmethod
     def get_service(cls):
