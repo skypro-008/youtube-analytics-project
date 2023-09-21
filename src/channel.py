@@ -1,8 +1,8 @@
 import json
 import os
 
-#from googleapiclient.discovery import build
-import googleapiclient.discovery
+
+from googleapiclient.discovery import build
 
 api_key = os.getenv('API_YT')
 youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=api_key)
@@ -10,11 +10,12 @@ youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=api_key)
 
 class Channel:
     """Класс для ютуб-канала"""
+    __API_KEY: str = os.getenv('YT_API_KEY')
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
-        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = channel['items'][0]['snippet']['title']
         self.description = channel['items'][0]['snippet']['description']
         self.url_chanel = f"https://www.youtube.com/{channel['items'][0]['snippet']['customUrl']}"
@@ -27,8 +28,11 @@ class Channel:
         channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
-    def get_service(self):
-        return youtube
+    @classmethod
+    def get_service(cls) -> build:
+        """Возвращает объект для работы с API youtube."""
+        service = build('youtube', 'v3', developerKey=cls.__API_KEY)
+        return service
 
     def to_json(self, filename):
         info_chanel = {"title": self.title,
