@@ -24,6 +24,15 @@ def test_add():
 def test_sub():
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     highload = Channel('UCwHL6WHUarjGfUM_586me8w')
+    combined_channel = moscowpython - highload
+    expected_subscribers = -1427
+    assert combined_channel == expected_subscribers
+
+
+
+def test_lt():
+    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    highload = Channel('UCwHL6WHUarjGfUM_586me8w')
     assert moscowpython < highload
 
 
