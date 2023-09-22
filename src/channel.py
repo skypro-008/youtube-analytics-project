@@ -24,6 +24,9 @@ class Channel:
         # название и ссылка на канал по шаблону <название_канала> (<ссылка_на_канал>)
         return f"{self.title} ({self.url})"
 
+    def __add__(self, other):
+        return self.video_count + other.video_count
+
     @property
     def channel_id(self):
         return self.__channel_id
