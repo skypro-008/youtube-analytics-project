@@ -36,7 +36,8 @@ class Channel:
     def __lt__(self, other):
         return self.video_count < other.video_count
 
-
+    def __ge__(self, other):
+        return self.video_count >= other.video_count
 
     @property
     def channel_id(self):
