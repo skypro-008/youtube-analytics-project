@@ -27,6 +27,9 @@ class Channel:
     def __add__(self, other):
         return self.video_count + other.video_count
 
+    def __sub__(self, other):
+        return self.video_count - other.video_count
+
     @property
     def channel_id(self):
         return self.__channel_id
