@@ -30,6 +30,11 @@ class Channel:
     def __sub__(self, other):
         return self.video_count - other.video_count
 
+    def __eq__(self, other):
+        return self.video_count == other.video_count
+
+
+
     @property
     def channel_id(self):
         return self.__channel_id
