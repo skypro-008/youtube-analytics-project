@@ -20,6 +20,10 @@ class Channel:
 
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
+    def __str__(self):
+        # название и ссылка на канал по шаблону <название_канала> (<ссылка_на_канал>)
+        return f"{self.title} ({self.url})"
+
     @property
     def channel_id(self):
         return self.__channel_id
