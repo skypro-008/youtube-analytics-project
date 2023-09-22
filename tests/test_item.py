@@ -29,4 +29,8 @@ def test_add():
     expected_subscribers = 2841
     assert combined_channel == expected_subscribers
 
+def test_sub():
+    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    highload = Channel('UCwHL6WHUarjGfUM_586me8w')
+    assert moscowpython < highload
 
