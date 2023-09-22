@@ -33,6 +33,9 @@ class Channel:
     def __eq__(self, other):
         return self.video_count == other.video_count
 
+    def __lt__(self, other):
+        return self.video_count < other.video_count
+
 
 
     @property
