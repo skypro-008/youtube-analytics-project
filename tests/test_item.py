@@ -21,3 +21,12 @@ def test_str():
     channel = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     expected_str = "MoscowPython (https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A)"
     assert str(channel) == expected_str
+
+def test_add():
+    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    highload = Channel('UCwHL6WHUarjGfUM_586me8w')
+    combined_channel = moscowpython + highload
+    expected_subscribers = 2841
+    assert combined_channel == expected_subscribers
+
+
