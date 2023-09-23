@@ -1,10 +1,7 @@
-from src.channel import *
+from src.get_service import *
 
 
-class Video:
-    """Класс для видео"""
-    YT_API_KEY = os.getenv('YT_API_KEY')
-    youtube = build('youtube', 'v3', developerKey=YT_API_KEY)
+class Video(Get_Service):
 
     def __init__(self, video_id: str):
         """Экземпляр инициализируется id видео. Дальше все данные будут подтягиваться по API."""
