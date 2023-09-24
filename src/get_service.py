@@ -3,7 +3,7 @@ import os
 from googleapiclient.discovery import build
 
 
-@dataclass(frozen=True)
+@dataclass
 class Get_Service:
     """ Базовый класс для работы с API """
     YT_API_KEY = os.getenv('YT_API_KEY')
