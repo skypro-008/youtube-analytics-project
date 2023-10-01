@@ -11,12 +11,6 @@ class PlayList:
     __api_key: str = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=__api_key)
 
-    # @property
-    # def total_duration(self):
-    #     ...
-    #
-    # def show_best_video(self):
-    #     ...
     def __init__(self, playlist_id):
         """
         Экземпляр инициализируется id плейлиста. Дальше все данные будут подтягиваться по API.
