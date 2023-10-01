@@ -18,7 +18,9 @@ class PlayList:
     # def show_best_video(self):
     #     ...
     def __init__(self, playlist_id):
-        """Экземпляр инициализируется id плейлиста. Дальше все данные будут подтягиваться по API."""
+        """
+        Экземпляр инициализируется id плейлиста. Дальше все данные будут подтягиваться по API.
+        """
         self.__playlist_id = playlist_id
         self.__playlist_videos = PlayList.youtube.playlistItems().list(playlistId=playlist_id,
                                                                        part='snippet, contentDetails, id, status',
@@ -31,9 +33,11 @@ class PlayList:
 
     @property
     def total_duration(self):
-        """Метод возвращает объект класса `datetime.timedelta`
+        """
+        Метод возвращает объект класса `datetime.timedelta`
         с суммарной длительность плейлиста
-        (обращение как к свойству, использовать `@property`)"""
+        (обращение как к свойству, использовать `@property`)
+        """
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.__playlist_videos['items']]
         video_response = PlayList.youtube.videos().list(part='contentDetails,statistics',
                                                         id=','.join(video_ids)
@@ -47,8 +51,10 @@ class PlayList:
         return total_time
 
     def show_best_video(self):
-        """Метод возвращает ссылку на самое популярное видео
-         из плейлиста (по количеству лайков)"""
+        """
+        Метод возвращает ссылку на самое популярное видео
+         из плейлиста (по количеству лайков)
+        """
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.__playlist_videos['items']]
         temp_like = 0
         temp_url = ''
