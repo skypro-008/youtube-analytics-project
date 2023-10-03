@@ -7,6 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+python-dotenv = "^1.0.0"
+google-api-python-client = "^2.101.0"
+isodate = "^0.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
