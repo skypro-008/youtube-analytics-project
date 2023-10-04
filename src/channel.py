@@ -20,9 +20,26 @@ class Channel:
         self.url = self.channel['items'][0]['snippet']['thumbnails']['default']['url']
         self.description = self.channel['items'][0]['snippet']['description']
         self.viewCount = self.channel['items'][0]['statistics']['viewCount']
-        self.subscriberCount = self.channel['items'][0]['statistics']['subscriberCount']
+        self.subscriberCount = int(self.channel['items'][0]['statistics']['subscriberCount'])
 
-
+    def __str__(self):
+        return f'<{self.title}> (<{self.url}>)'
+    def __add__(self, other):
+        return self.subscriberCount + other.subscriberCount
+    def __sub__(self, other):
+        return self.subscriberCount - other.subscriberCount
+    def __mul__(self, other):
+        return self.subscriberCount * other.subscriberCount
+    def __truediv__(self, other):
+        return self.subscriberCount / other.subscriberCount
+    def __lt__(self, other):
+        return self.subscriberCount < other.subscriberCount
+    def __le__(self, other):
+        return self.subscriberCount <= other.subscriberCount
+    def __gt__(self, other):
+        return self.subscriberCount > other.subscriberCount
+    def __ge__(self, other):
+        return self.subscriberCount >= other.subscriberCount
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         print(json.dumps(self.channel, indent=2, ensure_ascii=False))
