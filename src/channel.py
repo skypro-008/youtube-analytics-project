@@ -12,6 +12,8 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
         self.youtube = build('youtube', 'v3', developerKey=Channel.__api_key())
+        self.channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+
 
     @staticmethod
     def __api_key():
@@ -29,5 +31,4 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        print(json.dumps(channel, indent=2, ensure_ascii=False))
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
