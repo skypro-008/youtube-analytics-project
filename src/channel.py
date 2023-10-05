@@ -3,7 +3,6 @@ import os
 from googleapiclient.discovery import build
 import isodate
 from dotenv import load_dotenv
-import pprint
 
 
 class Channel:
@@ -12,10 +11,10 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
-        self.api_key = self._load_api()
+        self.youtube = build('youtube', 'v3', developerKey=Channel.__api_key())
 
-
-    def _load_api(self):
+    @staticmethod
+    def __api_key():
         '''
         Считать API_KEY из переменных окружения
         '''
@@ -30,6 +29,5 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        youtube = build('youtube', 'v3', developerKey=self.api_key)
-        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
