@@ -5,10 +5,17 @@ import isodate
 
 api_key = 'AIzaSyDoXfDhCmEBqP323Mfo599sILGCvB9-Gb4'
 
-youtube = build('youtube', 'v3', developerKey=api_key)
+value = os.getenv('YT_API_KEY')
+print(value)
+
+"""value2 = os.getenv('PATH')
+print(value2)"""
+
+
+"""youtube = build('youtube', 'v3', developerKey=api_key)
 channel = youtube.channels().list(id='UC-OVMPlMA3-YCIeg4z5z23A', part='snippet,statistics').execute()
 
-print(youtube)
+print(youtube)"""
 
 
 
