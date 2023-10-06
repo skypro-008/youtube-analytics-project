@@ -1,12 +1,53 @@
+import json
+import os
+from googleapiclient.discovery import build
+import isodate
+
+api_key = 'AIzaSyDoXfDhCmEBqP323Mfo599sILGCvB9-Gb4'
+#пришлось выключить, пока что не подтягивает эту переменную, хотя через консоль ее нахожу
+#api_key: str = os.getenv('YT_API_KEY')
+youtube = build('youtube', 'v3', developerKey=api_key)
 
 
 class Channel:
     """Класс для ютуб-канала"""
-
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        pass
+        self.channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
+        self.id = self.channel['items'][0]['id']
+        self.title = self.channel['items'][0]['snippet']['title']
+        self.video_count = self.channel['items'][0]['statistics']['videoCount']
+        self.url = self.channel['items'][0]['snippet']['thumbnails']['default']['url']
+        self.description = self.channel['items'][0]['snippet']['description']
+        self.viewCount = self.channel['items'][0]['statistics']['viewCount']
+        self.subscriberCount = int(self.channel['items'][0]['statistics']['subscriberCount'])
 
+    def __str__(self):
+        return f'<{self.title}> (<{self.url}>)'
+    def __add__(self, other):
+        return self.subscriberCount + other.subscriberCount
+    def __sub__(self, other):
+        return self.subscriberCount - other.subscriberCount
+    def __mul__(self, other):
+        return self.subscriberCount * other.subscriberCount
+    def __truediv__(self, other):
+        return self.subscriberCount / other.subscriberCount
+    def __lt__(self, other):
+        return self.subscriberCount < other.subscriberCount
+    def __le__(self, other):
+        return self.subscriberCount <= other.subscriberCount
+    def __gt__(self, other):
+        return self.subscriberCount > other.subscriberCount
+    def __ge__(self, other):
+        return self.subscriberCount >= other.subscriberCount
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        pass
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
+    @classmethod
+    def get_service(cls):
+        return youtube
+    def to_json(self, name):
+        with open(name, "w") as file:
+            file.write(str(vars(self)))
+
+
