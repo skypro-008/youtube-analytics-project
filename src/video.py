@@ -8,15 +8,24 @@ class Video:
     def __init__(self, video_id: str):
         """конструктор экземпляра
         param video_id - id видео ролика"""
-
-        self.info = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+        try:
+            self.info = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=video_id).execute()
-        self.video_id = video_id
-        self.title = self.info['items'][0]['snippet']['title']
-        self.url = f'https://www.youtube.com/watch?v={video_id}'
-        self.view_count = int(self.info['items'][0]['statistics']['viewCount'])
-        self.like_count = int(self.info['items'][0]['statistics']['likeCount'])
-        self.comment_count = int(self.info['items'][0]['statistics']['commentCount'])
+            self.video_id = video_id
+            self.title = self.info['items'][0]['snippet']['title']
+            self.url = f'https://www.youtube.com/watch?v={video_id}'
+            self.view_count = int(self.info['items'][0]['statistics']['viewCount'])
+            self.like_count = int(self.info['items'][0]['statistics']['likeCount'])
+            self.comment_count = int(self.info['items'][0]['statistics']['commentCount'])
+        except IndexError:
+            self.info = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                   id=video_id).execute()
+            self.video_id = video_id
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
+            self.comment_count = None
 
     def __str__(self):
         return self.title
