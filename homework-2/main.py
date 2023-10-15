@@ -8,7 +8,7 @@ if __name__ == '__main__':
     print(moscowpython.video_count)  # 685 (может уже больше)
     print(moscowpython.url)  # https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A
     # менять не можем
-    moscowpython.channel_id = 'UC-OVMPlMA3-YCIeg4z5z23A'
+    # moscowpython.channel_id = 'UC-OVMPlMA3-YCIeg4z5z23A'
     # AttributeError: property 'channel_id' of 'Channel' object has no setter
 
     # можем получить объект для работы с API вне класса

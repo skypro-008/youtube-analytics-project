@@ -9,7 +9,24 @@ class Channel:
 
     def __init__(self, channel_id) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
+        self.__api_key = os.getenv('API_KEY')
+        self.__youtube = build('youtube', 'v3', developerKey=self.__api_key)
+        self.__channel = self.__youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        self.title = self.__channel['items'][0]['snippet']['title']
+        self.description = self.__channel['items'][0]['snippet']['description']
+        self.video_count = self.__channel['items'][0]['statistics']['videoCount']
+        self.url = 'https://www.youtube.com/channel/' + self.__channel_id
+        self.subscribers = self.__channel['items'][0]['statistics']['subscriberCount']
+        self.viewCount = self.__channel['items'][0]['statistics']['viewCount']
+
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+    @property
+    def api_key(self):
+        return self.__api_key
 
     @classmethod
     def get_service(cls):
@@ -17,23 +34,16 @@ class Channel:
         youtube = build('youtube', 'v3', developerKey=__API_KEY)
         return youtube
 
-    @property
-    def title(self):
-        title = self.print_info()
-        return title['items'][0]['snippet']['title']
-
-    @property
-    def video_count(self):
-        video_count = self.print_info()
-        return video_count['items'][0]['statistics']['videoCount']
-
-    @property
-    def url(self):
-        return f'https://www.youtube.com/channel/{self.channel_id}'
-
     def to_json(self, dict_to_print) -> None:
         """Выводит словарь в json-подобном удобном формате с отступами"""
-        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
+        dictionary = {1: self.title,
+                      2: self.description,
+                      3: self.video_count,
+                      4: self.url,
+                      5: self.subscribers,
+                      6: self.viewCount}
+        with open(dict_to_print, 'w') as outfile:
+            outfile.write(json.dumps(dictionary, indent=2, ensure_ascii=False))
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
