@@ -1,4 +1,5 @@
 from src.channel import Channel
+import os
 
 if __name__ == '__main__':
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
@@ -13,7 +14,8 @@ if __name__ == '__main__':
     # AttributeError: property 'channel_id' of 'Channel' object has no setter
 
     # можем получить объект для работы с API вне класса
-    print(Channel.get_service())
+    api_key = os.environ.get('YT_API_KEY')
+    print(Channel.get_service(api_key))
     # <googleapiclient.discovery.Resource object at 0x000002B1E54F9750>
 
     # создаем файл 'moscowpython.json' в данными по каналу
