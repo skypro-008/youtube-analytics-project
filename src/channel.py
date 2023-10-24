@@ -71,7 +71,7 @@ class Channel:
                       5: self.subscribers,
                       6: self.viewCount}
         with open(dict_to_print, 'w') as outfile:
-            outfile.write(json.dumps(dictionary, indent=2, ensure_ascii=False))
+            outfile.write(json.dumps(dictionary, encodings='utf-8', indent=2, ensure_ascii=False))
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
