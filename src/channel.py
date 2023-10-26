@@ -64,6 +64,9 @@ class Channel:
         with open(file_name, 'w') as f:
             json.dump(info, f, indent=4)
 
+    def __str__(self):
+        return f"{self.title}('{self.url})"
+
 
     def __add__(self, other):
         return self.subscriberCount + other.subscriberCount
