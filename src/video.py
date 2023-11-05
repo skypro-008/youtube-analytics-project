@@ -4,19 +4,26 @@ from googleapiclient.discovery import build
 
 class Video:
     def __init__(self, video_id):
-        self.video_id = video_id
-        self.api_key = os.getenv('YT_API_KEY')
-        self.youtube = build('youtube', 'v3', developerKey=self.api_key)
-        self.video_response = self.youtube.videos().list(
-            part='snippet,statistics,contentDetails,topicDetails',
-            id=self.video_id).execute()
-        self.video_title = self.video_response['items'][0]['snippet']['title']
-        self.video_url = f"https://www.youtube.com/watch?v={self.video_id}"
-        self.view_count = int(self.video_response['items'][0]['statistics']['viewCount'])
-        self.like_count = int(self.video_response['items'][0]['statistics']['likeCount'])
+        try:
+            self.video_id = video_id
+            self.api_key = os.getenv('YT_API_KEY')
+            self.youtube = build('youtube', 'v3', developerKey=self.api_key)
+            self.video_response = self.youtube.videos().list(
+                part='snippet,statistics,contentDetails,topicDetails',
+                id=self.video_id).execute()
+            self.title = self.video_response['items'][0]['snippet']['title']
+        except IndexError:
+            self.title = None
+            self.video_url = None
+            self.view_count = None
+            self.like_count = None
+        else:
+            self.video_url = f"https://www.youtube.com/watch?v={self.video_id}"
+            self.view_count = int(self.video_response['items'][0]['statistics']['viewCount'])
+            self.like_count = int(self.video_response['items'][0]['statistics']['likeCount'])
 
     def __str__(self):
-        return self.video_title
+        return self.title
 
 
 class PLVideo(Video):
