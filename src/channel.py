@@ -73,7 +73,7 @@ class Channel:
 
     def print_info(self) -> None:
 
-        channel = self.YOUTUBE.channels().list(id=self.id,  part='snippet,statistics').execute() # в этой строчке обратичлся через self к аргумeнту YOUTUBE
+        channel = self.YOUTUBE.channels().list(id=self.channel_id, part='snippet,statistics').execute() # в этой строчке обратичлся через self к аргумeнту YOUTUBE
         print(json.dumps(channel, indent=2)) # в этой строчке распокавал ответ с помощью библиотеки json
 
     @classmethod

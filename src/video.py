@@ -22,10 +22,12 @@ class Video:
             )
             response = self.request.execute()
 
-            if response['items']:
-                video_data = response['items'][0]
+            video_data = response.get('items', [])  # Проверяем наличие элементов в ответе
+
+            if video_data:
+                video_data = video_data[0]
                 self.name_video = video_data['snippet']['title']
-                self.url = f"https://www.youtube.com/watch?v={self.id_video}"
+                self.url_video = f"https://www.youtube.com/watch?v={self.id_video}"
                 self.view_video = int(video_data['statistics']['viewCount'])
                 self.like_video = int(video_data['statistics']['likeCount'])
         except HttpError as e:
