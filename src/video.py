@@ -4,6 +4,7 @@ from googleapiclient.discovery import build
 
 class Video:
     def __init__(self, id_video):
+
         self.id_video = id_video
         self.__api_key = os.getenv('YouTubeAPI')
         youtube = build('youtube', 'v3', developerKey=self.__api_key)
@@ -11,11 +12,19 @@ class Video:
         video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=id_video
                                                ).execute()
+        try:
+            self.video_title = video_response['items'][0]['snippet']['title']
+            self.video_url = f'https://www.youtube.com/watch?v={self.id_video}'
+            self.video_view_count = video_response['items'][0]['statistics']['viewCount']
+            self.video_likes_count = video_response['items'][0]['statistics']['likeCount']
 
-        self.video_title = video_response['items'][0]['snippet']['title']
-        self.video_url = f'https://www.youtube.com/watch?v={self.id_video}'
-        self.video_view_count = video_response['items'][0]['statistics']['viewCount']
-        self.video_likes_count = video_response['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.video_title = None
+            self.video_url = None
+            self.video_view_count = None
+            self.video_likes_count = None
+
+
 
     def __str__(self):
         return f'{self.video_title}'
@@ -31,6 +40,8 @@ class PLVideo(Video):
                                                        part='contentDetails',
                                                        maxResults=50,
                                                        ).execute()
+
+
 
 
 
