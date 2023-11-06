@@ -30,7 +30,7 @@ class Video:
                 self.view_video = int(video_data['statistics']['viewCount'])
                 self.like_video = int(video_data['statistics']['likeCount'])
         except HttpError as e:
-            #self.name_video = self.url_video = self.view_video = self.like_video = None
+            self.name_video = self.url_video = self.view_video = self.like_video = None
             print(f"Ошибка при получении данных для видео {self.id_video}: {e}")
 
 

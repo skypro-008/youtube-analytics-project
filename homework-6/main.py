@@ -7,3 +7,4 @@ if __name__ == '__main__':
 
     print(broken_video.name_video)
     print(broken_video.like_video)
+    print(broken_video.id_video)
