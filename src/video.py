@@ -4,9 +4,8 @@ from googleapiclient.errors import HttpError
 
 
 class Video:
-    """Класс для ютуб-видео"""
+
     api_key = get_api_key()
-    """Экземпляр инициализирует id канал. Дальше все данные будут подтягиваться по API."""
 
     def __init__(self, id_video):
         self.id_video = id_video
@@ -31,7 +30,7 @@ class Video:
                 self.view_video = int(video_data['statistics']['viewCount'])
                 self.like_video = int(video_data['statistics']['likeCount'])
         except HttpError as e:
-            self.name_video = self.url_video = self.view_video = self.like_video = None
+            #self.name_video = self.url_video = self.view_video = self.like_video = None
             print(f"Ошибка при получении данных для видео {self.id_video}: {e}")
 
 
