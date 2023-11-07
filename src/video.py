@@ -13,25 +13,22 @@ class Video:
         self.url_video = None
         self.view_video = None
         self.like_video = None
+        self.request = self.get_service().videos().list(
+            part="snippet,statistics",
+            id=self.id_video
+        )
+        response = self.request.execute()
 
-        try:
-            self.request = self.get_service().videos().list(
-                part="snippet,statistics",
-                id=self.id_video
-            )
-            response = self.request.execute()
-
-            video_data = response.get('items', [])  # Проверяем наличие элементов в ответе
-
-            if video_data:
-                video_data = video_data[0]
-                self.name_video = video_data['snippet']['title']
-                self.url_video = f"https://www.youtube.com/watch?v={self.id_video}"
-                self.view_video = int(video_data['statistics']['viewCount'])
-                self.like_video = int(video_data['statistics']['likeCount'])
-        except HttpError as e:
+        video_data = response.get('items', [])  # Проверяем наличие элементов в ответе
+        if video_data:
+            video_data = video_data[0]
+            self.name_video = video_data['snippet']['title']
+            self.url_video = f"https://www.youtube.com/watch?v={self.id_video}"
+            self.view_video = int(video_data['statistics']['viewCount'])
+            self.like_video = int(video_data['statistics']['likeCount'])
+        else:
             self.name_video = self.url_video = self.view_video = self.like_video = None
-            print(f"Ошибка при получении данных для видео {self.id_video}: {e}")
+            print(f"Ошибка при получении данных для видео {self.id_video}")
 
 
 
