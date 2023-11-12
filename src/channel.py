@@ -21,5 +21,5 @@ class Channel:
         print(json.dumps(self.channel, indent=2, ensure_ascii=False))
 
 
-    #def __repr__(self):
-        #return f"Channel({self.channel_id}, {self.channel}"
+    def __repr__(self):
+        return f"Channel({self.channel_id}, {self.channel}"
