@@ -7,8 +7,7 @@ class Channel:
         self.channel_id = channel_id
 
     def print_info(self):
-        api_key = "AIzaSyCWPxoY0OGIHIFtENq5bkq58n5DzlRU-l8"
-        # api_key = os.environ.get("YouTube_API")
+        api_key = os.environ.get("YouTube_API")
 
         if not api_key:
             print("API не найден.")
