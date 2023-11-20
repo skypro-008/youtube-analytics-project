@@ -1,85 +1,79 @@
 import os
 import json
-import requests
+from googleapiclient.discovery import build
 
 
 class Channel:
     def __init__(self, channel_id):
-        self.channel_id = channel_id
+        self.id = channel_id
         self.title = None
         self.description = None
-        self.url = None
+        self.custom_url = None
+        self.published_at = None
+        self.thumbnail_urls = {}
+        self.country = None
+        self.view_count = None
         self.subscriber_count = None
         self.video_count = None
-        self.view_count = None
 
-        self.fetch_channel_info()  # Получаем информацию о канале
+        self.get_channel_info()
 
-    def fetch_channel_info(self):
-        api_key = os.environ.get("YouTube_API")
+    def get_channel_info(self):
+        api_key = os.getenv('YT_API_KEY') # Получение API-ключа из переменных окружения
+        youtube = build('youtube', 'v3', developerKey=api_key)
 
-        if not api_key:
-            print("API не найден.")
-            return
+        channel_data = youtube.channels().list(id=self.id, part='snippet,statistics').execute()
 
-        url = f"https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id={self.channel_id}&key={api_key}"
+        if 'items' in channel_data and len(channel_data['items']) > 0:
+            channel = channel_data['items'][0]
+            snippet = channel.get('snippet', {})
+            statistics = channel.get('statistics', {})
 
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
+            self.title = snippet.get('title')
+            self.description = snippet.get('description')
+            self.custom_url = snippet.get('customUrl')
+            self.published_at = snippet.get('publishedAt')
+            self.thumbnail_urls = snippet.get('thumbnails', {})
+            self.country = snippet.get('country')
+            self.view_count = statistics.get('viewCount')
+            self.subscriber_count = statistics.get('subscriberCount')
+            self.video_count = statistics.get('videoCount')
 
-            channel_data = response.json()
-            channel = channel_data.get("items", [{}])[0]
-
-            self.title = channel.get("snippet", {}).get("title", "N/A")
-            self.description = channel.get("snippet", {}).get("description", "N/A")
-            self.url = f"https://www.youtube.com/channel/{self.channel_id}"
-            self.subscriber_count = channel.get("statistics", {}).get("subscriberCount", "N/A")
-            self.video_count = channel.get("statistics", {}).get("videoCount", "N/A")
-            self.view_count = channel.get("statistics", {}).get("viewCount", "N/A")
-
-        except requests.exceptions.HTTPError as errh:
-            print("HTTP Error:", errh)
-        except requests.exceptions.ConnectionError as errc:
-            print("Error Connecting:", errc)
-        except requests.exceptions.Timeout as errt:
-            print("Timeout Error:", errt)
-        except requests.exceptions.RequestException as err:
-            print("Something went wrong:", err)
+    def get_channel_url(self):
+        return f"https://www.youtube.com/channel/{self.id}"
 
     @classmethod
     def get_service(cls):
-        # получение объекта для работы с YouTube API
-        return "<googleapiclient.discovery.Resource object>"
+        api_key = os.getenv('YT_API_KEY')
+        return build('youtube', 'v3', developerKey=api_key)
 
-    def to_json(self, filename):
+    def to_json(self, file_path):
         data = {
-            "id": self.channel_id,
+            "id": self.id,
             "title": self.title,
             "description": self.description,
-            "url": self.url,
+            "custom_url": self.custom_url,
+            "published_at": self.published_at,
+            "thumbnail_urls": self.thumbnail_urls,
+            "country": self.country,
+            "view_count": self.view_count,
             "subscriber_count": self.subscriber_count,
-            "video_count": self.video_count,
-            "view_count": self.view_count
+            "video_count": self.video_count
         }
 
-        with open(filename, 'w') as file:
-            json.dump(data, file, indent=4)
+        with open(file_path, 'w') as file:
+            json.dump(data, file, indent=2)
 
-if __name__ == '__main__':
-    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    def print_info(self):
+        print(f"Channel ID: {self.id}")
+        print(f"Title: {self.title}")
+        print(f"Description: {self.description}")
+        print(f"Custom URL: {self.custom_url}")
+        print(f"Published At: {self.published_at}")
+        print(f"Thumbnail URLs: {self.thumbnail_urls}")
+        print(f"Country: {self.country}")
+        print(f"View Count: {self.view_count}")
+        print(f"Subscriber Count: {self.subscriber_count}")
+        print(f"Video Count: {self.video_count}")
 
-    # значения атрибутов
-    print(moscowpython.title)  # Выводим название канала
-    print(moscowpython.video_count)  # Выводим количество видео
-    print(moscowpython.url)  # Выводим ссылку на канал
 
-    # Пробуем изменить атрибут
-    moscowpython.channel_id = 'Новое название'
-    # AttributeError: can't set attribute
-
-    # Полкчаем объект для работы с API вне класса
-    print(Channel.get_service())
-
-    # Создаем файл 'moscowpython.json' с данными по каналу
-    moscowpython.to_json('moscowpython.json')
