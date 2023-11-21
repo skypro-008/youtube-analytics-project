@@ -15,11 +15,11 @@ class Channel:
         self.view_count = None
         self.subscriber_count = None
         self.video_count = None
-        #self.url = f"https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A"
+        # self.url = f"https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A"
         self.get_channel_info()
 
     def get_channel_info(self):
-        api_key = os.getenv('YT_API_KEY') # Получение API-ключа из переменных окружения
+        api_key = os.getenv('YT_API_KEY')  # Получение API-ключа из переменных окружения
         youtube = build('youtube', 'v3', developerKey=api_key)
 
         channel_data = youtube.channels().list(id=self.id, part='snippet,statistics').execute()
@@ -76,4 +76,47 @@ class Channel:
         print(f"Subscriber Count: {self.subscriber_count}")
         print(f"Video Count: {self.video_count}")
 
+    def __str__(self):
+        return f"{self.title} ({self.get_channel_url()})"
 
+    def __add__(self, other):
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        if self.subscriber_count is not None and other.subscriber_count is not None:
+            return int(self.subscriber_count) - int(other.subscriber_count)
+        else:
+            return "Данные о количестве подписчеков недоступны"
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
+
+    def __gt__(self, other):
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
+
+    def __eq__(self, other):
+        return self.subscriber_count == other.subscriber_count
+
+
+if __name__ == '__main__':
+    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    highload = Channel('UCwHL6WHUarjGfUM_586me8w')
+
+    print(moscowpython)  # Выводит название канала и его ссылку (https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A)'
+    print(moscowpython + highload)  # Выводит сумму количества подписчиков двух каналов
+    print(moscowpython - highload)  # Выводит разницу количеств подписчеков между двумя каналами
+    print(highload - moscowpython)  # Выводит разницу количества подписчиков между двумя каналами (обратный порядок)
+    print(moscowpython > highload)  # Выводит false, если у канала MoscowPython больше подписчиков, чем у канала highload
+    print(moscowpython >= highload)  # Выводит False, если у канала MoscowPython больше или равно количество подписчиков
+    # у канала highload
+    print(moscowpython < highload)
+    print(moscowpython <= highload)  # Выводит True, если у канала MoscowPython меньше или равно количество подписчиков
+    # у канала highload
+    print(moscowpython == highload)  # Выводит False, если у канала MoscowPython количество подписчиков равно количеству
+    # подписчиков у канала highload
