@@ -15,7 +15,7 @@ class Channel:
         self.view_count = None
         self.subscriber_count = None
         self.video_count = None
-
+        #self.url = f"https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A"
         self.get_channel_info()
 
     def get_channel_info(self):
