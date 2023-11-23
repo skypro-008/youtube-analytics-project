@@ -20,6 +20,10 @@ class Channel:
         self.video_count = self.print_info()['items'][0]['statistics']['videoCount']
         self.vieW = self.print_info()['items'][0]['statistics']['viewCount']
 
+    @property
+    def channel_id(self) -> str:
+        return self.__channel_id
+
     def print_info(self) -> None:
         """Возвращает информацию о канале."""
         channel = youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
