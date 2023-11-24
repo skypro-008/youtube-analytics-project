@@ -80,27 +80,41 @@ class Channel:
         return f"{self.title} ({self.get_channel_url()})"
 
     def __add__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции сложения")
         return self.subscriber_count + other.subscriber_count
 
     def __sub__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции вычитания")
         if self.subscriber_count is not None and other.subscriber_count is not None:
             return int(self.subscriber_count) - int(other.subscriber_count)
         else:
-            return "Данные о количестве подписчеков недоступны"
+            return "Данные о количестве подписчиков недоступны"
 
     def __lt__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции '<'")
         return self.subscriber_count < other.subscriber_count
 
     def __le__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции '<='")
         return self.subscriber_count <= other.subscriber_count
 
     def __gt__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции '>'")
         return self.subscriber_count > other.subscriber_count
 
     def __ge__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции 'Ю='")
         return self.subscriber_count >= other.subscriber_count
 
     def __eq__(self, other):
+        if not isinstance(other, Channel):
+            raise ValueError("Должен использоваться объект класса Channel для выполнения операции '=='")
         return self.subscriber_count == other.subscriber_count
 
 
