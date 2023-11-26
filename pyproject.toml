@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "youtube-analytics-project"
+version = "0.1.0"
+description = ""
+authors = ["Alexei Kasaev <kasaev_97@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flake8 = "^6.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
