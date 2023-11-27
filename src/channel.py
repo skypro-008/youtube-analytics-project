@@ -1,4 +1,3 @@
-from google.auth.transport import requests
 from googleapiclient.discovery import build
 import json
 import os
