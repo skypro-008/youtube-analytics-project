@@ -37,6 +37,45 @@ class Channel:
         """
         return self.__channel_id
 
+    def __str__(self):
+        """
+        Возвращает название канала и url
+        """
+        return f"{self.title}({self.url})"
+
+    def __add__(self, other):
+        """
+        Возвращает сумму подписчиков двух каналов
+        """
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """
+        Вычетает разность подписчиков двух каналов
+        """
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other):
+        """
+        Возвращает False, если количество подписчиков
+        текущего канала больше, чем у другого
+        """
+        return self.subscriber_count > other.subscriber_count
+
+    def __le__(self, other):
+        """
+        Возвращает True, если количество подписчиков
+        текущего канала меньше или равно, чем у другого
+        """
+        return self.subscriber_count <= other.subscriber_count
+
+    def __eq__(self, other):
+        """
+        Возвращает True, если количество подписчиков
+        у двух каналов одинаково
+        """
+        return self.subscriber_count == other.subscriber_count
+
     @classmethod
     def get_service(cls) -> Any:
         """
