@@ -15,10 +15,34 @@ class Channel:
         self.youtube = build('youtube', 'v3', developerKey=os.getenv('YT_API_KEY'))
         self.description = self.youtube_load()["items"][0]["snippet"]["description"]
         self.title = self.youtube_load()["items"][0]["snippet"]["title"]
-        self.url = self.youtube_load()["items"][0]["snippet"]["thumbnails"]["default"]["url"]
+        self.url = f"https://www.youtube.com/channel/{channel_id}"
         self.count_subscribers = self.youtube_load()["items"][0]["statistics"]["subscriberCount"]
         self.video_count = self.youtube_load()["items"][0]["statistics"]["videoCount"]
         self.count_views = self.youtube_load()["items"][0]["statistics"]["viewCount"]
+
+    def __str__(self):
+        """
+        возвращает название и ссылку на канал
+        """
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """
+        возвращает сумму подписчиков
+        """
+        return int(self.count_subscribers) + int(other.count_subscribers)
+
+    def __sub__(self, other):
+        """
+        возвращает разность подписчиков
+        """
+        return int(self.count_subscribers) - int(other.count_subscribers)
+
+    def __lt__(self, other):
+        return int(self.count_subscribers) < int(other.count_subscribers)
+
+    def __le__(self, other):
+        return int(self.count_subscribers) <= int(other.count_subscribers)
 
     def youtube_load(self):
         """Выдает информацию о сайте"""
