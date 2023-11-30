@@ -9,11 +9,18 @@ class Video:
     url_str = 'https://youtu.be/'
 
     def __init__(self, id_video):
-        self.__id_video = id_video
-        self.title = self.video_response()['items'][0]['snippet']['title']
-        self.view_count = self.video_response()['items'][0]['statistics']['viewCount']
-        self.like_count = self.video_response()['items'][0]['statistics']['likeCount']
-        self.url = Video.url_str + self.__id_video
+        try:
+            self.__id_video = id_video
+            self.title = self.video_response()['items'][0]['snippet']['title']
+            self.view_count = self.video_response()['items'][0]['statistics']['viewCount']
+            self.like_count = self.video_response()['items'][0]['statistics']['likeCount']
+            self.url = Video.url_str + self.__id_video
+        except Exception:
+            self.__id_video = id_video
+            self.title = None
+            self.view_count = None
+            self.like_count = None
+            self.url = None
 
     def __str__(self):
         return self.title
@@ -37,6 +44,7 @@ class Video:
 
 class PLVideo(Video):
     """Класс для видео из плейлиста"""
+
     def __init__(self, id_video, pl_id):
         super().__init__(id_video)
         self.__pl_id = pl_id
