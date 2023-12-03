@@ -1,3 +1,4 @@
+import json
 import os
 
 from googleapiclient.discovery import build
@@ -18,8 +19,28 @@ class Channel(YouTube):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__id = channel_id
         channel = self.get_service().channels().list(id=self.__id, part='snippet,statistics').execute()
-        self.ifo = channel
+        self.ifo = channel['items'][0]
+        self.items = channel['items'][0]
+        self.title = self.items['snippet']['localized']['title']
+        self.description = self.items['snippet']['localized']['description']
+        self.url = f"https://www.youtube.com/{self.items['snippet']['customUrl']}"
+        self.subscriber_count = self.items['statistics']['subscriberCount']
+        self.video_count = self.items['statistics']['videoCount']
+        self.view_count = self.items['statistics']['viewCount']
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         return self.ifo
+
+    def to_json(self, filename):
+        youtobe_json = {
+            'title': self.title,
+            'description': self.description,
+            'url': self.url,
+            'subscriberCount': self.subscriber_count,
+            'videoCount': self.video_count,
+            'viewCount': self.view_count,
+            'id': self.__id
+        }
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(youtobe_json, f, indent=2, ensure_ascii=False)
