@@ -12,7 +12,4 @@ if __name__ == '__main__':
     assert isinstance(duration, datetime.timedelta)
     assert duration.total_seconds() == 6592.0
 
-    best_video_url = pl.show_best_video()
-    print("Best Video URL:", best_video_url)
-
-    assert best_video_url == "https://www.youtube.com/watch?v=cUGyMzWQcGM"
+    assert pl.show_best_video() == "https://youtu.be/cUGyMzWQcGM"

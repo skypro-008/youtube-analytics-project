@@ -53,7 +53,7 @@ class PlayList:
 
                 if int(view_count) > max_views:
                     max_views = int(view_count)
-                    best_video = f"https://www.youtube.com/watch?v={video_id}"
+                    best_video = f"https://youtu.be/{video_id}"
 
         return best_video
 
