@@ -29,13 +29,13 @@ class Video:
                 self.view_count = int(video_info['statistics']['viewCount'])
                 self.like_count = int(video_info['statistics']['likeCount'])
             else:
-                # Если список items пустой, устанавливаем остальные поля в значение None
+                # Если список пустой, устанавливаем остальные поля в значение None
                 self.title = None
                 self.view_count = None
                 self.like_count = None
         except Exception as e:
             print(f"An error occurred: {str(e)}")
-            # Если произошла ошибка при получении информации о видео,
+            # Если произошла ошибка при получении информации о видео
             # устанавливаем остальные поля в значение None
             self.title = None
             self.view_count = None
