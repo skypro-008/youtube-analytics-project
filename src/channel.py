@@ -60,3 +60,36 @@ class Channel:
 
         with open(filename, 'w', encoding='utf-8') as json_file:
             json.dump(channel_data, json_file, indent=2, ensure_ascii=False)
+
+
+def __str__(self) -> str:
+    """Возвращает строковое представление канала."""
+    return f"{self.title} ({self.url})"
+
+
+def __add__(self, other) -> int:
+    """Возвращает сумму подписчиков двух каналов."""
+    return self.subscriber_count + other.subscriber_count
+
+
+def __sub__(self, other) -> int:
+    """Возвращает разность подписчиков двух каналов."""
+    return self.subscriber_count - other.subscriber_count
+
+
+def __lt__(self, other) -> bool:
+    """Возвращает True, если количество подписчиков
+    текущего канала меньше, чем у другого."""
+    return self.subscriber_count < other.subscriber_count
+
+
+def __le__(self, other) -> bool:
+    """Возвращает True, если количество подписчиков
+    текущего канала меньше или равно, чем у другого."""
+    return self.subscriber_count <= other.subscriber_count
+
+
+def __eq__(self, other) -> bool:
+    """Возвращает True, если количество подписчиков
+    у двух каналов одинаково."""
+    return self.subscriber_count == other.subscriber_count
