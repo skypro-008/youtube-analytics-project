@@ -31,6 +31,30 @@ class Channel:
     def channel_id(self, channel_id):
         self.__channel_id = channel_id
 
+    def __str__(self):
+        return f"{self.title} ({self.__channel_id})"
+
+    def __add__(self, other):
+        return int(self.count_subscribers) + int(other.count_subscribers)
+
+    def __sub__(self, other):
+        return int(self.count_subscribers) - int(other.count_subscribers)
+
+    def __lt__(self, other):
+        return int(self.count_subscribers) < int(other.count_subscribers)
+
+    def __eq__(self, other):
+        return int(self.count_subscribers) == int(other.count_subscribers)
+
+    def __le__(self, other):
+        return int(self.count_subscribers) <= int(other.count_subscribers)
+
+    def __gt__(self, other):
+        return int(self.count_subscribers) > int(other.count_subscribers)
+
+    def __ge__(self, other):
+        return int(self.count_subscribers) >= int(other.count_subscribers)
+
     def print_info(self) -> None:
         """Выводит словарь в json-подобном удобном формате с отступами"""
         # print(self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute())
