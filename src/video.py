@@ -14,7 +14,7 @@ class Video:
         )
         self.response = self.request.execute()
         self.name = self.response["items"][0]["snippet"]["title"]
-        self.url = f"https://www.youtube.com/channel/{self.video_id}"
+        self.url = f"https://youtu.be/{self.video_id}"
         self.view_count = self.response["items"][0]["statistics"]["viewCount"]
         self.like_count = self.response["items"][0]["statistics"]["likeCount"]
 
