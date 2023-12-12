@@ -1,3 +1,4 @@
+import isodate
 from googleapiclient.discovery import build
 import os
 import dotenv
@@ -27,3 +28,23 @@ class PLVideo(Video):
 
     def __str__(self):
         return self.title
+
+
+playlist_videos = youtube.playlistItems().list(part='snippet, contentDetails',
+                                               id='PLv_zOGKKxVpj-n2qLkEM2Hj96LO6uqgQw').execute()
+
+print(playlist_videos)
+
+video_ids = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
+
+print(video_ids)
+
+video_response = youtube.videos().list(part='contentDetails,statistics',
+                                       id=','.join(video_ids)
+                                       ).execute()
+
+for video in video_response['items']:
+    # YouTube video duration is in ISO 8601 format
+    iso_8601_duration = video['contentDetails']['duration']
+    duration = isodate.parse_duration(iso_8601_duration)
+    print(duration)
