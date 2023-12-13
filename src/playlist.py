@@ -29,7 +29,9 @@ class PlayList:
 
     @property
     def total_duration(self):
-
+        """
+        возвращает общую длинну плей листа
+        """
         total_duration = datetime.timedelta()
         for video in self.video_response['items']:
             # YouTube video duration is in ISO 8601 format
@@ -39,6 +41,9 @@ class PlayList:
         return total_duration
 
     def show_best_video(self):
+        """
+        выдает видео с самым большим количеством лайков из плейлиста
+        """
         like = 0
         max_like = ""
 
