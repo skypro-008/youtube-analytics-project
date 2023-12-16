@@ -6,17 +6,22 @@ class Video:
     """Класс по видео из ютуба"""
 
     def __init__(self, video_id: str):
-        self.video_id = video_id
-        self.request = (
-            self.get_service()
-            .videos()
-            .list(part="snippet,contentDetails,statistics", id=self.video_id)
-        )
-        self.response = self.request.execute()
-        self.name = self.response["items"][0]["snippet"]["title"]
-        self.url = f"https://youtu.be/{self.video_id}"
-        self.view_count = self.response["items"][0]["statistics"]["viewCount"]
-        self.like_count = self.response["items"][0]["statistics"]["likeCount"]
+        try:
+            self.video_id = video_id
+            self.request = (
+                self.get_service()
+                .videos()
+                .list(part="snippet,contentDetails,statistics", id=self.video_id)
+            )
+            self.response = self.request.execute()
+            self.title = self.response["items"][0]["snippet"]["title"]
+            self.url = f"https://youtu.be/{self.video_id}"
+            self.view_count = self.response["items"][0]["statistics"]["viewCount"]
+            self.like_count = self.response["items"][0]["statistics"]["likeCount"]
+        except:
+            self.video_id = video_id
+            self.title = None
+            self.like_count = None
 
     @classmethod
     def get_service(cls) -> build:
@@ -31,7 +36,7 @@ class Video:
         """
         Возвращет названия видео
         """
-        return f"{self.name}"
+        return f"{self.title}"
 
 
 class PLVideo(Video):
