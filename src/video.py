@@ -10,12 +10,20 @@ youtube = build('youtube', 'v3', developerKey=os.getenv('YT_API_KEY'))
 
 class Video:
     def __init__(self, channel_id):
-        self.channel_id = channel_id
-        self.video = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails', id=channel_id).execute()['items'][0]
-        self.title = self.video["snippet"]["title"]
-        self.url = f"https://www.youtube.com/channel/{channel_id}"
-        self.video_count = self.video["statistics"]["viewCount"]
-        self.count_views = self.video["statistics"]["likeCount"]
+        try:
+            self.channel_id = channel_id
+            self.video = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails', id=channel_id).execute()['items'][0]
+            self.title = self.video["snippet"]["title"]
+            self.url = f"https://www.youtube.com/channel/{channel_id}"
+            self.video_count = self.video["statistics"]["viewCount"]
+            self.like_count = self.video["statistics"]["likeCount"]
+        except IndexError:
+            self.channel_id = channel_id
+            self.video = None
+            self.title = None
+            self.url = None
+            self.video_count = None
+            self.like_count = None
 
     def __str__(self):
         return self.title
@@ -33,11 +41,8 @@ class PLVideo(Video):
 playlist_videos = youtube.playlistItems().list(part='snippet, contentDetails',
                                                id='PLv_zOGKKxVpj-n2qLkEM2Hj96LO6uqgQw').execute()
 
-print(playlist_videos)
-
 video_ids = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
 
-print(video_ids)
 
 video_response = youtube.videos().list(part='contentDetails,statistics',
                                        id=','.join(video_ids)
