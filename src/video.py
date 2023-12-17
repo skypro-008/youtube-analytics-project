@@ -18,9 +18,13 @@ class Video:
             self.url = f"https://youtu.be/{self.video_id}"
             self.view_count = self.response["items"][0]["statistics"]["viewCount"]
             self.like_count = self.response["items"][0]["statistics"]["likeCount"]
-        except:
+        except Exception:
             self.video_id = video_id
+            self.request = None
+            self.response = None
             self.title = None
+            self.url = None
+            self.view_count = None
             self.like_count = None
 
     @classmethod
