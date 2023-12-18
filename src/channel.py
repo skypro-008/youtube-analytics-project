@@ -69,3 +69,27 @@ class Channel:
                        "view_count": self.__view_count,
                        "subscriber_count": self.__subscriber_count},
                       file)
+
+    def __str__(self):
+        return f"{self.__title}({self.__url})"
+
+    def __add__(self, other):
+        return self.__subscriber_count + other.__subscriber_count
+
+    def __sub__(self, other):
+        return self.__subscriber_count - other.__subscriber_count
+
+    def __le__(self, other):
+        return self.__subscriber_count <= other.__subscriber_count
+
+    def __lt__(self, other):
+        return self.__subscriber_count < other.__subscriber_count
+
+    def __ge__(self, other):
+        return self.__subscriber_count >= other.__subscriber_count
+
+    def __gt__(self, other):
+        return self.__subscriber_count > other.__subscriber_count
+
+    def __eq__(self, other):
+        return self.__subscriber_count == other.__subscriber_count
