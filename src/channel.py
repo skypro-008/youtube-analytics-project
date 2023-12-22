@@ -26,10 +26,55 @@ class Channel:
         self.title = channel_info['items'][0]['snippet']['title']
         self.channel_desc = channel_info['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
-        self.count_sub = channel_info['items'][0]['statistics']['subscriberCount']
-        self.video_count = channel_info['items'][0]['statistics']['videoCount']
-        self.view_count = channel_info['items'][0]['statistics']['viewCount']
+        self.count_sub = int(channel_info['items'][0]['statistics']['subscriberCount'])
+        self.video_count = int(channel_info['items'][0]['statistics']['videoCount'])
+        self.view_count = int(channel_info['items'][0]['statistics']['viewCount'])
     
+
+    def __str__(self) -> str:
+        """
+        :return: Название и ссылку на канал по шаблону `<название_канала> (<ссылка_на_канал>)`
+        """
+        return f'{self.title} ({self.url})'
+    
+    def __add__(self, other):
+        """
+        :return: Складывает по количеству подписчиков
+        """
+        return self.count_sub + other.count_sub
+
+    def __sub__(self, other):
+        """
+        :return: Вычитает по количеству подписчиков
+        """
+        return self.count_sub - other.count_sub
+    
+    def __lt__(self, other):
+        """
+        :return: Сравнивает "меньше" по количеству подписчиков
+        """
+        return self.count_sub < other.count_sub
+    
+    def __le__(self, other):
+        """
+        :return: Сравнивает "меньше или равно" по количеству подписчиков
+        """
+        return self.count_sub <= other.count_sub
+    
+    def __gt__(self, other):
+        """
+        :return: Сравнивает "больше" по количеству подписчиков
+        """
+        return self.count_sub > other.count_sub
+    
+    def __ge__(self, other):
+        """
+        :return: Сравнивает "больше или равно" по количеству подписчиков
+        """
+        return self.count_sub >= other.count_sub
+    
+    
+
     @classmethod
     def get_service(cls):
         """
@@ -42,7 +87,7 @@ class Channel:
         return youtube
 
     def to_json(self, name_file):
-        with open(f"src/{name_file}", 'w') as file:
+        with open(f"src/{name_file}", 'w', encoding="utf-8") as file:
             json.dump(self.__dict__, file)
 
     def print_info(self) -> None:
