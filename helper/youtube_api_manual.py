@@ -1,5 +1,6 @@
 import json
 import os
+from pprint import pprint
 
 # необходимо установить через: pip install google-api-python-client
 from googleapiclient.discovery import build
@@ -40,9 +41,9 @@ playlists = youtube.playlists().list(channelId=channel_id,
                                      maxResults=50,
                                      ).execute()
 # printj(playlists)
-for playlist in playlists['items']:
-    print(playlist)
-    print()
+# for playlist in playlists['items']:
+    # print(playlist)
+    # print()
 
 
 '''
@@ -58,7 +59,7 @@ playlist_videos = youtube.playlistItems().list(playlistId=playlist_id,
                                                part='contentDetails',
                                                maxResults=50,
                                                ).execute()
-# printj(playlist_videos)
+printj(playlist_videos)
 
 # получить все id видеороликов из плейлиста
 video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
@@ -95,3 +96,4 @@ video_title: str = video_response['items'][0]['snippet']['title']
 view_count: int = video_response['items'][0]['statistics']['viewCount']
 like_count: int = video_response['items'][0]['statistics']['likeCount']
 comment_count: int = video_response['items'][0]['statistics']['commentCount']
+pprint(video_response)
