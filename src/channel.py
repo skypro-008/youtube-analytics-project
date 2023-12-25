@@ -13,11 +13,11 @@ class Channel:
         self.__channel = self.youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         self.__channel_id = self.__channel["items"][0]["id"]
         self.__title = self.__channel["items"][0]["snippet"]["title"]
-        self.__video_count = self.__channel["items"][0]["statistics"]["videoCount"]
+        self.__video_count = int(self.__channel["items"][0]["statistics"]["videoCount"])
         self.__url = f"https://www.youtube.com/channel/{self.__channel_id}"
         self.__description = self.__channel["items"][0]["snippet"]["description"]
-        self.__view_count = self.__channel["items"][0]["statistics"]["viewCount"]
-        self.__subscriber_count = self.__channel["items"][0]["statistics"]["subscriberCount"]
+        self.__view_count = int(self.__channel["items"][0]["statistics"]["viewCount"])
+        self.__subscriber_count = int(self.__channel["items"][0]["statistics"]["subscriberCount"])
 
     @property
     def channel(self):
@@ -70,26 +70,26 @@ class Channel:
                        "subscriber_count": self.__subscriber_count},
                       file)
 
-    def __str__(self):
-        return f"{self.__title}({self.__url})"
-
     def __add__(self, other):
-        return self.__subscriber_count + other.__subscriber_count
+        return self.subscriber_count + other.subscriber_count
+
+    def __radd__(self, other):
+        return self.subscriber_count + other.subscriber_count
 
     def __sub__(self, other):
-        return self.__subscriber_count - other.__subscriber_count
-
-    def __le__(self, other):
-        return self.__subscriber_count <= other.__subscriber_count
+        return self.subscriber_count - other.subscriber_count
 
     def __lt__(self, other):
-        return self.__subscriber_count < other.__subscriber_count
+        return self.subscriber_count < other.subscriber_count
 
-    def __ge__(self, other):
-        return self.__subscriber_count >= other.__subscriber_count
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
 
     def __gt__(self, other):
-        return self.__subscriber_count > other.__subscriber_count
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
 
     def __eq__(self, other):
-        return self.__subscriber_count == other.__subscriber_count
+        return self.subscriber_count == other.subscriber_count
