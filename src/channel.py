@@ -1,6 +1,7 @@
 import os
 import json
 from googleapiclient.discovery import build
+
 class Channel:
     """Класс для ютуб-канала"""
     api_key = os.getenv('YT_API_KEY')
@@ -13,8 +14,4 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        print(json.dumps(self.channel))
-
-
-
-
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
