@@ -41,9 +41,6 @@ class Video:
 
 
 class PLVideo(Video):
-    api_key: str = os.getenv('YOUTUBE_API_KEY')
-    youtube = build('youtube', 'v3', developerKey=api_key)
-
     def __init__(self, video_id: str, playlist_id: str):
         super().__init__(video_id)
         self.__playlist_id = playlist_id
