@@ -25,11 +25,14 @@ class Channel:
 
     @classmethod
     def get_service(cls):
+        """
+        возвращает объект для работы с YouTube API
+        """
         return cls.youtube
 
 
 
     def to_json(self, channel) -> None:
         """Выводит в консоль информацию о канале."""
-        print(json.dumps(self.channel))
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
 
