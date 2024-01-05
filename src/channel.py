@@ -1,7 +1,10 @@
+from os import environ as env
 from googleapiclient.discovery import build
+
 
 class Channel:
     """Класс для ютуб-канала"""
+    api_key = env.get('YT_API_KEY') if env.get('YT_API_KEY') is not None else env.get('API_KEY')
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
@@ -9,10 +12,16 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-
-        api_key = 'AIzaSyCWMbqApjkYh1yy_Bk9kiAbUjv1fI9EH0E'
-        youtube = build('youtube', 'v3', developerKey=api_key)
-        request = youtube.channels().list(part='snippet, statistics', id=self.channel_id)
+        request = Channel.get_service().channels().list(part='snippet, statistics', id=self.channel_id)
         response = request.execute()
 
         print(response)
+
+    @classmethod
+    def get_service(cls):
+        """
+        Создает объект Resource для работы с YouTube Dara API с помощью api_key.
+        :return: Объект Resource
+        """
+        youtube = build('youtube', 'v3', developerKey=cls.api_key)
+        return youtube
