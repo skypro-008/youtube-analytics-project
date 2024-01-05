@@ -1,3 +1,4 @@
+import json
 from os import environ as env
 from googleapiclient.discovery import build
 
@@ -71,3 +72,22 @@ class Channel:
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         print(self.channel_info())
+
+    def to_json(self, filename: str):
+        """
+        Сохраняет данные канала в JSON-файл по заданному шаблону словаря.
+        :param filename: Имя файла с расширением .json
+        :return: None
+        """
+        data = {
+            'channel_id': self._channel_id,
+            'title': self._title,
+            'description': self._description,
+            'url': self._url,
+            'subscriber_count': self._subscriber_count,
+            'video_count': self._video_count,
+            'total_views': self._total_views,
+        }
+
+        with open(filename, 'w', encoding='utf-8') as json_file:
+            json.dump(data, json_file, ensure_ascii=False, indent=4)
