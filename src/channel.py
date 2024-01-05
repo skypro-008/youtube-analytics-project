@@ -10,13 +10,7 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
 
-    def print_info(self) -> None:
-        """Выводит в консоль информацию о канале."""
-        request = Channel.get_service().channels().list(part='snippet, statistics', id=self.channel_id)
-        response = request.execute()
-
-        print(response)
-
+    # classmethods
     @classmethod
     def get_service(cls):
         """
@@ -25,3 +19,18 @@ class Channel:
         """
         youtube = build('youtube', 'v3', developerKey=cls.api_key)
         return youtube
+
+    # methods
+    def channel_info(self) -> dict:
+        """
+        Получает информацию о канале через API, путем выполнения запроса к YT Data API.
+        :return: Словарь с информацией о канале
+        """
+        request = Channel.get_service().channels().list(part='snippet, statistics', id=self.channel_id)
+        response = request.execute()
+
+        return response
+
+    def print_info(self) -> None:
+        """Выводит в консоль информацию о канале."""
+        print(self.channel_info())
