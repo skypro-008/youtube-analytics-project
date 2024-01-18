@@ -1,14 +1,14 @@
 from googleapiclient.discovery import build
 import os
-import json
 
 
 class Video:
+    """Класс для видео"""
 
     api_key = os.getenv('YT_API_KEY')
 
     def __init__(self, video_id: str) -> None:
-
+        """Экземпляр инициализируется по id видео. Дальше все данные будут подтягиваться по API."""
         self.video_id = video_id
         self.video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                                id=video_id).execute()
@@ -29,8 +29,10 @@ class Video:
 
 
 class PLVideo(Video):
+    """Класс для плейлиста"""
 
     def __init__(self, video_id: str, playlist_id: str):
+        """Экземпляр инициализируется по id видео и id плейлиста. Дальше все данные будут подтягиваться по API."""
         super().__init__(video_id)
         self.playlist_id = playlist_id
         self.playlist_response = self.get_service().playlistItems().list(playlistId=playlist_id,
