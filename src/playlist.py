@@ -24,3 +24,17 @@ class PlayList:
         self.url = f"https://www.youtube.com/playlist?list={self.playlist_id}"
 
 
+    def __str__(self):
+        return f'{self.title}, {self.url}'
+
+    @property
+    def total_duration(self):
+        response = datetime.timedelta()
+
+        for video in self.video_response['items']:
+            iso_8601_duration = video['contentDetails']['duration']
+            duration = isodate.parse_duration(iso_8601_duration)
+            response += duration
+        return response
+
+
