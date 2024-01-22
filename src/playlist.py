@@ -37,4 +37,17 @@ class PlayList:
             response += duration
         return response
 
+    def show_best_video(self):
+        global best_video
+        likes = 0
+        for video_id in self.video_ids:
+            video_request = self.youtube.videos().list(
+                part='statistics',
+                id=video_id
+            ).execute()
+            like_count = video_request['items'][0]['statistics']['likeCount']
+            if int(like_count) > likes:
+                likes = int(like_count)
+                best_video = f"https://youtu.be/{video_request['items'][0]['id']}"
+        return best_video
 
