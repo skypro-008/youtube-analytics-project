@@ -21,6 +21,12 @@ class Channel:
         self.video_count = channel['items'][0]['statistics']['videoCount']
         self.viewCount = channel['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        return f"{self.url}"
+
+    def __add__(self, other):
+        return self.subscriberCount + other.subscriberCount
+
     @staticmethod
     def print_info() -> None:
         """Выводит в консоль информацию о канале."""
