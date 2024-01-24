@@ -9,12 +9,12 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.info = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         self.id = channel_id
-        self.title = self.info.get("items")[0].get("snippet").get("title")
-        self.description = self.info.get("items")[0].get("snippet").get("description")
-        self.url = "https://www.youtube.com/" + self.id
-        self.subs_count = int(self.info.get("items")[0].get("statistics").get("subscriberCount"))
-        self.video_count = int(self.info.get("items")[0].get("statistics").get("videoCount"))
-        self.view_count = int(self.info.get("items")[0].get("statistics").get("viewCount"))
+        self.title = self.info["items"][0]["snippet"]["title"]
+        self.description = self.info["items"][0]["snippet"]["description"]
+        self.url = "https://youtu.be/" + self.id
+        self.subs_count = int(self.info["items"][0]["statistics"]["subscriberCount"])
+        self.video_count = int(self.info["items"][0]["statistics"]["videoCount"])
+        self.view_count = int(self.info["items"][0]["statistics"]["viewCount"])
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
