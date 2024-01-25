@@ -328,6 +328,20 @@ files = [
 ]
 
 [[package]]
+name = "isodate"
+version = "0.6.1"
+description = "An ISO 8601 date/time/duration parser and formatter"
+optional = false
+python-versions = "*"
+files = [
+    {file = "isodate-0.6.1-py2.py3-none-any.whl", hash = "sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96"},
+    {file = "isodate-0.6.1.tar.gz", hash = "sha256:48c5881de7e8b0a0d648cb024c8062dc84e7b840ed81e864c7614fd3c127bde9"},
+]
+
+[package.dependencies]
+six = "*"
+
+[[package]]
 name = "packaging"
 version = "23.2"
 description = "Core utilities for Python packages"
@@ -486,6 +500,27 @@ files = [
 pyasn1 = ">=0.1.3"
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
+name = "timedelta-isoformat"
+version = "0.6.2.11"
+description = "Supplemental ISO8601 duration format support for datetime.timedelta"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "timedelta_isoformat-0.6.2.11-py3-none-any.whl", hash = "sha256:e4415e52a9a5a01da5ddfab289a2b4855ba956078bd20191cf1fce77883061fe"},
+]
+
+[[package]]
 name = "uritemplate"
 version = "4.1.1"
 description = "Implementation of RFC 6570 URI Templates"
@@ -515,4 +550,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "4bb6de7cc74440a4f3634e28df2f07083ac8781bb4e67a0a60b3e687d202c6c3"
+content-hash = "69591db88746e435fd58d0fed4072a66b19c58649acce1cf38446d0dc89e83b3"

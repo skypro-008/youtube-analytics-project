@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.12"
 google-api-python-client = "^2.115.0"
 pytest-cov = "^4.1.0"
+isodate = "^0.6.1"
+timedelta-isoformat = "^0.6.2.11"
 
 
 [build-system]
