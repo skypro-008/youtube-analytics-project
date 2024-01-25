@@ -6,7 +6,18 @@ class Channel:
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
-        """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
+        """
+        Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API.
+        :param: channel_id - Id канала
+        info - Вся информация взятая из API
+        id - id канала
+        title - название канала
+        description - описание канала
+        url - ссылка на канал
+        subs_count - количество подписчиков
+        video_count - количество видео
+        view_count - общее количество просмотров
+        """
         self.info = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         self.id = channel_id
         self.title = self.info["items"][0]["snippet"]["title"]
@@ -29,7 +40,7 @@ class Channel:
 
     def to_json(self, file_name: str):
         """
-        Сохраняет входящие даные в файл типа json
+        Сохраняет входящие данные в файл типа json
         :param: data - данные для сохранения
         :param: file_name - имя файла хранилища
         :return: bool - удачно ли все прошло
@@ -46,6 +57,7 @@ class Channel:
         with open(file_name, 'w') as f:
             json.dump(data, f)
 
+    """Магические :) функции"""
     def __str__(self) -> str:
         return f'{self.title} ({self.url})'
 
