@@ -1,7 +1,6 @@
 import json
 import os
 
-from config import DIR_ROOT
 from googleapiclient.discovery import build
 
 
@@ -17,9 +16,37 @@ class Channel:
         self.title = channel['items'][0]['snippet']['title']
         self.description = channel['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
-        self.subscriber_count = channel['items'][0]['statistics']['subscriberCount']
+        self.subscriber_count = int(channel['items'][0]['statistics']['subscriberCount'])
         self.video_count = channel['items'][0]['statistics']['videoCount']
         self.view_count = channel['items'][0]['statistics']['viewCount']
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """возможность складывать"""
+        result = self.subscriber_count + other.subscriber_count
+        return result
+
+    def __sub__(self, other):
+        """возможность вычитать"""
+        result = self.subscriber_count - other.subscriber_count
+        return result
+
+    def __gt__(self, other):
+        """возможность сравнивать"""
+        result = self.subscriber_count > other.subscriber_count
+        return result
+
+    def __ge__(self, other):
+        """возможность сравнивать"""
+        result = self.subscriber_count >= other.subscriber_count
+        return result
+
+    def __lt__(self, other):
+        """возможность сравнивать"""
+        result = self.subscriber_count < other.subscriber_count
+        return result
 
     def printj(self, dict_to_print: dict) -> None:
         """Выводит словарь в json-подобном удобном формате с отступами"""
