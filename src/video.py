@@ -12,12 +12,18 @@ class Video:
         self.video_id = video_id
         self.video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                                id=video_id).execute()
-        self.video_title: str = self.video_response['items'][0]['snippet']['title']
-        self.url = f"https://www.youtube.com/video/{self.video_id}"
-        self.view_count: int = self.video_response['items'][0]['statistics']['viewCount']
-        self.like_count: int = self.video_response['items'][0]['statistics']['likeCount']
-        self.comment_count: int = self.video_response['items'][0]['statistics']['commentCount']
-
+        try:
+            self.title: str = self.video_response['items'][0]['snippet']['title']
+            self.url = f"https://www.youtube.com/video/{self.video_id}"
+            self.view_count: int = self.video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = self.video_response['items'][0]['statistics']['likeCount']
+            self.comment_count: int = self.video_response['items'][0]['statistics']['commentCount']
+        except IndexError:
+            self.title = None
+            self.like_count = None
+            self.view_count = None
+            self.url = None
+            self.comment_count = None
     @classmethod
     def get_service(cls):
         """Возвращает объект для работы с YouTube API"""
