@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv('../.env')
 
@@ -79,7 +80,3 @@ class Channel:
 
     def __le__(self, other):
         return self.subscriber_count <= other.subscriber_count
-
-    def print_info(self) -> None:
-        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
-
