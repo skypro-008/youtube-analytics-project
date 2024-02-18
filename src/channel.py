@@ -18,93 +18,103 @@ load_dotenv()
 
 class Channel:
     """Класс для ютуб-канала"""
+
     @classmethod
     def get_service(cls):
         api_key: str = os.getenv('YT_API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
 
-    def __init__(self, channel_id: str) -> None:
+    def __init__(self, channel_id: str, data_youtube = {}) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
+        self.data_youtube = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+
+    @property
+    def channel_id(self):
+        return self.__channel_id
 
     @property
     def id(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["id"]
+        return self.data_youtube.get("items", [{}])[0].get("id", "")
 
     @property
     def title(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["snippet"]["title"]
+        return self.data_youtube.get("items", [{}])[0].get("snippet", {}).get("title", "")
 
     @property
     def description(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["snippet"]["description"]
+        return self.data_youtube.get("items", [{}])[0].get("snippet", {}).get("description", "")
 
     @property
     def url(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["snippet"]["thumbnails"]["default"]["url"]
+        return (self.data_youtube.get("items", [{}])[0].get("snippet", {}).get("thumbnails", {}).get("default", {})
+                .get("url", ""))
 
     @property
     def subscriberCount(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["statistics"]["subscriberCount"]
+        return self.data_youtube.get("items", [{}])[0].get("statistics", {}).get("subscriberCount", "")
 
     @property
     def video_Count(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["statistics"]["videoCount"]
+        return self.data_youtube.get("items", [{}])[0].get("statistics", {}).get("videoCount", "")
 
     @property
     def viewCount(self):
-        data_youtube = self.error_handler()
-        return data_youtube["items"][0]["statistics"]["viewCount"]
+        return self.data_youtube.get("items", [{}])[0].get("statistics", {}).get("viewCount", "")
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        data_youtube = json.dumps(self.error_handler(), indent=2, ensure_ascii=False)
+        data_youtube = json.dumps(self.data_youtube, indent=2, ensure_ascii=False)
         print(data_youtube)
 
-    # def to_json(self, name_file_json):
+    def to_json(self, name_file_json):  # = 'channel_atribut.json'):
+        with open(f"{name_file_json}", "w", encoding='utf-8') as f:
+            json.dump({"title": self.title,
+                       "description": self.description,
+                       "id": self.id,
+                       "url": self.url,
+                       "subscriberCount": self.subscriberCount,
+                       "video_Count": self.video_Count,
+                       "viewCount": self.viewCount}, f, ensure_ascii=False, indent=2)
 
-    def error_handler(self):
-        try:
-            channel = Channel.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
-            # channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-            with open('channel_data.json', 'w', encoding='utf-8') as json_file:
-                # Проверка на то, что данные успешно получены и сохранены в файл channel_data.json
-                json.dump(channel, json_file, ensure_ascii=False, indent=2)
-            # Открываем и читаем вновь созданный файл
-            with open('channel_data.json', 'r', encoding='utf-8') as json_file:
-                data_youtube = json.load(json_file)
-            return data_youtube
-        except Exception as e:
-            try:
-                with open('channel_data.json', 'r', encoding='utf-8') as json_file:
-                    data_youtube = json.load(json_file)
-                    print(f"Произошла ошибка при обращении к YouTube API: {e},\n"
-                          "но данные успешно считаны из файла 'channel_data.json':")
-                    return data_youtube
-            except FileNotFoundError as er:
-                print(f"Произошла ошибка при обращении к YouTube API: {er},\n"
-                      "и не найден локальный файл с данными 'channel_data.json'.")
-            except json.JSONDecodeError as je:
-                print(f"Произошла ошибка при обращении к YouTube API: {je},\n"
-                      "локальный файл 'channel_data.json' найден, но\n"
-                      "произошла ошибка при декодировании данных из файла JSON: {je}")
+    # def error_handler(self):
+    #     try:
+    #         # channel = Channel.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+    #         # youtube = self.get_service()
+    #         # you_channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+    #         with open('channel_data.json', 'w', encoding='utf-8') as json_file:
+    #             # Проверка на то, что данные успешно получены и сохранены в файл channel_data.json
+    #             json.dump(you_channel, json_file, ensure_ascii=False, indent=2)
+    #         # Открываем и читаем вновь созданный файл
+    #         with open('channel_data.json', 'r', encoding='utf-8') as json_file:
+    #             data_youtube = json.load(json_file)
+    #         return data_youtube
+    #     except Exception as e:
+    #         try:
+    #             with open('channel_data.json', 'r', encoding='utf-8') as json_file:
+    #                 data_youtube = json.load(json_file)
+    #                 print(f"Произошла ошибка при обращении к YouTube API: {e},\n"
+    #                       "но данные успешно считаны из файла 'channel_data.json':")
+    #                 return data_youtube
+    #         except FileNotFoundError as er:
+    #             print(f"Произошла ошибка при обращении к YouTube API: {er},\n"
+    #                   "и не найден локальный файл с данными 'channel_data.json'.")
+    #         except json.JSONDecodeError as je:
+    #             print(f"Произошла ошибка при обращении к YouTube API: {je},\n"
+    #                   "локальный файл 'channel_data.json' найден, но\n"
+    #                   "произошла ошибка при декодировании данных из файла JSON: {je}")
 
 
-channel = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+# channel = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
 
 # print(Channel.get_service())
-print(channel.title)
-print(channel.description)
-print(channel.id)
-print(channel.url)
-print(channel.subscriberCount)
-print(channel.video_Count)
-print(channel.viewCount)
-channel.print_info()
+# print(channel.title)
+# print(channel.description)
+# print(channel.id)
+# print(channel.subscriberCount)
+# print(channel.video_Count)
+# print(channel.viewCount)
+# print(channel.url)
+# channel.print_info()
+# channel.to_json("jj.json")
