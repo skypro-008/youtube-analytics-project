@@ -11,7 +11,6 @@ class PlayList:
     """класс для плейлиста"""
 
     api_key: str = os.getenv('YT_API_KEY')
-    #build('youtube', 'v3', developerKey=self.api_key)
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
