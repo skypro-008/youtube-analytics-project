@@ -18,8 +18,8 @@ class Video:
         try:
             self.title: str = self.video_response['items'][0]['snippet']['title']
             self.url = f"https://www.youtube.com/{self.video_id}"
-            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
-            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+            self.view_count: int = self.video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = self.video_response['items'][0]['statistics']['likeCount']
 
         except IndexError:
             self.title = None
