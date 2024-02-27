@@ -75,7 +75,7 @@ video_response = youtube.videos().list(part='contentDetails,statistics',
 # printj(video_response)
 
 for video in video_response['items']:
-    # YouTube video duration is in ISO 8601 format
+    # YouTube video.py duration is in ISO 8601 format
     iso_8601_duration = video['contentDetails']['duration']
     duration = isodate.parse_duration(iso_8601_duration)
     print(duration)

@@ -1,4 +1,6 @@
+from dotenv import load_dotenv
 from src.video import Video, PLVideo
+load_dotenv()
 
 if __name__ == '__main__':
     # Создаем два экземпляра класса

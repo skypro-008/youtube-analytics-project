@@ -26,13 +26,14 @@ class Channel:
         return youtube
 
 
-    def __init__(self, channel_id: str, data_youtube = {}) -> None:
+    def __init__(self, channel_id: str) -> None:
+    # def __init__(self, channel_id, video_id=None) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
         self.data_youtube = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
 
     def __str__(self):
-        return f"{self.title} ({self.url})"
+        return f"{self.title}"
 
     def __add__(self, other):
         return self.subscriberCount + other.subscriberCount
