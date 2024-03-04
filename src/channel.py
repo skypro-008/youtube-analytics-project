@@ -52,7 +52,7 @@ class Channel:
     def channel_id(self, new_channel_id):
         if new_channel_id:
             print("AttributeError: property 'channel_id' of 'Channel' object has no setter")
-            self.__channel_id = self.__channel_id
+            self.__channel_id = new_channel_id
     @classmethod
     def get_service(cls):
         api_key: str = os.getenv('API-KEY')
