@@ -19,10 +19,40 @@ class Channel:
         self.video_count = int(self.channel['items'][0]['statistics']['videoCount'])
         self.view_count = int(self.channel['items'][0]['statistics']['viewCount'])
 
+    def __str__(self):
+        return f"{self.title} {self.url}"
+
+    def __add__(self, other):
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        print(json.dumps(self.channel))
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+    @channel_id.setter
+    def channel_id(self, new_channel_id):
+        if new_channel_id:
+            print("AttributeError: property 'channel_id' of 'Channel' object has no setter")
+            self.__channel_id = self.__channel_id
     @classmethod
     def get_service(cls):
         api_key: str = os.getenv('API-KEY')
