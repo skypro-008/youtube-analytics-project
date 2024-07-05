@@ -5,7 +5,7 @@ if __name__ == '__main__':
     moscowpython.print_info()
 
     """
-{
+
   "kind": "youtube#channelListResponse",
   "etag": "uAdmwT0aDhY9LmAzJzIafD6ATRw",
   "pageInfo": {
