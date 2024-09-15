@@ -5,6 +5,18 @@ if __name__ == '__main__':
     moscowpython.print_info()
 
     """
+    - id канала
+- название канала
+- описание канала
+- ссылка на канал
+- количество подписчиков
+- количество видео
+- общее количество просмотров
+    # получаем значения атрибутов
+    print(moscowpython.title)  # MoscowPython
+    print(moscowpython.video_count)  # 685 (может уже больше)
+    print(moscowpython.url)  # https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A
+
 {
   "kind": "youtube#channelListResponse",
   "etag": "uAdmwT0aDhY9LmAzJzIafD6ATRw",
