@@ -1,5 +1,8 @@
 import json
+from dotenv import load_dotenv
 import os
+# Загружаем переменные из .env файла
+load_dotenv()
 
 # необходимо установить через: pip install google-api-python-client
 from googleapiclient.discovery import build

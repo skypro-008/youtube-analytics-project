@@ -1,5 +1,28 @@
 from src.channel import Channel
 
+from dotenv import load_dotenv
+import os
+from googleapiclient.discovery import build
+# Загружаем переменные из .env файла
+load_dotenv()
+
+# Получаем API-ключ
+api_key = os.getenv('YT_API_KEY')
+print(api_key)  # Для проверки, что ключ загружен
+
+# Создаем клиент YouTube API
+youtube = build('youtube', 'v3', developerKey=api_key)
+# Пример запроса к API
+request = youtube.channels().list(
+    part='snippet,contentDetails,statistics',
+    id='UC-OVMPlMA3-YCIeg4z5z23A'  # Замените на нужный ID канала
+)
+response = request.execute()
+
+print(response)
+
+
+
 if __name__ == '__main__':
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     moscowpython.print_info()

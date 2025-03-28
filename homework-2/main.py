@@ -18,3 +18,4 @@ if __name__ == '__main__':
 
     # создаем файл 'moscowpython.json' в данными по каналу
     moscowpython.to_json('moscowpython.json')
+
